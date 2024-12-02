@@ -5,7 +5,7 @@
     <div class="header-table">
     <h2 class="header-h2">Applications</h2>
     </div>
-    <table id="userTable">
+    <table id="applicationsTable">
         <thead>
             <tr>
                 <th>ID</th>

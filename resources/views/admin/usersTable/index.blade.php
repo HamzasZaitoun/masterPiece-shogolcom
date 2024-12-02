@@ -17,26 +17,23 @@
             </tr>
         </thead>
         <tbody>
+        @foreach ($data as $user)
         <tr>
-            <td>1</td>
-            <td>sdad</td>
-            <td>loui</td>
-            <td>Valid</td>
-            <td class="action">
-                <a href=""><i class="bi bi-eye"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>hamza</td>
-            <td>saad</td>
-            <td>Valid</td>
-            <td class="action">
-                <a href=""><i class="bi bi-eye"></i></a>
-            </td>
-        </tr>
+        <td>{{$user['id']}}</td>
+        <td>{{$user['name']}}</td>
+        <td>{{$user['last_name']}}</td>
+        <td>{{$user['account_status']}}</td>
+        <td class="action">
+            <a href="{{ route('admin.users.userDetails', ['id' => $user->id]) }}"><i class="bi bi-eye"></i></a>
+        </td>
+    </tr>
+        @endforeach
         </tbody>
     </table>
  </div>
  </main>
+ {{-- @php
+    $user = ob_get_clean(); 
+ @endphp --}}
+
 @endsection

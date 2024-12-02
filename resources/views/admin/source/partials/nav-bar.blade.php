@@ -13,7 +13,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="{{route('admin.users.adminProfile')}}"><i class="bi bi-person-arms-up"></i>Profile</a></li>
                     <li>
-                    <a href="{{route('admin.dashboard')}}">
+                    {{-- <a href="{{route('admin.dashboard')}}"> --}}
                     <i class="bi bi-box-arrow-right"></i> logout
                     </a>
                     </li>

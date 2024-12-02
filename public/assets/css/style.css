@@ -726,9 +726,27 @@ form {
     gap: 10px;
     max-width: 95%;
     margin: auto;
-    background-color: rgba(0, 0, 0, 0.048);
+  
     padding-bottom: 2rem;
     padding-right: 2rem;
+}
+.edit-form
+{
+   
+        display: flex;
+        flex-wrap: wrap;  /* Allow wrapping of items */
+        padding-left: 2rem;
+        padding-top: 2rem;
+        gap: 10px;
+        max-width: 95%;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.048);
+        padding-bottom: 2rem;
+        padding-right: 2rem;
+    
 }
 .form-group {
     display: flex;
@@ -748,6 +766,13 @@ input[type="password"],
 input[type="number"],
 input[type="date"] {
     width: 60%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type="text area"]
+{
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -1127,5 +1152,13 @@ hr {
 .delete-btn i {
     font-size: 18px;
 }
+.error-message
+{
+    color: red;
+}
+th
+{
+    text-align: center !important;
+}   
 
 /* END OF DELETE BUTTON */

@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use    App\Models\Governate;
+use Illuminate\Support\Facades\File;
+
 
 use App\Http\Requests\storeUserRequest;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -12,7 +16,13 @@ class UserController extends Controller
      */
     public function index()
     {
-            return view('admin.usersTable.index'); 
+       $data= User::all();
+    //    dd($data);
+    // $data=User::find(2);
+    // $data->delete();
+    // dd($data);
+
+            return view('admin.usersTable.index',compact('data')); 
     }
     public function adminProfile()
     {
@@ -28,25 +38,54 @@ class UserController extends Controller
         return view('admin.usersTable.create');
     }
 
+    public function getCitiesByGovernate($governate)
+    {
+        // Load the JSON file containing cities
+        $json = File::get(resource_path('data/governates.json'));
+        $cities = json_decode($json, true);
+    
+        // Filter cities based on the selected governate
+        if (isset($cities[$governate])) {
+            $filteredCities = $cities[$governate];
+        } else {
+            $filteredCities = [];
+        }
+    
+        return response()->json($filteredCities);
+    }
+    
+
+    
     /**
      * Store a newly created resource in storage.
      */
     public function store(storeUserRequest $request)
-    {
-        $validatedData=$request->validated();
-    //    $request->validate([
-    //     'firstName'=>['required','string','min:4','max:20'],
+{
+    $validatedData = $request->validated();
 
-    //    ]); 
-       dd($validatedData);
+    if ($request->hasFile('profilePicture')) {
+        $fileName = time() . '.' . $request->profilePicture->extension();
+        $request->profilePicture->move(public_path('uploads/users'), $fileName);
+        $validatedData['profile_picture'] = $fileName;
     }
+
+    $validatedData['password'] = bcrypt($validatedData['password']);
+ 
+    User::create($validatedData);
+
+    return redirect('/admin/users/')->with('success', 'User created successfully');
+}
+
+    
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
+        $user=User::find($id);
         
+        return view('admin.usersTable.show',compact('user'));
     }
 
     /**
@@ -54,15 +93,35 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user=User::findOrFail($id);
+         return view('admin.usersTable.update');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(storeUserRequest $request, string $id)
     {
-        //
+        dd($request);
+        $validatedData=$request->validated();
+        $user = User::findOrFail($id);
+        if (!$user) {
+            return redirect()->route('admin.users.index')->with('error', 'User not found');
+        }
+        if ($request->hasFile('profilePicture')) {
+            if ($user->profile_picture && file_exists(public_path('uploads/' . $user->profile_picture))) {
+                unlink(public_path('uploads/' . $user->profile_picture));
+            }
+    
+            $fileName = time() . '.' . $request->profilePicture->extension();
+    
+            $request->profilePicture->move(public_path('uploads'), $fileName);
+    
+            $validatedData['profile_picture'] = $fileName;
+        }
+        $user->update($validatedData);
+        return redirect()->route('admin.users.userDetails')->with('success','added succefully');
+
     }
 
     /**
@@ -73,3 +132,4 @@ class UserController extends Controller
         //
     }
 }
+;

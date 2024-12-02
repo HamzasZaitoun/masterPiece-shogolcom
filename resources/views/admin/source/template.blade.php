@@ -12,5 +12,6 @@
     
 @yield('content')
 @include('admin.source.partials.footer')
+@include('admin.source.partials.scripts')
 </body>
 </html>

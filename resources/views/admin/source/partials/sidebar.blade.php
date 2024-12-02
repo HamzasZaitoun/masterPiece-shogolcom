@@ -32,7 +32,7 @@
             </div>
 
             <div class="sidebar">
-                <a href="{{Route('admin.dashboard')}}" class="nav-link">
+                {{-- <a href="{{Route('admin.users')}}" class="nav-link"> --}}
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
@@ -78,7 +78,7 @@
                     </span>
                     <h3>Users reviews</h3>
                 </a>
-                <a href="{{route('admin.dashboard')}}">
+                {{-- <a href="{{route('admin.dashboard')}}"> --}}
                     <span class="material-icons-sharp">
                         logout
                     </span>

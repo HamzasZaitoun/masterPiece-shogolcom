@@ -11,30 +11,35 @@
             <tr>
                 <th>ID</th>
                 <th>Job title</th>
-                <th>City</th>
+                <th>Job description</th>
                 <th>Category</th>
                 <th>View</th>
             </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>Developer</td>
-            <td>Amman</td>
-            <td>IT</td>
-            <td class="action">
-                <a href=""><i class="bi bi-eye"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Scrum master</td>
-            <td>Amman</td>
-            <td>IT</td>
-            <td class="action">
-                <a href=""><i class="bi bi-eye"></i></a>
-            </td>
-        </tr>
+            @foreach ($jobs as $job)
+            <tr>
+                <td>{{ $job->job_id }}</td>
+                <td>{{ $job->job_title }}</td>
+                <td>{{ $job->job_description }}</td>
+                <!-- Fetching category name from the relationship -->
+                <td>{{ $job->category->category_name }}</td>
+
+                <td class="action">
+                    <a href="{{ route('admin.jobs.jobDetails', ['id' => $job->job_id]) }}"><i
+                            class="bi bi-eye"></i>
+                    </a>
+                    <form id="deleteCategoryForm" action="{{ route('admin.categories.deleteCategory', ['id' => $job->job_id]) }}" method="POST" class="d-inline">
+                        @csrf
+                        @Method('DELETE')
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="tooltip"
+                            title="Delete Job" onclick="confirmDelete(this)">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
  </div>

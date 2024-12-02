@@ -6,9 +6,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\UserReviewController;
 use App\Http\Controllers\WebsiteReviewController;
-use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\GovernatesController;
 use Faker\Provider\ar_EG\Payment;
 use Illuminate\Support\Facades\Route;
 
@@ -22,40 +23,50 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('admin.index');
+Route::get('/governates', [GovernatesController::class, 'getGovernates']);
+Route::get('/dashboard', function () {
+    return view('dashboard')->name('dashboard');
 });
 Route::get('/', function () {
-    return view('admin.index');
-})->name('admin.dashboard');
+    return view('user.homePage.index');
+});
+// Route::get('/', function () {
+//     return view('admin.index');
+// })->name('admin.dashboard');
 
 Route::controller(UserController::class)->prefix('admin/users')->name('admin.users.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/addUser', 'create')->name('addUser');
     Route::post('/storeUser', 'store')->name('storeUser');
-
+    Route::get('/userDetails/{id}', 'show')->name('userDetails');
+    Route::get('/editUser/{id}', 'edit')->name('editUser');
+    Route::patch('/editUser/{id}', 'update')->name('updateUser');
     Route::get('/adminProfile', 'adminProfile')->name('adminProfile');
+    Route::get('/cities/{governate}',  'getCitiesByGovernate');
 
+});
 
+Route::controller(CategoryController::class)->prefix('admin/categories')->name('admin.categories.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/addCategory', 'create')->name('addCategory');
+    Route::post('/storeCategory','store')->name('storeCategory');
+    Route::get('/categoryDetails/{id}', 'show')->name('showCategory');
+    Route::get('/editCategory/{id}', 'edit')->name('editCategory');
+    Route::PATCH('/updateCategory/{id}', 'update')->name('updateCategory');
+    Route::delete('/deleteCategory/{id}', 'destroy')->name('deleteCategory');
 });
 
 Route::controller(JobController::class)->prefix('admin/jobs')->name('admin.jobs.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/addJob', 'create')->name('addJob');
-
+    Route::post('/storeJob','store')->name('storeJob');
+    Route::get('/jobDetails/{id}', 'show')->name('jobDetails');
+    Route::get('/cities/{governate}', 'getCitiesByGovernate');
     // Route::get('/jobDetails', 'create')->name('jobDetails');
 
 
 });
-Route::controller(CategoryController::class)->prefix('admin/categories')->name('admin.categories.')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/addCategory', 'create')->name('addCategory');
 
-    // Route::get('/categoryDetails', 'create')->name('categoryDetails');
-
-
-});
 
 Route::controller(PaymentController::class)->prefix('admin/payments')->name('admin.payments.')->group(function () {
     Route::get('/', 'index')->name('index');
