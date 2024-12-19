@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use    App\Models\Governate;
 use Illuminate\Support\Facades\File;
 
@@ -16,17 +17,17 @@ class UserController extends Controller
      */
     public function index()
     {
-       $data= User::all();
-    //    dd($data);
-    // $data=User::find(2);
-    // $data->delete();
-    // dd($data);
+        $data = User::all();
+        //    dd($data);
+        // $data=User::find(2);
+        // $data->delete();
+        // dd($data);
 
-            return view('admin.usersTable.index',compact('data')); 
+        return view('admin.usersTable.index', compact('data'));
     }
     public function adminProfile()
     {
-            return view('admin.adminsTable.profile'); 
+        return view('admin.adminsTable.profile');
     }
 
     /**
@@ -34,7 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        
+
         return view('admin.usersTable.create');
     }
 
@@ -43,49 +44,49 @@ class UserController extends Controller
         // Load the JSON file containing cities
         $json = File::get(resource_path('data/governates.json'));
         $cities = json_decode($json, true);
-    
+
         // Filter cities based on the selected governate
         if (isset($cities[$governate])) {
             $filteredCities = $cities[$governate];
         } else {
             $filteredCities = [];
         }
-    
+
         return response()->json($filteredCities);
     }
-    
 
-    
+
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(storeUserRequest $request)
-{
-    $validatedData = $request->validated();
+    {
+        $validatedData = $request->validated();
 
-    if ($request->hasFile('profilePicture')) {
-        $fileName = time() . '.' . $request->profilePicture->extension();
-        $request->profilePicture->move(public_path('uploads/users'), $fileName);
-        $validatedData['profile_picture'] = $fileName;
+        if ($request->hasFile('profilePicture')) {
+            $fileName = time() . '.' . $request->profilePicture->extension();
+            $request->profilePicture->move(public_path('uploads/users'), $fileName);
+            $validatedData['profile_picture'] = $fileName;
+        }
+
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+        User::create($validatedData);
+
+        return redirect('/admin/users/')->with('success', 'User created successfully');
     }
 
-    $validatedData['password'] = bcrypt($validatedData['password']);
- 
-    User::create($validatedData);
 
-    return redirect('/admin/users/')->with('success', 'User created successfully');
-}
-
-    
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        $user=User::find($id);
-        
-        return view('admin.usersTable.show',compact('user'));
+        $user = User::find($id);
+
+        return view('admin.usersTable.show', compact('user'));
     }
 
     /**
@@ -93,8 +94,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user=User::findOrFail($id);
-         return view('admin.usersTable.update');
+        $user = User::findOrFail($id);
+        return view('admin.usersTable.update', compact('user'));
     }
 
     /**
@@ -102,34 +103,33 @@ class UserController extends Controller
      */
     public function update(storeUserRequest $request, string $id)
     {
-        dd($request);
-        $validatedData=$request->validated();
+        $validatedData = $request->validated();
         $user = User::findOrFail($id);
-        if (!$user) {
-            return redirect()->route('admin.users.index')->with('error', 'User not found');
-        }
+
         if ($request->hasFile('profilePicture')) {
-            if ($user->profile_picture && file_exists(public_path('uploads/' . $user->profile_picture))) {
-                unlink(public_path('uploads/' . $user->profile_picture));
+            if ($user->profile_picture && file_exists(public_path('uploads/users/' . $user->profile_picture))) {
+                unlink(public_path('uploads/users/' . $user->profile_picture));
             }
-    
+
             $fileName = time() . '.' . $request->profilePicture->extension();
-    
-            $request->profilePicture->move(public_path('uploads'), $fileName);
-    
+            $request->profilePicture->move(public_path('uploads/users'), $fileName);
             $validatedData['profile_picture'] = $fileName;
         }
-        $user->update($validatedData);
-        return redirect()->route('admin.users.userDetails')->with('success','added succefully');
 
+        $user->update($validatedData);
+
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
     }
-}
-;
+};

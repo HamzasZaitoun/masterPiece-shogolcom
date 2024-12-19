@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id('job_id');
-            
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
             $table->string('job_title', 255);
             $table->text('job_description');
             $table->string('job_governate', 255);
@@ -40,8 +38,8 @@ return new class extends Migration
             $table->string('custom_category', 255)->nullable(); // Optional
             $table->integer('number_of_workers')->nullable()->default(1); // Optional
             $table->text('cancellation_reason')->nullable();
-            $table->timestamps(); // created_at, updated_at
-            $table->softDeletes(); // deleted_at (soft delete)
+            $table->timestamps(); 
+            $table->softDeletes(); 
         });
     }
 

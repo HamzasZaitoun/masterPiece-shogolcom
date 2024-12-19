@@ -2,65 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
+use App\Http\Requests\PaymentRequest;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('admin.paymentsTable.index'); 
-
+        $payments = Payment::all();
+        return view('admin.paymentsTable.index', compact('payments'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('admin.paymentsTable.show'); 
-
+        return view('admin.paymentsTable.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(PaymentRequest $request)
     {
-        //
+        Payment::create($request->validated());
+        return redirect()->route('admin.payments.index')->with('success', 'Payment created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Payment $payment)
     {
-        //
+        return view('admin.paymentsTable.show', compact('payment'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Payment $payment)
     {
-        //
+        return view('admin.paymentsTable.update', compact('payment'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(PaymentRequest $request, Payment $payment)
     {
-        //
+        $payment->update($request->all());
+        return redirect()->route('admin.payments.index')->with('success', 'Payment updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Payment $payment)
     {
-        //
+        $payment->delete();
+        return redirect()->route('admin.payments.index')->with('success', 'Payment deleted successfully.');
     }
 }

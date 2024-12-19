@@ -1,41 +1,47 @@
 @extends('admin.source.template')
+
 @section('content')
-<h1>Payments dashboard</h1>
- <div class="recent-orders">
-    <div class="header-table">
-    <h2 class="header-h2">Payment</h2>
+    <h1>Payments Dashboard</h1>
+    <div class="recent-orders">
+        <div class="header-table">
+            <h2 class="header-h2">Payments</h2>
+            <button class="add-btn" onclick="location.href = '{{ Route('admin.payments.create') }}';">Add Payment</button>
+           
+        </div>
+        <table id="paymentTable" class="display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User ID</th>
+                    <th>Job ID</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($payments as $payment)
+                    <tr>
+                        <td>{{ $payment->id }}</td>
+                        <td>{{ $payment->user_id }}</td>
+                        <td>{{ $payment->job_id }}</td>
+                        <td>{{ ucfirst($payment->payment_status) }}</td>
+                        <td class="action">
+                            <a href="{{ route('admin.payments.show', $payment->id) }}" title="View"><i
+                                    class="bi bi-eye"></i></a>
+                            <a href="{{ route('admin.payments.edit', $payment->id) }}" title="Edit"><i
+                                    class="bi bi-pencil"></i></a>
+                            <form action="{{ route('admin.payments.destroy', $payment->id) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" style="border:none;background:none;" title="Delete">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-    <table id="paymentTable" class="display">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>User ID</th>
-                <th>Job ID</th>
-                <th>Stutus</th>
-                <th>View</th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>23</td>
-            <td>paid</td>
-            <td class="action">
-                <a href="{{Route('admin.payments.paymentDetails')}}"><i class="bi bi-eye"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>2</td>
-            <td>16</td>
-            <td>paid</td>
-            <td class="action">
-                <a href="{{Route('admin.payments.paymentDetails')}}"><i class="bi bi-eye"></i></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
- </div>
- </main>
 @endsection

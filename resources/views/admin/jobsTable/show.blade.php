@@ -162,11 +162,11 @@
     </table>
 
     <!-- Action Buttons -->
-    {{-- <div class="button-container">
+    <div class="button-container">
         <button onclick="location.href='{{ route('admin.jobs.editJob', ['id' => $job->job_id]) }}'" class="edit-btn btn btn-primary btn-lg shadow-sm rounded-pill px-4 py-2 my-3">
             <i class="bi bi-pencil-square"></i> Edit Job
         </button>
-    </div> --}}
+    </div>
 </div>
 
 @endsection

@@ -1,9 +1,13 @@
 @extends('admin.source.template')
 @section('content')
-<h1>Users Reviews dashboard</h1>
- <div class="recent-orders">
+<h1>Users Reviews Dashboard</h1>
+
+<div class="recent-orders">
     <div class="header-table">
-    <h2 class="header-h2">Reviews</h2>
+        <h2 class="header-h2">Reviews</h2>
+        <button class="add-btn" onclick="location.href='{{ route('admin.usersReviews.create') }}';">
+            Add Review
+        </button>
     </div>
     <table id="userReviewsTable" class="display">
         <thead>
@@ -11,31 +15,29 @@
                 <th>ID</th>
                 <th>Reviewer ID</th>
                 <th>Reviewed ID</th>
-                <th>Rating</th>
-                <th>View</th>
+             
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>23</td>
-            <td><i class="bi bi-star-fill"></i> 4.9</td>
-            <td class="action">
-                <a href="userReviewsDetails.php"><i class="bi bi-eye"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>4</td>
-            <td>12</td>
-            <td><i class="bi bi-star-fill"></i> 4.34</td>
-            <td class="action">
-                <a href="userReviewsDetails.php"><i class="bi bi-eye"></i></a>
-            </td>
-        </tr>
+            @foreach ($reviews as $review)
+            <tr>
+                <td>{{ $review->review_id }}</td>
+                <td>{{ $review->application->user->name }}</td>
+                {{-- <td>{{ $applications->job->user->name }}</td> --}}
+                <td>{{ $review->rating }}</td>
+                <td>
+                    <a href="{{ route('admin.usersReviews.show', $review->review_id) }}">View</a>
+                    <a href="{{ route('admin.usersReviews.edit', $review->review_id) }}">Edit</a>
+                    <form action="{{ route('admin.usersReviews.destroy', $review->review_id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
         </tbody>
     </table>
- </div>
- </main>
+</div>
 @endsection

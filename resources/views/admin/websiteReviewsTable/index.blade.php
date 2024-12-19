@@ -1,41 +1,40 @@
 @extends('admin.source.template')
+
 @section('content')
-<h1>Reviews dashboard</h1>
- <div class="recent-orders">
-    <div class="header-table">
-    <h2 class="header-h2">Reviews</h2>
+    <h1>Reviews Dashboard</h1>
+    <div class="recent-orders">
+        <div class="header-table">
+            <h2 class="header-h2">Reviews</h2>
+            <button class="add-btn" onclick="location.href = '{{ Route('admin.websiteReviews.create')}}';">Add Review</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User Name</th>
+                    <th>Rating</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($reviews as $review)
+                    <tr>
+                        <td>{{ $review->id }}</td>
+                        <td>{{ $review->user->name }}</td>
+                        <td>{{ $review->rating }}</td>
+                        <td>
+                            <a href="{{ route('admin.websiteReviews.show', $review) }}">View</a>
+                            <a href="{{ route('admin.websiteReviews.edit', $review) }}">Edit</a>
+                            <form action="{{ route('admin.websiteReviews.destroy', $review) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-    <table id="reviewsTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>User id {name}</th>
-                <th>Rating</th>
-                <th>Rate date</th>
-                <th>View</th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>sdad</td>
-            <td><i class="bi bi-star-fill"></i> 5</td>
-            <td>15-10-2024</td>
-            <td class="action">
-                <a href="{{Route('admin.websiteReviews.websiteReviewDetails')}}"><i class="bi bi-eye"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>hamza</td>
-            <td><i class="bi bi-star-fill"></i> 3.85</td>
-            <td>8-8-2024</td>
-            <td class="action">
-                <a href="{{Route('admin.websiteReviews.websiteReviewDetails')}}"><i class="bi bi-eye"></i></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
- </div>
- </main>
 @endsection

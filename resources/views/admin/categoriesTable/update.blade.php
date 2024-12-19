@@ -8,7 +8,7 @@
             <h2 class="text-center mb-4">Edit Category</h2>
 
             <!-- Edit Category Form -->
-            <form class="edit-form" id="editCategoryForm" action="{{route('admin.categories.updateCategory', ['id' => $category->category_id])}}" method="POST" enctype="multipart/form-data">
+            <form class="form" id="editCategoryForm" action="{{route('admin.categories.updateCategory', ['id' => $category->category_id])}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
 
@@ -21,25 +21,25 @@
                         </div>
                     @endif
                     <h6>Upload a different photo...</h6>
-                    <input type="file" class="form-control" id="category_picture" name="category_picture">
+                    <input class="input" placeholder=""type="file" class="form-control" id="category_picture" name="category_picture">
                 </div>
 
                 <div class="form-field mb-3">
                     <!-- Category Name -->
                     <label for="category_name" class="form-label">Category Name</label>
-                    <input type="text" id="category_name" name="category_name" class="form-control" value="{{ $category->category_name }}" required>
+                    <input class="input" placeholder=""type="text" id="category_name" name="category_name" class="form-control" value="{{ $category->category_name }}" required>
                 </div>
 
                 <div class="form-field mb-3">
                     <!-- Category Description -->
                     <label for="category_description" class="form-label">Description</label>
-                    <input type="text" name="category_description" id="category_description" class="form-control" value="{{ $category->category_description }}">
+                    <input class="input" placeholder=""type="text" name="category_description" id="category_description" class="form-control" value="{{ $category->category_description }}">
                 </div>
 
                 <!-- Submit Button -->
-               
+               <div></div>
                 <div class="button-container">
-                    <button type="submit">update!</button>
+                    <button class="edit-save-btn" type="submit">update!</button>
                 </div>
             </form>
         </div>

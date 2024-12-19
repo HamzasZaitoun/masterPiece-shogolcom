@@ -23,10 +23,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/governates', [GovernatesController::class, 'getGovernates']);
-Route::get('/dashboard', function () {
-    return view('dashboard')->name('dashboard');
-});
+// Route::get('/dashboard', function () {
+//     return view('dashboard')->name('dashboard');
+// });
 Route::get('/', function () {
     return view('user.homePage.index');
 });
@@ -43,13 +44,13 @@ Route::controller(UserController::class)->prefix('admin/users')->name('admin.use
     Route::patch('/editUser/{id}', 'update')->name('updateUser');
     Route::get('/adminProfile', 'adminProfile')->name('adminProfile');
     Route::get('/cities/{governate}',  'getCitiesByGovernate');
-
+    Route::delete('/deleteUser/{id}', 'destroy')->name('destroy');
 });
 
 Route::controller(CategoryController::class)->prefix('admin/categories')->name('admin.categories.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/addCategory', 'create')->name('addCategory');
-    Route::post('/storeCategory','store')->name('storeCategory');
+    Route::post('/storeCategory', 'store')->name('storeCategory');
     Route::get('/categoryDetails/{id}', 'show')->name('showCategory');
     Route::get('/editCategory/{id}', 'edit')->name('editCategory');
     Route::PATCH('/updateCategory/{id}', 'update')->name('updateCategory');
@@ -59,55 +60,84 @@ Route::controller(CategoryController::class)->prefix('admin/categories')->name('
 Route::controller(JobController::class)->prefix('admin/jobs')->name('admin.jobs.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/addJob', 'create')->name('addJob');
-    Route::post('/storeJob','store')->name('storeJob');
+    Route::post('/storeJob', 'store')->name('storeJob');
     Route::get('/jobDetails/{id}', 'show')->name('jobDetails');
     Route::get('/cities/{governate}', 'getCitiesByGovernate');
     // Route::get('/jobDetails', 'create')->name('jobDetails');
-
-
+    Route::get('/editJob/{id}', 'edit')->name('editJob');
+    Route::PATCH('/updateJob/{id}', 'update')->name('updateJob');
+    Route::delete('/deleteJob/{id}', 'destroy')->name('deleteJob');
 });
 
 
-Route::controller(PaymentController::class)->prefix('admin/payments')->name('admin.payments.')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/paymentDetails', 'create')->name('paymentDetails');
+Route::controller(PaymentController::class)
+    ->prefix('admin/payments')
+    ->name('admin.payments.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{payment}', 'show')->name('show');
+        Route::get('/{payment}/edit', 'edit')->name('edit');
+        Route::put('/{payment}', 'update')->name('update');
+        Route::delete('/{payment}', 'destroy')->name('destroy');
+    });
+
+Route::controller(ApplicationController::class)
+    ->prefix('admin/applications')
+    ->name('admin.applications.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{application_id}', 'show')->name('show');
+        Route::get('/{application_id}/edit', 'edit')->name('edit');
+        Route::put('/{application_id}', 'update')->name('update');
+        Route::delete('/{application_id}', 'destroy')->name('destroy');
+    });
 
 
-});
-Route::controller(ApplicationController::class)->prefix('admin/applications')->name('admin.applications.')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/applicationDetails', 'create')->name('applicationDetails');
+Route::controller(WebsiteReviewController::class)
+    ->prefix('admin/websiteReviews')
+    ->name('admin.websiteReviews.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{review}', 'show')->name('show');
+        Route::get('/{review}/edit', 'edit')->name('edit');
+        Route::put('/{review}', 'update')->name('update');
+        Route::delete('/{review}', 'destroy')->name('destroy');
+    });
 
-
-});
-Route::controller(WebsiteReviewController::class)->prefix('admin/websiteReviews')->name('admin.websiteReviews.')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/websiteReviewDetails', 'create')->name('websiteReviewDetails');
-
-
-});
-Route::controller(UserReviewController::class)->prefix('admin/usersReviews')->name('admin.usersReviews.')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/ReviewDetails', 'create')->name('ReviewDetails');
-
-
-});
+Route::controller(UserReviewController::class)
+    ->prefix('admin/usersReviews')->name('admin.usersReviews.')->group(function () {
+        Route::get('/', 'index')->name('index');            
+        Route::get('/create', 'create')->name('create');    
+        Route::post('/', 'store')->name('store');           
+        Route::get('/{id}', 'show')->name('show');          
+        Route::get('/{id}/edit', 'edit')->name('edit');     
+        Route::put('/{id}', 'update')->name('update');      
+        Route::delete('/{id}', 'destroy')->name('destroy'); 
+    });
 Route::controller(ContactUsController::class)->prefix('admin/contactUs')->name('admin.contactUs.')->group(function () {
     Route::get('/', 'index')->name('index');
-    Route::get('/contactDetails', 'create')->name('contactDetails');
-
-
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{id}', 'show')->name('show');
+    Route::get('/{id}/edit', 'edit')->name('edit');
+    Route::put('/{id}', 'update')->name('update');
+    Route::delete('/{id}', 'destroy')->name('destroy');
 });
 
-
 Route::middleware(['auth'])->group(function () {
-    Route::get('/index', function(){
+    Route::get('/index', function () {
         return view('admin.index');
     })->name('admin.index');
 });
 Route::get('/admin/dashboard', function () {
-    return view('admin/dashboard');
-})->middleware(['auth', 'verified'])->name('admin/dashboard');
+    return view('admin/index');
+})->middleware(['auth', 'verified'])->name('admin/index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -115,4 +145,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

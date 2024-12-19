@@ -2,65 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
+use App\Models\UserToUserReview;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserToUserReviewRequest;
 
 class UserReviewController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('admin.websiteReviewsTable.index'); 
-
+        // Get all reviews with related applications
+        $reviews = UserToUserReview::with('application')->get();
+        $applications = Application::with('user')->get();
+        return view('admin.usersReviewsTable.index', compact('reviews'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.usersReviewsTable.show'); 
+        $applications = Application::with('user')->get();
 
+        return view('admin.usersReviewsTable.create', compact('applications'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function store(UserToUserReviewRequest $request)
     {
-        //
+        // Store the new review in the database
+        UserToUserReview::create($request->validated());
+        return redirect()->route('admin.usersReviews.index')->with('success', 'Review created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $review = UserToUserReview::findOrFail($id);
+        return view('admin.usersReviewsTable.show', compact('review'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $review = UserToUserReview::findOrFail($id);
+        $applications = Application::all();
+        return view('admin.usersReviewsTable.edit', compact('review', 'applications'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(UserToUserReviewRequest $request, $id)
     {
-        //
+        $review = UserToUserReview::findOrFail($id);
+        $review->update($request->validated());
+        return redirect()->route('admin.usersReviews.index')->with('success', 'Review updated successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $review = UserToUserReview::findOrFail($id);
+        $review->delete();
+        return redirect()->route('admin.usersReviews.index')->with('success', 'Review deleted successfully!');
     }
 }

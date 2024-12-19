@@ -53,7 +53,7 @@ body{
     user-select: none;
     overflow-x: hidden;
     color: var(--color-dark);
-    background-color: var(--color-background);
+    background-color: #ffffff;
 }
 
 a{
@@ -74,6 +74,7 @@ h1{
 h2{
     font-weight: 600;
     font-size: 1.4rem;
+    padding-bottom: 20px;
 }
 
 h3{
@@ -150,7 +151,7 @@ aside .toggle .close{
 aside .sidebar{
     display: flex;
     flex-direction: column;
-    background-color: var(--color-white);
+    background-color: #f7f7f7e7;
     box-shadow: var(--box-shadow);
     border-radius: 15px;
     height: 88vh;
@@ -718,15 +719,78 @@ th
     height: 20px;
 }
 /* The details page form */
-form {
+/* Container styling */
+.select-container {
+    margin-bottom: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+/* Label styling */
+.select-container label {
+    display: inline-block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+/* Select dropdown styling */
+.select-container .select {
+    width: 100%;
+    padding: 5px;
+    font-size: 1rem;
+    color: #333;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="gray" d="M7 10l5 5l5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 39px;
+    border-radius: 10px;
+    border: 2px solid #00adb5;
+}
+
+/* Hover and focus effects */
+.select-container .select:hover {
+    border-color: #03f2ff;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.select-container .select:focus {
+    outline: none;
+    border-color: #00f2ff;
+    background-color: #fff;
+}
+
+/* Disabled option styling */
+.select-container .select option[disabled] {
+    color: #aaa;
+}
+
+/* Error message styling */
+.select-container .error-message {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #e63946;
+}
+
+.form {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     padding-left: 2rem;
     padding-top: 2rem;
-    gap: 10px;
+    gap: 20px;
+    margin-top: 10px;
     max-width: 95%;
     margin: auto;
-  
+    /* border: 2px solid var(--color-primary); */
     padding-bottom: 2rem;
     padding-right: 2rem;
 }
@@ -760,42 +824,17 @@ label {
     color: #219B9D;
     text-align: left; 
 }
-input[type="text"],
-input[type="file"],
-input[type="password"],
-input[type="number"],
-input[type="date"] {
-    width: 60%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+.input {
+    color: black;
+    border: 2px solid #00adb5;
+    border-radius: 10px;
+    padding: 10px 25px;
+    background: transparent;
+    width: 100%;
 }
-input[type="text area"]
-{
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-@media (max-width: 768px) {
-    .form-group {
-        flex-direction: column;
-        align-items: flex-start;
-    }
 
-    label {
-        width: 100%;
-        text-align: left;
-    }
-
-    input[type="text"],
-    input[type="file"],
-    input[type="password"],
-    input[type="number"],
-    input[type="date"] {
-        width: 100%;
-    }
+.input:active {
+    box-shadow: 2px 2px 15px #00f2ff inset;
 }
 .button-container {
     text-align: center;
@@ -807,6 +846,7 @@ input[type="text area"]
     cursor: pointer;
     margin: 0 10px;
 }
+
 /* Initially hide the save button */
 #saveButton {
     display: none;
@@ -1162,3 +1202,75 @@ th
 }   
 
 /* END OF DELETE BUTTON */
+
+/* ---------create button -------- */
+.create-btn {
+    width:100%;
+    height: 3em;
+    border-radius: 30em;
+    font-size: 15px;
+    font-family: inherit;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 6px 6px 12px #c5c5c5,
+        -6px -6px 12px #ffffff;
+}
+
+.create-btn::before {
+    content: '';
+    width: 0;
+    height: 3em;
+    border-radius: 30em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to right, #0d89af 0%, #00f2ff 100%);
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+}
+.create-btn:hover{color: white;transition: .8s ease;}
+.create-btn:hover::before {
+    width: 100%;
+    color: white;
+}
+/* ---------edit-save button -------- */
+.edit-save-btn {
+    width: 100%;
+    height: 3em;
+    border-radius: 30em;
+    font-size: 15px;
+    font-family: inherit;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 6px 6px 12px #c5c5c5,
+        -6px -6px 12px #ffffff;
+}
+
+.edit-save-btn::before {
+    content: '';
+    width: 0;
+    height: 3em;
+    border-radius: 30em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to right, #0d89af 0%, #00f2ff 100%);
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+}
+
+.edit-save-btn:hover {
+    color: white;
+    transition: .8s ease;
+}
+
+.edit-save-btn:hover::before {
+    width: 100%;
+    color: white;
+}

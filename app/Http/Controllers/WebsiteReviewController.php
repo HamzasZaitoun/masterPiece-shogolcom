@@ -2,65 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReviewRequest;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class WebsiteReviewController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('admin.websiteReviewsTable.index'); 
-
+        $reviews = Review::with('user')->get();
+        return view('admin.websiteReviewsTable.index', compact('reviews'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('admin.websiteReviewsTable.show'); 
-
+        return view('admin.websiteReviewsTable.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(ReviewRequest $request)
     {
-        //
+        Review::create($request->validated());
+        return redirect()->route('admin.websiteReviews.index')->with('success', 'Review created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Review $review)
     {
-        //
+        return view('admin.websiteReviewsTable.show', compact('review'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Review $review)
     {
-        //
+        return view('admin.websiteReviewsTable.update', compact('review'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(ReviewRequest $request, Review $review)
     {
-        //
+        $review->update($request->validated());
+        return redirect()->route('admin.websiteReviews.index')->with('success', 'Review updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Review $review)
     {
-        //
+        $review->delete();
+        return redirect()->route('admin.websiteReviews.index')->with('success', 'Review deleted successfully.');
     }
 }

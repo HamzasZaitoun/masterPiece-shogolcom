@@ -16,7 +16,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'gender',
-        'mobile_number',  
+        'mobile_number',
         'profile_picture',
         'balance',
         'bio',
@@ -37,4 +37,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function apllication()
+    {
+        return $this->hasMany(Application::class, 'application_id');
+    }
 }
