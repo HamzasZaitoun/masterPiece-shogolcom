@@ -9,7 +9,7 @@
             <img id="profile-image" src="images/people-working-as-team-company.jpg" alt="profile image">
             <div class="profile-info">
                 <h3 class="name">{{$user->first_name . ' ' . $user->last_name}}</h3>
-                <p class="headline">Full Stack Developer</p>
+                
                 <p class="city">{{$user->user_governorate .', ' . $user->user_city}}</p>
             </div>
         </div>
@@ -60,13 +60,14 @@
     <hr>
     <div class="bio">
         <div class="bio-header">
-            <div class="bio-title"><h4 class="name">Bio :</h4></div>            
+            <div class="bio-title"><h4 class="name">About me :</h4></div>            
         </div>
         <div class="bio-body">
             <P>
                 {{$user->bio}}
             </P>
-            <div class="bio-btn"><button>Edit profile</button></div>
+            <div class="bio-btn"> <a class="nav-link custom-btn btn" href="{{ route('editProfile') }}">edit profile</a> </div>
+           
         </div>
     </div>
     <hr>
