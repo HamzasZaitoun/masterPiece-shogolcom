@@ -14,7 +14,7 @@
                 <div class="job-thumb job-thumb-box">
                     <div class="job-image-box-wrap">
                         <a href="job-details.php">
-                            <img src="{{asset('assets/images/jobs/it-professional-works-startup-project.jpg')}}" class="job-image img-fluid" alt="">
+                            <img src="{{asset('assets/user/images/jobs/it-professional-works-startup-project.jpg')}}" class="job-image img-fluid" alt="">
                         </a>
 
                         <div class="job-image-box-wrap-info d-flex align-items-center">
@@ -35,7 +35,7 @@
 
                         <div class="d-flex align-items-center">
                             <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mt-2 mb-4">
-                                <img src="{{asset('assets/images/logos/salesforce.png')}}" class="job-image me-3 img-fluid" alt="">
+                                <img src="{{asset('assets/user/images/logos/salesforce.png')}}" class="job-image me-3 img-fluid" alt="">
 
                                 <p class="mb-0">Salesforce</p>
                             </div>
@@ -75,7 +75,7 @@
                 <div class="job-thumb job-thumb-box">
                     <div class="job-image-box-wrap">
                         <a href="job-details.php">
-                            <img src="{{asset('assets/images/jobs/marketing-assistant.jpg')}}" class="job-image img-fluid" alt="marketing assistant">
+                            <img src="{{asset('assets/user/images/jobs/marketing-assistant.jpg')}}" class="job-image img-fluid" alt="marketing assistant">
                         </a>
 
                         <div class="job-image-box-wrap-info d-flex align-items-center">
@@ -96,7 +96,7 @@
 
                         <div class="d-flex align-items-center">
                             <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mt-2 mb-4">
-                                <img src="{{asset('assets/images/logos/spotify.png')}}" class="job-image me-3 img-fluid" alt="">
+                                <img src="{{asset('assets/user/images/logos/spotify.png')}}" class="job-image me-3 img-fluid" alt="">
 
                                 <p class="mb-0">Spotify</p>
                             </div>
@@ -136,7 +136,7 @@
                 <div class="job-thumb job-thumb-box">
                     <div class="job-image-box-wrap">
                         <a href="job-details.php">
-                            <img src="{{asset('assets/images/jobs/coding-man.jpg')}}" class="job-image img-fluid" alt="">
+                            <img src="{{asset('assets/user/images/jobs/coding-man.jpg')}}" class="job-image img-fluid" alt="">
                         </a>
 
                         <div class="job-image-box-wrap-info d-flex align-items-center">
@@ -157,7 +157,7 @@
                             
                         <div class="d-flex align-items-center">
                             <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mt-2 mb-4">
-                                <img src="{{asset('assets/images/logos/twitter.png')}}" class="job-image me-3 img-fluid" alt="">
+                                <img src="{{asset('assets/user/images/logos/twitter.png')}}" class="job-image me-3 img-fluid" alt="">
 
                                 <p class="mb-0">Twiter</p>
                             </div>
@@ -197,7 +197,7 @@
                 <div class="job-thumb job-thumb-box">
                     <div class="job-image-box-wrap">
                         <a href="job-details.php">
-                            <img src="{{asset('assets/images/jobs/pretty-blogger-posing-cozy-apartment.jpg')}}" class="job-image img-fluid" alt="">
+                            <img src="{{asset('assets/user/images/jobs/pretty-blogger-posing-cozy-apartment.jpg')}}" class="job-image img-fluid" alt="">
                         </a>
 
                         <div class="job-image-box-wrap-info d-flex align-items-center">
@@ -218,7 +218,7 @@
 
                         <div class="d-flex align-items-center">
                             <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mt-2 mb-4">
-                                <img src="{{asset('assets/images/logos/yelp.png')}}" class="job-image me-3 img-fluid" alt="">
+                                <img src="{{asset('assets/user/images/logos/yelp.png')}}" class="job-image me-3 img-fluid" alt="">
 
                                 <p class="mb-0">Yelp</p>
                             </div>
@@ -258,7 +258,7 @@
                 <div class="job-thumb job-thumb-box">
                     <div class="job-image-box-wrap">
                         <a href="job-details.php">
-                            <img src="{{asset('assets/images/jobs/paper-analysis.jpg')}}" class="job-image img-fluid" alt="">
+                            <img src="{{asset('assets/user/images/jobs/paper-analysis.jpg')}}" class="job-image img-fluid" alt="">
                         </a>
 
                         <div class="job-image-box-wrap-info d-flex align-items-center">
@@ -279,7 +279,7 @@
                             
                         <div class="d-flex align-items-center">
                             <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mt-2 mb-4">
-                                <img src="{{asset('assets/images/logos/paypal.png')}}" class="job-image me-3 img-fluid" alt="">
+                                <img src="{{asset('assets/user/images/logos/paypal.png')}}" class="job-image me-3 img-fluid" alt="">
 
                                 <p class="mb-0">Paypal</p>
                             </div>
@@ -319,7 +319,7 @@
                 <div class="job-thumb job-thumb-box">
                     <div class="job-image-box-wrap">
                         <a href="job-details.php">
-                            <img src="{{asset('assets/images/jobs/logo-designer-working-computer-desktop.jpg')}}" class="job-image img-fluid" alt="">
+                            <img src="{{asset('assets/user/images/jobs/logo-designer-working-computer-desktop.jpg')}}" class="job-image img-fluid" alt="">
                         </a>
 
                         <div class="job-image-box-wrap-info d-flex align-items-center">
@@ -340,7 +340,7 @@
                             
                         <div class="d-flex align-items-center">
                             <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mt-2 mb-4">
-                                <img src="{{asset('assets/images/logos/envato.png')}}" class="job-image me-3 img-fluid" alt="">
+                                <img src="{{asset('assets/user/images/logos/envato.png')}}" class="job-image me-3 img-fluid" alt="">
 
                                 <p class="mb-0">Envato</p>
                             </div>

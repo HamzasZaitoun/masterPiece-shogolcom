@@ -42,7 +42,7 @@
                 
                 <div class="job-thumb d-flex">
                     <div class="job-image-wrap bg-white shadow-lg">
-                        <img src="{{asset('assets/images/logos/google.png')}}" class="job-image img-fluid" alt="">
+                        <img src="{{asset('assets/user/images/logos/google.png')}}" class="job-image img-fluid" alt="">
                     </div>
 
                     <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
@@ -87,7 +87,7 @@
 
                 <div class="job-thumb d-flex">
                     <div class="job-image-wrap bg-white shadow-lg">
-                        <img src="{{asset('assets/images/logos/apple.png')}}" class="job-image img-fluid" alt="">
+                        <img src="{{asset('assets/user/images/logos/apple.png')}}" class="job-image img-fluid" alt="">
                     </div>
 
                     <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
@@ -132,7 +132,7 @@
 
                 <div class="job-thumb d-flex">
                     <div class="job-image-wrap bg-white shadow-lg">
-                        <img src="{{asset('assets/images/logos/meta.png')}}" class="job-image img-fluid" alt="">
+                        <img src="{{asset('assets/user/images/logos/meta.png')}}" class="job-image img-fluid" alt="">
                     </div>
 
                     <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
@@ -177,7 +177,7 @@
 
                 <div class="job-thumb d-flex">
                     <div class="job-image-wrap bg-white shadow-lg">
-                        <img src="{{asset('assets/images/logos/slack.png')}}" class="job-image img-fluid" alt="">
+                        <img src="{{asset('assets/user/images/logos/slack.png')}}" class="job-image img-fluid" alt="">
                     </div>
 
                     <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
@@ -222,7 +222,7 @@
 
                 <div class="job-thumb d-flex">
                     <div class="job-image-wrap bg-white shadow-lg">
-                        <img src="{{asset('assets/images/logos/creative-market.png')}}" class="job-image img-fluid" alt="">
+                        <img src="{{asset('assets/user/images/logos/creative-market.png')}}" class="job-image img-fluid" alt="">
                     </div>
 
                     <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">

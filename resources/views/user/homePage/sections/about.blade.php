@@ -4,7 +4,7 @@
 
             <div class="col-lg-3 col-12">
                 <div class="about-image-wrap custom-border-radius-start">
-                    <img src="{{asset('assets/images/professional-asian-businesswoman-gray-blazer.jpg')}}" class="about-image custom-border-radius-start img-fluid" alt="">
+                    <img src="{{asset('assets/user/images/professional-asian-businesswoman-gray-blazer.jpg')}}" class="about-image custom-border-radius-start img-fluid" alt="">
 
                     <div class="about-info">
                         <h4 class="text-white mb-0 me-2">Julia Ward</h4>
@@ -30,7 +30,7 @@
 
             <div class="col-lg-3 col-12">
                 <div class="instagram-block">
-                    <img src="{{asset('assets/images/horizontal-shot-happy-mixed-race-females.jpg')}}" class="about-image custom-border-radius-end img-fluid" alt="">
+                    <img src="{{asset('assets/user/images/horizontal-shot-happy-mixed-race-females.jpg')}}" class="about-image custom-border-radius-end img-fluid" alt="">
 
                     <div class="instagram-block-text">
                         <a href="https://instagram.com/" class="custom-btn btn">

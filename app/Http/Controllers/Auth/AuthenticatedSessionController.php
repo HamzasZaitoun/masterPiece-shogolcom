@@ -17,6 +17,8 @@ class AuthenticatedSessionController extends Controller
   public function create(): View{
       return view('auth.login');}
 
+
+
   public function store(Request $request){$credentials = $request->only('email', 'password');
 
         // Validate the incoming request data
@@ -35,7 +37,11 @@ class AuthenticatedSessionController extends Controller
             // Successful login
             $request->session()->regenerate();
 
-            return redirect()->route('admin.index');
+            if (Auth::user()->role ==='admin') {
+                return redirect()->route('admin.dashboard'); 
+            }
+
+            return redirect()->route('home'); 
         }
 
         // If the credentials are incorrect, or the user is not found

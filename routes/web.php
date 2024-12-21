@@ -12,6 +12,8 @@ use App\Http\Controllers\WebsiteReviewController;
 use App\Http\Controllers\GovernatesController;
 use Faker\Provider\ar_EG\Payment;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+//login routes
+Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+
+//////////////////
 Route::get('/governates', [GovernatesController::class, 'getGovernates']);
 // Route::get('/dashboard', function () {
 //     return view('dashboard')->name('dashboard');
@@ -31,9 +41,17 @@ Route::get('/governates', [GovernatesController::class, 'getGovernates']);
 Route::get('/', function () {
     return view('user.homePage.index');
 });
+Route::get('/home', function () {
+    return view('user.homePage.index'); // Or return the appropriate view
+})->name('home');
+// Route::get('/profile', function () {
+//     return view('user.profile.profile'); // Or return the appropriate view
+// })->name('profile');
+
 // Route::get('/', function () {
 //     return view('admin.index');
 // })->name('admin.dashboard');
+
 
 Route::controller(UserController::class)->prefix('admin/users')->name('admin.users.')->group(function () {
     Route::get('/', 'index')->name('index');
@@ -130,10 +148,15 @@ Route::controller(ContactUsController::class)->prefix('admin/contactUs')->name('
     Route::delete('/{id}', 'destroy')->name('destroy');
 });
 
+
+Route::get('/profile', function () {
+    return view('dashboard'); // Or return the appropriate view
+})->name('profile');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/index', function () {
-        return view('admin.index');
-    })->name('admin.index');
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
 });
 Route::get('/admin/dashboard', function () {
     return view('admin/index');

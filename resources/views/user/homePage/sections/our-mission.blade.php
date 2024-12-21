@@ -32,7 +32,7 @@
 
             <div class="col-lg-6 col-12">
                 <div class="video-thumb">
-                    <img src="{{asset('assets/images/people-working-as-team-company.jpg')}}" class="about-image custom-border-radius-end img-fluid" alt="">
+                    <img src="{{asset('assets/user/images/people-working-as-team-company.jpg')}}" class="about-image custom-border-radius-end img-fluid" alt="">
 
                     <div class="video-info">
                         <a href="https://www.youtube.com/tooplate" class="youtube-icon bi-youtube"></a>
