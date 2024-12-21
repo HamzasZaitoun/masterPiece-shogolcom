@@ -29,25 +29,25 @@ togglePasswordVisibility('confirmPassword', 'confirmPasswordToggle');
 
 
 // Register form submission with password match validation and redirect
-document.getElementById("registerForm").addEventListener("submit", (event) => {
-   event.preventDefault();
-   const password = document.getElementById("registerPassword").value;
-   const confirmPassword = document.getElementById("confirmPassword").value;
-   if (password === confirmPassword) {
-      Swal.fire({
-         title: "Account created successfully.",
-         text: "",
-         icon: "success",
-             });
-      window.location.href = "login.php"; 
-   } else {
-      Swal.fire({
-         title: "Passwords do not match.",
-         text: "Please try again.",
-         icon: "error",
-             });
-   }
-});
+// document.getElementById("registerForm").addEventListener("submit", (event) => {
+//    event.preventDefault();
+//    const password = document.getElementById("registerPassword").value;
+//    const confirmPassword = document.getElementById("confirmPassword").value;
+//    if (password === confirmPassword) {
+//       Swal.fire({
+//          title: "Account created successfully.",
+//          text: "",
+//          icon: "success",
+//              });
+//       window.location.href = "login.php"; 
+//    } else {
+//       Swal.fire({
+//          title: "Passwords do not match.",
+//          text: "Please try again.",
+//          icon: "error",
+//              });
+//    }
+// });
 
 // Toggle between login and register forms
 const loginAccessRegister = document.getElementById('loginAccessRegister');

@@ -8,9 +8,9 @@
         <div class="profile-left">
             <img id="profile-image" src="images/people-working-as-team-company.jpg" alt="profile image">
             <div class="profile-info">
-                <h3 class="name">Sadad al-bayyari</h3>
+                <h3 class="name">{{$user->first_name . ' ' . $user->last_name}}</h3>
                 <p class="headline">Full Stack Developer</p>
-                <p class="city">San Francisco, CA</p>
+                <p class="city">{{$user->user_governorate .', ' . $user->user_city}}</p>
             </div>
         </div>
         <div class="profile-right ">
@@ -64,14 +64,13 @@
         </div>
         <div class="bio-body">
             <P>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore neque earum quaerat ad id ea mollitia autem atque? Ullam reprehenderit eum quam alias, optio odit nulla facere eligendi labore modi?
-                Quisquam blanditiis assumenda dolore magnam consectetur corporis porro provident pariatur consequuntur iure quos delectus amet quaerat dolorem odit, vel repudiandae aliquid nostrum necessitatibus soluta minus laudantium? Asperiores optio similique cupiditate.
+                {{$user->bio}}
             </P>
             <div class="bio-btn"><button>Edit profile</button></div>
         </div>
     </div>
     <hr>
-    <!-- Navigation Bar for Tabs -->
+    {{-- <!-- Navigation Bar for Tabs -->
     <div class="content-nav">
         <button class="tab-link active" data-tab="posts">Your Posts</button>
         <button class="tab-link" data-tab="completed">Completed jobs</button>
@@ -615,7 +614,7 @@
                                     </div>
                                 </div>
                             </div>
-    </div>
+    </div> --}}
 
 
 </main>

@@ -1,19 +1,19 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Governate;
+use App\Models\Governorate;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class GovernateSeeder extends Seeder
+class GovernorateSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run()
     {
-        $governates = [
+        $governorates = [
             'Amman',
             'Irbid',
             'Zarqaa',
@@ -27,8 +27,8 @@ class GovernateSeeder extends Seeder
             'Mafraq',
         ];
 
-        foreach ($governates as $governate) {
-            Governate::create(['governate_name' => $governate]);
+        foreach ($governorates as $governorate) {
+            Governorate::create(['governorate_name' => $governorate]);
         }
     }
 }

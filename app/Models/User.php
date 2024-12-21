@@ -12,7 +12,7 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable, SoftDeletes;
 
     protected $fillable = [
-        'name',
+        'first_name',
         'last_name',
         'email',
         'gender',
@@ -23,7 +23,7 @@ class User extends Authenticatable
         'role',
         'account_status',
         'password',
-        'user_governate',   // New field
+        'user_governorate',   // New field
         'user_city',         // New field
         'user_detailed_location', // New field
     ];

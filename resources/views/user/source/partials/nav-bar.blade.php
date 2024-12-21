@@ -40,7 +40,7 @@
                     <li class="nav-item ms-lg-auto">
                         @auth
                        
-                            <a class="nav-link" href="">Profile</a>
+                            <a class="nav-link" href="{{route('profile')}}">Profile</a>
                         @endauth
                     </li>
                     

@@ -87,7 +87,7 @@
                      <input type="email" name="email" id="email" required placeholder=" " class="login__input">
                      <label for="email" class="login__label">Email
                      </label>
-                     <i class="ri-phone-line login__icon"></i>
+                     <i class="ri-mail-line login__icon"></i>
                   </div>
                   <div class="login__box">
                      <input type="password"name="password" id="loginPasswordInput" required placeholder=" " class="login__input">
@@ -107,44 +107,93 @@
 
       <!-- CREATE ACCOUNT -->
       <div class="login__register">
+         <div class="container">
          <h1 class="login__title">Create new account.</h1>
-         <div class="login__area">
-            <form id="registerForm" class="login__form">
+         @if ($errors->all())
+         <div>
+             <ul>
+                 @foreach ($errors->all() as $error)
+                     <li class="text-danger">
+                         {{ $error }}
+                     </li>
+                 @endforeach
+             </ul>
+         </div>
+     @endif
+         <div class="login__area"> 
+            <form method="POST" id="registerForm" class="login__form" action="{{ route('register') }}">
+               @csrf
                <div class="login__content grid">
-                  <div class="login__group grid">
-                     <div class="login__box">
-                        <input type="text" id="names" required placeholder=" " class="login__input">
-                        <label for="names" class="login__label">Name</label>
-                        <i class="ri-id-card-fill login__icon"></i>
-                     </div>
-                     <div class="login__box">
-                        <input type="text" id="surnames" required placeholder=" " class="login__input">
-                        <label for="surnames" class="login__label">Surname</label>
-                        <i class="ri-id-card-fill login__icon"></i>
-                     </div>
-                  </div>
-                  <div class="login__box">
-                     <input type="text" id="registerMobile" required placeholder=" " class="login__input">
-                     <label for="registerMobile" class="login__label">Mobile number</label>
-                     <i class="ri-phone-line login__icon"></i>
-                  </div>
-                  <div class="login__box">
-                     <input type="password" id="registerPassword" required placeholder=" " class="login__input">
-                     <label for="registerPassword" class="login__label">Password</label>
-                     <i class="ri-eye-off-fill login__icon" id="registerPasswordToggle"></i>
-                  </div>
-                  <div class="login__box">
-                     <input type="password" id="confirmPassword" required placeholder=" " class="login__input">
-                     <label for="confirmPassword" class="login__label">Confirm Password</label>
-                     <i class="ri-eye-off-fill login__icon" id="confirmPasswordToggle"></i>
-                  </div>
+                   <div class="login__group grid">
+                       <div class="login__box">
+                           <input type="text" id="first_name" name="first_name" required placeholder=" " class="login__input">
+                           <label for="first_name" class="login__label">First Name</label>
+                           <i class="ri-id-card-fill login__icon"></i>
+                       </div>
+                       <div class="login__box">
+                           <input type="text" id="last_name" name="last_name" required placeholder=" " class="login__input">
+                           <label for="last_name" class="login__label">Surname</label>
+                           <i class="ri-id-card-fill login__icon"></i>
+                       </div>
+                   </div>
+                   <div class="login__group grid">
+                       <div class="login__box">
+                           <select id="gender" name="gender" required class="login__input">
+                               <option value="" disabled selected>Select Gender</option>
+                               <option value="male">Male</option>
+                               <option value="female">Female</option>
+                           </select>
+                           <label for="gender" class="login__label">Gender</label>
+                           <i class="ri-men-line login__icon"></i>
+                       </div>
+           
+                       <div class="login__box">
+                           <input type="date" id="birth_date" name="birth_date" required placeholder=" " class="login__input">
+                           <label for="birth_date" class="login__label">Birth Date</label>
+                       </div>
+                   </div>
+           
+                   <div class="login__box">
+                       <input type="number" id="mobile_number" name="mobile_number" required placeholder=" " class="login__input">
+                       <label for="mobile_number" class="login__label">Mobile number</label>
+                       <i class="ri-phone-line login__icon"></i>
+                   </div>
+                   <div class="login__box">
+                       <input type="email" id="email2" name="email" required placeholder=" " class="login__input">
+                       <label for="email" class="login__label">Email</label>
+                       <i class="ri-mail-line login__icon"></i>
+                   </div>
+                   <div class="login__group grid">
+                       <div class="login__box">
+                           <input type="text" id="governorate" name="user_governorate" required placeholder=" " class="login__input">
+                           <label for="governorate" class="login__label">Governorate</label>
+                           <i class="ri-government-line login__icon"></i>
+                       </div>
+                       <div class="login__box">
+                           <input type="text" id="city" name="user_city" required placeholder=" " class="login__input">
+                           <label for="city" class="login__label">City</label>
+                           <i class="ri-building-line login__icon"></i>
+                       </div>
+                   </div>
+                   <div class="login__box">
+                       <input type="password" id="password" name="password" required placeholder=" " class="login__input">
+                       <label for="password" class="login__label">Password</label>
+                       <i class="ri-eye-off-fill login__icon" id="registerPasswordToggle"></i>
+                   </div>
+                   <div class="login__box">
+                       <input type="password" name="password_confirmation" id="password_confirmation" required placeholder=" " class="login__input">
+                       <label for="password_confirmation" class="login__label">Confirm Password</label>
+                       <i class="ri-eye-off-fill login__icon" id="confirmPasswordToggle"></i>
+                   </div>
                </div>
                <button type="submit" class="login__button">Create account</button>
-            </form>
+           </form>
+           
             <p class="login__switch">
                Already have an account? 
                <button id="loginButtonAccess" type="submit">Log In</button>
             </p>
+         </div>
          </div>
       </div>
    </div>

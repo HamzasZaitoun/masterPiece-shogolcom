@@ -19,7 +19,7 @@
   --big-font-size: 1.5rem;
   --normal-font-size: .938rem;
   --small-font-size: .813rem;
-  --tiny-font-size: .688rem;
+  --tiny-font-size: .258rem;
 
   /*========== Font weight ==========*/
   --font-regular: 400;
@@ -79,7 +79,7 @@ img {
 /*=============== REUSABLE CSS CLASSES ===============*/
 .container {
   max-width: 1120px;
-  margin-inline: 1.5rem;
+  margin-inline: auto;
 }
 
 .grid {
@@ -91,6 +91,7 @@ img {
 .login {
   position: relative;
   height: 100vh;
+  display: flex;
   align-items: center;
   overflow: hidden;
 }
@@ -117,7 +118,7 @@ img {
 .login__input {
   background: none;
   width: 100%;
-  padding: 1.5rem 2.5rem 1.5rem 1.25rem;
+  padding: .5rem 1rem .5rem .75rem;
   font-weight: var(--font-semi-bold);
   border: 3px solid transparent;
   border-radius: 1rem;
@@ -258,7 +259,7 @@ img {
 }
 
 .login__input:focus {
-  padding-block: 2rem 1rem;
+  padding-block: 1rem .5rem;
 }
 
 /* Input focus sticky top label */
@@ -268,7 +269,7 @@ img {
 }
 
 .login__input:not(:placeholder-shown).login__input:not(:focus) {
-  padding-block: 2rem 1rem;
+  padding-block: .75rem .25rem;
 }
 
 /* Input focus color */
