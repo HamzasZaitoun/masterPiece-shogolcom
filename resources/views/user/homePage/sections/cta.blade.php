@@ -12,9 +12,10 @@
 
             <div class="col-lg-4 col-12 ms-auto">
                 <div class="custom-border-btn-wrap d-flex align-items-center mt-lg-4 mt-2">
+                    @guest
                     <a href="#" class="custom-btn custom-border-btn btn me-4">Create an account</a>
-
-                    <a href="#" class="custom-link">Post a job</a>
+                    @endguest
+                    <a href="{{route('postJob')}}" class="custom-link btn   new-post-btn">Post a job now!</a>
                 </div>
             </div>
 

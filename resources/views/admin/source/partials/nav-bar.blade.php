@@ -4,7 +4,7 @@
                 <div class="dropdown">
                 <div class="profile">
                 <div class="info">
-                    <p>Hey, <b>Reza</b></p>
+                    <p>Hey, <b>{{auth()->user()->first_name}}</b></p>
                     <small class="text-muted">admin</small>
                 </div>
                 <div class="profile-photo">

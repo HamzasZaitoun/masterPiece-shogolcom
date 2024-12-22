@@ -89,10 +89,10 @@
             {{-- <label for="user_governate">Governate</label> --}}
             <select class="select" id="user_governate" name="user_governate" required>
                 <option value="" disabled selected>Select Governate</option>
-                @foreach (\App\Models\Governate::all() as $governate)
-                    <option value="{{ $governate->governate_name }}"
-                        {{ old('user_governate') == $governate->governate_name ? 'selected' : '' }}>
-                        {{ $governate->governate_name }}
+                @foreach (\App\Models\Governorate::all() as $governorate)
+                    <option value="{{ $governorate->governorate_name }}"
+                        {{ old('user_governate') == $governorate->governorate_name ? 'selected' : '' }}>
+                        {{ $governorate->governorate_name }}
                     </option>
                 @endforeach
             </select>
@@ -161,7 +161,7 @@
     </form>
 
     <script>
-        // Add event listener for governate change
+        // Add event listener for governorate change
         document.getElementById('user_governate').addEventListener('change', function() {
             var governateId = this.value;
             console.log(governateId); // Log the selected governateId

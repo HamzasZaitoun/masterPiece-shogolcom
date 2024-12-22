@@ -1947,12 +1947,13 @@ hr {
 }
 
 .new-post-form-group {
-  margin-bottom: 20px;
+  
+  margin: 15px;
 }
 
 .new-post-form-control {
   width: 100%;
-  padding: 10px;
+  padding: 6px;
   font-size: 14px;
   border: 1px solid #219B9D;
   border-radius: 5px;

@@ -148,7 +148,7 @@
                        </div>
            
                        <div class="login__box">
-                           <input type="date" id="birth_date" name="birth_date" required placeholder=" " class="login__input">
+                           <input type="date" id="birth_date" name="birth_date"  placeholder=" " class="login__input">
                            <label for="birth_date" class="login__label">Birth Date</label>
                        </div>
                    </div>
@@ -164,21 +164,41 @@
                        <i class="ri-mail-line login__icon"></i>
                    </div>
                    <div class="login__group grid">
-                       <div class="login__box">
-                           <input type="text" id="governorate" name="user_governorate" required placeholder=" " class="login__input">
-                           <label for="governorate" class="login__label">Governorate</label>
-                           <i class="ri-government-line login__icon"></i>
-                       </div>
-                       <div class="login__box">
-                           <input type="text" id="city" name="user_city" required placeholder=" " class="login__input">
-                           <label for="city" class="login__label">City</label>
-                           <i class="ri-building-line login__icon"></i>
-                       </div>
+                    <div class="login__box">
+                        <select class="login__input" id="user_governorate" name="user_governorate" required>
+                            <option value="" disabled selected>Select Governorate</option>
+                            @foreach (\App\Models\Governorate::all() as $governorate)
+                                <option value="{{ $governorate->governorate_name }}"
+                                    {{ old('user_governorate') == $governorate->governorate_name ? 'selected' : '' }}>
+                                    {{ $governorate->governorate_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <label for="user_governorate" class="login__label">Governorate</label>
+                        <i class="ri-government-line login__icon"></i>
+                        @error('user_governorate')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+                    </div>
+                
+                    <div class="login__box">
+                        <select class="login__input" id="user_city" name="user_city" required>
+                            <option value="" disabled selected>Select City</option>
+                           
+                        </select>
+                        <label for="user_city" class="login__label">City</label>
+                        <i class="ri-building-line login__icon"></i>
+                        @error('user_city')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    
                    </div>
+                   
                    <div class="login__box">
                        <input type="password" id="password" name="password" required placeholder=" " class="login__input">
                        <label for="password" class="login__label">Password</label>
-                       <i class="ri-eye-off-fill login__icon" id="registerPasswordToggle"></i>
+                       <i class="ri-eye-off-fill login__icon" id="registerPasswordToggle" style="cursor: pointer;"></i>
                    </div>
                    <div class="login__box">
                        <input type="password" name="password_confirmation" id="password_confirmation" required placeholder=" " class="login__input">
@@ -199,5 +219,33 @@
    </div>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
    <script src="{{asset('assets/login/js/main.js')}}"></script>
+
+
+   <script>
+    // Add event listener for governorate change
+    document.getElementById('user_governorate').addEventListener('change', function() {
+        var governorateId = this.value;
+        console.log(governorateId); // Log the selected governateId
+
+        if (governorateId) {
+            fetch(`/admin/users/cities/${governorateId}`)
+                .then(response => response.json())
+                .then(cities => {
+                    var citySelect = document.getElementById('user_city');
+                    citySelect.innerHTML =
+                        '<option value="" disabled selected>Select City</option>'; // Reset cities
+                    cities.forEach(city => {
+                        var option = document.createElement('option');
+                        option.value = city;
+                        option.textContent = city;
+                        citySelect.appendChild(option);
+                    });
+                });
+        } else {
+            document.getElementById('user_city').innerHTML =
+                '<option value="" disabled selected>Select City</option>';
+        }
+    });
+</script>
 </body>
 </html>

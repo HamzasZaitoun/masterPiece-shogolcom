@@ -4,7 +4,7 @@
 
             <div class="col-lg-4 col-md-6 col-12 mb-3">
                 <div class="d-flex align-items-center mb-4">
-                    <img src="images/logo.png" class="img-fluid logo-image">
+                    <img src="{{asset('assets/user/images/publicSiteLogo.png')}}" class="img-fluid logo-image">
 
                     <div class="d-flex flex-column">
                         <strong class="logo-text">Gotto</strong>
@@ -42,13 +42,13 @@
                 <h6 class="site-footer-title">Company</h6>
 
                 <ul class="footer-menu">
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">About</a></li>
+                    <li class="footer-menu-item"><a href="{{route('about')}}" class="footer-menu-link">About</a></li>
 
                     <li class="footer-menu-item"><a href="#" class="footer-menu-link">Blog</a></li>
 
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Jobs</a></li>
+                    <li class="footer-menu-item"><a href="{{route('jobs')}}" class="footer-menu-link">Jobs</a></li>
 
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Contact</a></li>
+                    <li class="footer-menu-item"><a href="{{route('contact')}}" class="footer-menu-link">Contact</a></li>
                 </ul>
             </div>
 

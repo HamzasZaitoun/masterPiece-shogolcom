@@ -9,7 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\UserReviewController;
 use App\Http\Controllers\WebsiteReviewController;
-use App\Http\Controllers\GovernatesController;
+use App\Http\Controllers\CityController;
 use Faker\Provider\ar_EG\Payment;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -34,7 +34,7 @@ Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
 
 //////////////////
-Route::get('/governates', [GovernatesController::class, 'getGovernates']);
+Route::get('/cities', [CityController::class, 'getCities']);
 // Route::get('/dashboard', function () {
 //     return view('dashboard')->name('dashboard');
 // });
@@ -44,13 +44,24 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('user.homePage.index'); // Or return the appropriate view
 })->name('home');
-// Route::get('/profile', function () {
-//     return view('user.profile.profile'); // Or return the appropriate view
-// })->name('profile');
+Route::get('/about', function () {
+    return view('user.aboutus.about'); // Or return the appropriate view
+})->name('about');
+Route::get('/contact', function () {
+    return view('user.contact.contact'); // Or return the appropriate view
+})->name('contact');
 
-// Route::get('/', function () {
-//     return view('admin.index');
-// })->name('admin.dashboard');
+
+
+//user jobs routes
+Route::get('/postJob', function () {
+    return view('user.jobs.postJob'); 
+})->name('postJob');
+Route::get('/jobs', function () {
+    return view('user.jobs.jobs'); 
+})->name('jobs');
+
+
 
 
 Route::controller(UserController::class)->prefix('admin/users')->name('admin.users.')->group(function () {

@@ -21,7 +21,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="about.php">About Us</a>
+                        <a class="nav-link" href="{{route('about')}}">About Us</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -35,7 +35,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contact</a>
+                        <a class="nav-link" href="{{route('contact')}}">Contact</a>
                     </li>
                     <li class="nav-item ms-lg-auto">
                         @auth

@@ -377,7 +377,7 @@
             </div>
 
             <div class="col-lg-4 col-12 recent-jobs-bottom d-flex ms-auto my-4">
-                <a href="job-listings.php" class="custom-btn btn ms-lg-auto">Browse Job Listings</a>
+                <a href="{{route('jobs')}}" class="custom-btn btn ms-lg-auto">Browse Job Listings</a>
             </div>
 
         </div>

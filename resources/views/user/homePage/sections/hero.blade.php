@@ -9,8 +9,12 @@
                     <h6 class="text-white">post seasonal jobs or apply for one.</h6>
 
                     <h1 class="hero-title text-white mt-4 mb-4">Find the Perfect Job<br> or Post One Today!</h1>
-
-                    <a href="#" class="custom-btn text-white hero-border-btn custom-border-btn btn">Post Now</a>
+                    @auth
+                    <a href="{{route('postJob')}}" class="custom-btn text-white hero-border-btn custom-border-btn btn">Post Now</a>
+                    @endauth
+                    @guest
+                    <a href="{{route('login')}}" class="custom-btn text-white hero-border-btn custom-border-btn btn">Post Now</a>
+                    @endguest
                 </div>
             </div>
 
@@ -20,23 +24,11 @@
                     <div class="row">
                         <div class="col-lg-12 col-12">
                             <button type="submit" class="form-control">
-                                Find it !
+                                <a href="{{route('jobs')}}" class="text-white" >find it!</a>
                             </button>
                         </div>
 
-                        <div class="col-12">
-                            <div class="d-flex flex-wrap align-items-center mt-4 mt-lg-0">
-                                <span class="text-white mb-lg-0 mb-md-0 me-2">Popular keywords:</span>
-
-                                <div>
-                                    <a href="job-listings.php" class="badge">Web design</a>
-
-                                    <a href="job-listings.php" class="badge">Marketing</a>
-
-                                    <a href="job-listings.php" class="badge">Customer support</a>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </form>
             </div>

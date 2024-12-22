@@ -25,7 +25,7 @@
                 <option value="" disabled selected>Select User</option>
                 @foreach (\App\Models\User::all() as $user)
                     <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                        {{ $user->name }} (ID: {{ $user->id }})
+                        {{ $user->first_name .' '. $user->last_name }} 
                     </option>
                 @endforeach
             </select>
@@ -51,28 +51,28 @@
             @enderror
         </div>
 
-        <!-- Governate Dropdown -->
+        <!-- Governorate Dropdown -->
         <div class="select-container">
-            {{-- <label for="governate">Governate</label> --}}
-            <select class="select" id="governate" name="job_governate" required>
-                <option value="" disabled selected>Select Governate</option>
-                @foreach (\App\Models\Governate::all() as $governate)
-                    <option value="{{ $governate->governate_name }}"
-                        {{ old('job_governate') == $governate->governate_name ? 'selected' : '' }}>
-                        {{ $governate->governate_name }}
+            {{-- <label for="Governorate">Governorate</label> --}}
+            <select class="select" id="job_governorate" name="job_governorate" required>
+                <option value="" disabled selected>Select governorate</option>
+                @foreach (\App\Models\Governorate::all() as $governorate)
+                    <option value="{{ $governorate->governorate_name }}"
+                        {{ old('job_governorate') == $governorate->governorate_name ? 'selected' : '' }}>
+                        {{ $governorate->governorate_name }}
                     </option>
                 @endforeach
             </select>
-            @error('job_governate')
+            @error('job_governorate')
                 <span class="error-message">{{ $message }}</span>
             @enderror
         </div>
         <div class="select-container">
-            {{-- <label for="user_city">City</label> --}}
-            <select class="select" id="user_city" name="user_city" required>
+            {{-- <label for="job_city">City</label> --}}
+            <select class="select" id="job_city" name="job_city" required>
                 <option value="" disabled selected>Select City</option>
             </select>
-            @error('user_city')
+            @error('job_city')
                 <span class="error-message">{{ $message }}</span>
             @enderror
         </div>
@@ -264,16 +264,16 @@
     </form>
 
     <script>
-        // Add event listener for governate change
-        document.getElementById('user_governate').addEventListener('change', function() {
-            var governateId = this.value;
-            console.log(governateId); // Log the selected governateId
+        // Add event listener for Governorate change
+        document.getElementById('job_governorate').addEventListener('change', function() {
+            var GovernorateId = this.value;
+            console.log(GovernorateId); 
 
-            if (governateId) {
-                fetch(`/admin/users/cities/${governateId}`)
+            if (GovernorateId) {
+                fetch(`/admin/users/cities/${GovernorateId}`)
                     .then(response => response.json())
                     .then(cities => {
-                        var citySelect = document.getElementById('user_city');
+                        var citySelect = document.getElementById('job_city');
                         citySelect.innerHTML =
                             '<option value="" disabled selected>Select City</option>'; // Reset cities
                         cities.forEach(city => {
@@ -284,7 +284,7 @@
                         });
                     });
             } else {
-                document.getElementById('user_city').innerHTML =
+                document.getElementById('job_city').innerHTML =
                     '<option value="" disabled selected>Select City</option>';
             }
         });
