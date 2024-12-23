@@ -5,7 +5,8 @@
     <div class="recent-orders">
         <div class="header-table">
             <h2 class="header-h2">Reviews</h2>
-            <button class="add-btn" onclick="location.href = '{{ Route('admin.websiteReviews.create')}}';">Add Review</button>
+            <button class="add-btn" onclick="location.href = '{{ Route('admin.websiteReviews.create') }}';">Add
+                Review</button>
         </div>
         <table>
             <thead>
@@ -22,14 +23,14 @@
                         <td>{{ $review->id }}</td>
                         <td>{{ $review->user->name }}</td>
                         <td>{{ $review->rating }}</td>
-                        <td>
-                            <a href="{{ route('admin.websiteReviews.show', $review) }}">View</a>
-                            <a href="{{ route('admin.websiteReviews.edit', $review) }}">Edit</a>
+                        <td class="action">
+                            <a href="{{ route('admin.websiteReviews.show', $review) }}"><i class="bi bi-eye"></i></a>
+                            {{-- <a href="{{ route('admin.websiteReviews.edit', $review) }}">Edit</a> --}}
                             <form action="{{ route('admin.websiteReviews.destroy', $review) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit">Delete</button>
+                                <button type="submit"class="delete-btn"><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
                     </tr>

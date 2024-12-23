@@ -25,7 +25,7 @@
                         <td>{{ ucfirst($application->application_status) }}</td>
                         <td class="action">
                             <a href="{{ route('admin.applications.show', $application->application_id) }}"><i class="bi bi-eye"></i></a>
-                            <a href="{{ route('admin.applications.edit', $application->application_id) }}"><i class="bi bi-pencil"></i></a>
+                            {{-- <a href="{{ route('admin.applications.edit', $application->application_id) }}"><i class="bi bi-pencil"></i></a> --}}
                             <form action="{{ route('admin.applications.destroy', $application->application_id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')

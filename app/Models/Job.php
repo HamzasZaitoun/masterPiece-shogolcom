@@ -15,7 +15,7 @@ class Job extends Model
         'user_id',
         'job_title',
         'job_description',
-        'job_governate',
+        'job_governorate',
         'job_city',
         'job_detailed_location',
         'job_type',

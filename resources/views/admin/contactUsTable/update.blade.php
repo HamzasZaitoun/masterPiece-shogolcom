@@ -17,37 +17,46 @@
 
     <form
         action="{{ isset($contact) ? route('admin.contactUs.update', $contact->contact_id) : route('admin.contactUs.store') }}"
-        method="POST">
+        method="POST" class="form">
         @csrf
         @method('PUT')
 
-
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" value="{{ old('email', $contact->email) }}" class="form-control"
-                required>
+        <div class="input-field">
+            <input class="input" placeholder="Enter your mail.."type="email" id="email" name="email"
+                value="{{ old('email', $contact->email) }}" required>
+            @error('email')
+                <span class="error-message">{{ $message }}</span>
+            @enderror
         </div>
-
-        <div class="form-group">
-            <label for="category">Category</label>
-            <select name="category" id="category" class="form-control" required>
-                <option value="Technical Issue" {{ $contact->category == 'Technical Issue' ? 'selected' : '' }}>Technical
-                    Issue</option>
-                <option value="Feedback" {{ $contact->category == 'Feedback' ? 'selected' : '' }}>Feedback</option>
-                <option value="General Inquiry" {{ $contact->category == 'General Inquiry' ? 'selected' : '' }}>General
-                    Inquiry</option>
-                <option value="Other" {{ $contact->category == 'Other' ? 'selected' : '' }}>Other</option>
+        <div class="select-container">
+            <select class="select" id="category" name="category" value="{{ old('category') }}" required>
+                <option value="" disabled selected>Select Category</option>
+                <option value="Technical Issue"
+                    {{ isset($contact) && $contact->category == 'Technical Issue' ? 'selected' : '' }}>Technical Issue
+                </option>
+                <option value="Feedback" {{ isset($contact) && $contact->category == 'Feedback' ? 'selected' : '' }}>
+                    Feedback</option>
+                <option value="General Inquiry"
+                    {{ isset($contact) && $contact->category == 'General Inquiry' ? 'selected' : '' }}>General Inquiry
+                </option>
+                <option value="Other" {{ isset($contact) && $contact->category == 'Other' ? 'selected' : '' }}>Other
+                </option>
             </select>
+            @error('gender')
+                <span class="error-message">{{ $message }}</span>
+            @enderror
         </div>
 
-        <div class="form-group">
-            <label for="message">Message</label>
-            <textarea name="message" id="message" class="form-control" required>{{ old('message', $contact->message) }}</textarea>
+        <div class="input-field">
+            <input class="input" placeholder="Enter your message ..." type="message" id="message" name="message"
+                value="{{ $contact->message ?? old('message') }}">
+            @error('message')
+                <span class="error-message">{{ $message }}</span>
+            @enderror
         </div>
-
-        <div class="form-group">
-            <label for="status">Status</label>
-            <select name="status" id="status" class="form-control" required>
+        <div class="select-container">
+            {{-- <label for="status">Status</label> --}}
+            <select name="status" id="status" class="select" required>
                 <option value="pending" {{ $contact->status == 'pending' ? 'selected' : '' }}>Pending</option>
                 <option value="reviewed" {{ $contact->status == 'reviewed' ? 'selected' : '' }}>Reviewed</option>
                 <option value="resolved" {{ $contact->status == 'resolved' ? 'selected' : '' }}>Resolved</option>
@@ -55,11 +64,16 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="response">Response</label>
-            <textarea name="response" id="response" class="form-control">{{ old('response', $contact->response) }}</textarea>
+        <div class="input-field">
+            {{-- <label for="response">Response</label> --}}
+            <input name="response" id="response" placeholder="response ..."class="input"
+                value="{{ old('response', $contact->response) }}">
+        </div>
+        <div></div>
+        <div></div>
+        <div class="button-container">
+            <button type="submit" class="create-btn">Update</button>
         </div>
 
-        <button type="submit" class="btn btn-success">Update</button>
     </form>
 @endsection

@@ -24,6 +24,7 @@
                         <td>{{ $user['last_name'] }}</td>
                         <td>{{ $user['account_status'] }}</td>
                         <td class="action">
+                            <div class="flex">
                             <a href="{{ route('admin.users.userDetails', ['id' => $user->id]) }}"><i
                                     class="bi bi-eye"></i></a>
                             <form action="{{ route('admin.users.destroy', ['id' => $user->id]) }}" method="POST"
@@ -32,7 +33,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="delete-btn"><i class="bi bi-trash"></i></button>
                             </form>
-
+                        </div>
                         </td>
                     </tr>
                 @endforeach

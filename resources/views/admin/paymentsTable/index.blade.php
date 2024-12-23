@@ -28,13 +28,13 @@
                         <td class="action">
                             <a href="{{ route('admin.payments.show', $payment->id) }}" title="View"><i
                                     class="bi bi-eye"></i></a>
-                            <a href="{{ route('admin.payments.edit', $payment->id) }}" title="Edit"><i
-                                    class="bi bi-pencil"></i></a>
+                            {{-- <a href="{{ route('admin.payments.edit', $payment->id) }}" title="Edit"><i
+                                    class="bi bi-pencil"></i></a> --}}
                             <form action="{{ route('admin.payments.destroy', $payment->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" style="border:none;background:none;" title="Delete">
+                                <button class="delete-btn" type="submit" title="Delete">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>

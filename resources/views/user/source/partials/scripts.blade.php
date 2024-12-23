@@ -6,6 +6,7 @@
 <script src="{{asset('assets/user/js/counter.js')}}"></script>
 <script src="{{asset('assets/user/js/custom.js')}}"></script>
 <script src="{{asset('assets/user/js/min.js')}}"></script>
+
 <script>
 
 </script>

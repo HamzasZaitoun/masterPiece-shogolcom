@@ -26,16 +26,16 @@
                         <td>{{ $category['category_description'] }}</td>
 
 
-                        <td class="action">
+                        <td class="action d-inline">
                             <a href="{{ route('admin.categories.showCategory', ['id' => $category->category_id]) }}"><i
                                     class="bi bi-eye"></i>
                             </a>
                             <form id="deleteCategoryForm"   action="{{ route('admin.categories.deleteCategory', ['id' => $category->category_id]) }}" method="POST" class="d-inline">
                                 @csrf
                                 @Method('DELETE')
-                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="tooltip"
-                                    title="Delete User" onclick="confirmDelete(this)">
-                                    <i class="bi bi-trash-fill"></i>
+                                <button type="submit" class="delete-btn" data-bs-toggle="tooltip"
+                                     onclick="confirmDelete(this)">
+                                    <i class="bi bi-trash"></i>
                                 </button>
                             </form>
                         

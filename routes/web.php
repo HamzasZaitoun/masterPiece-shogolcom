@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\PublicSiteController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -26,6 +27,19 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
+//landing page
+Route::get('/', [PublicSiteController::class, 'showLandingPage']);
+Route::get('/home', [PublicSiteController::class, 'showLandingPage'])->name('home');
+
+//jobs pages routes
+Route::get('/postJob', [PublicSiteController::class, 'showPostJobPage'])->name('postJob');
+Route::post('/jobs/create', [PublicSiteController::class, 'createJobPost'])->name('publishJob');
+//////////
+
+Route::get('/jobs', function () {
+    return view('user.jobs.jobs'); 
+})->name('jobs');
+
 
 //login routes
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -38,12 +52,7 @@ Route::get('/cities', [CityController::class, 'getCities']);
 // Route::get('/dashboard', function () {
 //     return view('dashboard')->name('dashboard');
 // });
-Route::get('/', function () {
-    return view('user.homePage.index');
-});
-Route::get('/home', function () {
-    return view('user.homePage.index'); // Or return the appropriate view
-})->name('home');
+
 Route::get('/about', function () {
     return view('user.aboutus.about'); // Or return the appropriate view
 })->name('about');
@@ -53,13 +62,6 @@ Route::get('/contact', function () {
 
 
 
-//user jobs routes
-Route::get('/postJob', function () {
-    return view('user.jobs.postJob'); 
-})->name('postJob');
-Route::get('/jobs', function () {
-    return view('user.jobs.jobs'); 
-})->name('jobs');
 
 
 

@@ -4,12 +4,12 @@
 
             <div class="col-lg-3 col-12">
                 <div class="about-image-wrap custom-border-radius-start">
-                    <img src="{{asset('assets/user/images/professional-asian-businesswoman-gray-blazer.jpg')}}" class="about-image custom-border-radius-start img-fluid" alt="">
+                    <img src="{{asset('assets/user/images/Zaitoun1.jpeg')}}" class="about-image custom-border-radius-start img-fluid" alt="">
 
                     <div class="about-info">
-                        <h4 class="text-white mb-0 me-2">Julia Ward</h4>
+                        <h4 class="text-white mb-0"><small> Hamza Zaitoun</small></h4>
 
-                        <p class="text-white mb-0">Investor</p>
+                        <p class="text-white mb-0 text-center">CEO</p>
                     </div>
                 </div>
             </div>
@@ -29,14 +29,13 @@
             </div>
 
             <div class="col-lg-3 col-12">
-                <div class="instagram-block">
-                    <img src="{{asset('assets/user/images/horizontal-shot-happy-mixed-race-females.jpg')}}" class="about-image custom-border-radius-end img-fluid" alt="">
+                <div class="about-image-wrap custom-border-radius-start">
+                    <img src="http://127.0.0.1:8000/assets/user/images/zamel.jpeg" class="about-image custom-border-radius-start img-fluid" alt="">
 
-                    <div class="instagram-block-text">
-                        <a href="https://instagram.com/" class="custom-btn btn">
-                            <i class="bi-instagram"></i>
-                            @Gotto
-                        </a>
+                    <div class="about-info">
+                        <h4 class="text-white mb-0"><small> Hamza Zamil</small></h4>
+
+                        <p class="text-white mb-0 text-center">COO</p>
                     </div>
                 </div>
             </div>
