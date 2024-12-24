@@ -36,6 +36,10 @@ Route::get('/postJob', [PublicSiteController::class, 'showPostJobPage'])->name('
 Route::post('/jobs/create', [PublicSiteController::class, 'createJobPost'])->name('publishJob');
 Route::get('/jobs/{id}', [PublicSiteController::class, 'showJobDetails'])->name('JobDetails');
 Route::get('/jobs', [PublicSiteController::class, 'showJobs'])->name('jobs');
+Route::get('/filterjobs', [PublicSiteController::class, 'showFilterdJobs'])->name('filterJobs');
+
+
+
 //////////
 
 

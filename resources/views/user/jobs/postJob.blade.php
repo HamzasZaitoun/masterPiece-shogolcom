@@ -32,7 +32,7 @@
 
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <label for="job_category">Job category</label>
-                                    <select name="job_category" id="job_category" class="form-control" required>
+                                    <select name="job_category" id="job_category" class="form-control form-select" required>
                                         <option value="" disabled selected>Select Job category</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->category_id }}"
@@ -53,7 +53,7 @@
 
                                 <div class="col-lg-4 col-md-4 col-12"id="jobType">
                                     <label for="job_type">Job Type</label>
-                                    <select name="job_type" id="job_type" class="form-control" required>
+                                    <select name="job_type" id="job_type" class="form-control form-select" required>
                                         <option value="" disabled selected>Select Job Type</option>
                                         <option value="day" {{ old('job_type') == 'day' ? 'selected' : '' }}>Daily</option>
                                         <option value="month" {{ old('job_type') == 'month' ? 'selected' : '' }}>Monthely</option>
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <label for="job_governorate">Job governorate</label>
-                                    <select name="job_governorate" id="job_governorate" class="form-control" required>
+                                    <select name="job_governorate" id="job_governorate" class="form-control form-select" required>
                                         <option value="" disabled selected>Select Job governorate</option>
                                         @foreach ($governorates as $governorate)
                                         <option value="{{ $governorate->governorate_name }}"
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <label for="job_city">Job City</label>
-                                    <select name="job_city" id="job_city" class="form-control" required>
+                                    <select name="job_city" id="job_city" class="form-control form-select" required>
                                         <option value="" disabled selected>Select job city</option>
                                         
                                     </select>

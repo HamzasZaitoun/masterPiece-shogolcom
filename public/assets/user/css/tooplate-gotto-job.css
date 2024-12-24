@@ -1071,7 +1071,7 @@ nav[aria-label="breadcrumb"] {
   display: block;
   margin: auto;
   padding: 20px;
-  max-height: 200px;
+  max-height: 280px;
   width: 100%;
 }
 .urgent-job-image
