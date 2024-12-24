@@ -9,13 +9,13 @@
             <div class="row">
                 
                 <div class="col-lg-12 col-12 text-center">
-                    <h1 class="text-white">Job Listings</h1>
+                    <h1 class="text-white">Job Details</h1>
 
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
 
-                            <li class="breadcrumb-item active" aria-current="page">Job listings</li>
+                            <li class="breadcrumb-item active" aria-current="page">Job Details</li>
                         </ol>
                     </nav>
                 </div>
@@ -24,82 +24,98 @@
         </div>
     </header>
 
-    <section class="section-padding pb-0 d-flex justify-content-center align-items-center">
+
+    <section class="job-section section-padding pb-0">
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-12 col-12">
-                    <form class="custom-form hero-form" action="#" method="get" role="form">
-                        <h3 class="text-white mb-3">Search your dream job</h3>
-                        
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1"><i class="bi-person custom-icon"></i></span>
+                <div class="col-lg-8 col-12">
+                    <h2 class="job-title mb-0">
+                        {{$job->job_title}}
+                    </h2>
 
-                                    <input type="text" name="job-title" id="job-title" class="form-control" placeholder="Job Title" required>
-                                </div>
+                    <div class="job-thumb job-thumb-detail">
+                        <div class="d-flex flex-wrap align-items-center border-bottom pt-lg-3 pt-2 pb-3 mb-4">
+                            <p class="job-location mb-0">
+                                <i class="custom-icon bi-geo-alt me-1"></i>
+                                {{$job->job_governorate . ', ' . $job->job_city}}
+                            </p>
+
+                            <p class="job-date mb-0">
+                                <i class="custom-icon bi-clock me-1"></i>
+                                {{ $job->created_at->diffForHumans()}}
+                            </p>
+
+                            <p class="job-price mb-0">
+                                <i class="custom-icon bi-cash me-1"></i>
+                                {{ $job->payment_amount}}
+                            </p>
+
+                            <div class="d-flex">
+                                <p class="mb-0">
+                                    <a href="job-listings.php" class="badge badge-level">{{$job->job_type}}</a>
+                                </p>
+
+                                <p class="mb-0">
+                                    <a href="job-listings.php" class="badge">
+                                        {{$job->category->category_name}}
+                                    </a>
+                                </p>
                             </div>
-
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1"><i class="bi-geo-alt custom-icon"></i></span>
-
-                                    <input type="text" name="job-location" id="job-location" class="form-control" placeholder="Location" required>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-4 col-12">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1"><i class="bi-cash custom-icon"></i></span>
-
-                                    <select class="form-select form-control" name="job-salary" id="job-salary" aria-label="Default select example">
-                                        <option selected>Salary Range</option>
-                                        <option value="1">$300k - $500k</option>
-                                        <option value="2">$10000k - $45000k</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-4 col-12">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1"><i class="bi-laptop custom-icon"></i></span>
-
-                                    <select class="form-select form-control" name="job-level" id="job-level" aria-label="Default select example">
-                                        <option selected>Level</option>
-                                        <option value="1">Internship</option>
-                                        <option value="2">Junior</option>
-                                        <option value="2">Senior</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-4 col-12">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1"><i class="bi-laptop custom-icon"></i></span>
-
-                                    <select class="form-select form-control" name="job-remote" id="job-remote" aria-label="Default select example">
-                                        <option selected>Remote</option>
-                                        <option value="1">Full Time</option>
-                                        <option value="2">Contract</option>
-                                        <option value="2">Part Time</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12 col-12">
-                                <button type="submit" class="form-control">
-                                    Search job
-                                </button>
-                            </div>
-
-                            
                         </div>
-                    </form>
+
+                        <h4 class="mt-4 mb-2">Job Description</h4>
+
+                        <p>{{$job->job_description}}</p>
+
+                        <h5 class="mt-4 mb-3">Additional information</h5>
+
+                        <p class="mb-1"><strong>Start date: </strong>{{$job->start_date}}</p>
+
+                        <p><strong>Number of workers needed: </strong>{{$job->number_of_workers}}</p>
+
+                        <p><strong>job duration: </strong>{{$job->job_duration||'N/A'}} days</p>
+
+                        
+
+                        <div class="d-flex justify-content-center flex-wrap mt-5 border-top pt-4">
+                            <a href="#" class="custom-btn btn mt-2">Apply now</a>
+
+                            <a href="#" class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">Save this job</a>
+
+                            <div class="job-detail-share d-flex align-items-center">
+                                <p class="mb-0 me-lg-4 me-3">Share:</p>
+
+                                <a href="#" class="bi-facebook"></a>
+
+                                <a href="#" class="bi-twitter mx-3"></a>
+
+                                <a href="#" class="bi-share"></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-lg-6 col-12">
-                    <img src="images/4557388.png" class="hero-image img-fluid" alt="">
+                <div class="col-lg-4 col-12 mt-5 mt-lg-0">
+                    <div class="job-thumb job-thumb-detail-box bg-white shadow-lg">
+                        <div class="d-flex align-items-center">
+                            <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mb-3">
+                                <img src="images/logos/google.png" class="job-image me-3 img-fluid" alt="">
+
+                                <p class="mb-0">Google</p>
+                            </div>
+
+                            <a href="#" class="bi-bookmark ms-auto me-2"></a>
+
+                            <a href="#" class="bi-heart"></a>
+                        </div>
+
+                        <h6 class="mt-3 mb-2">About {{$job->user->first_name}}</h6>
+
+                        <p>{{$job->user->bio}}</p>
+
+                       
+                    </div>
                 </div>
 
             </div>
@@ -112,34 +128,16 @@
             <div class="row align-items-center">
 
                 <div class="col-lg-6 col-12 mb-lg-4">
-                    <h3>Results of 30-65 of 1500 jobs</h3>
+                    <h3>Similar Jobs</h3>
+
+                    <p><strong>Over 10k opening jobs</strong> Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito adipcingi elit eismuod larehai</p>
                 </div>
 
-                <div class="col-lg-4 col-12 d-flex align-items-center ms-auto mb-5 mb-lg-4">
-                    <p class="mb-0 ms-lg-auto">Sort by:</p>
-
-                    <div class="dropdown dropdown-sorting ms-3 me-4">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownSortingButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            Newest Jobs
-                        </button>
-
-                        <ul class="dropdown-menu" aria-labelledby="dropdownSortingButton">
-                            <li><a class="dropdown-item" href="#">Lastest Jobs</a></li>
-
-                            <li><a class="dropdown-item" href="#">Highed Salary Jobs</a></li>
-
-                            <li><a class="dropdown-item" href="#">Internship Jobs</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="d-flex">
-                        <a href="#" class="sorting-icon active bi-list me-2"></a>
-
-                        <a href="#" class="sorting-icon bi-grid"></a>
-                    </div>
+                <div class="col-lg-4 col-12 d-flex ms-auto mb-5 mb-lg-4">
+                    <a href="{{route('jobs')}}" class="custom-btn custom-border-btn btn ms-lg-auto">Browse Job Listings</a>
                 </div>
 
-                @foreach($jobs as $job)
+                @foreach($similerJobs as $job)
                 
                 <div class="col-lg-4 col-md-6 col-12 job-card">
                     <div class="job-thumb job-thumb-box">
@@ -154,7 +152,7 @@
                                 </p>
     
                                 <p class="mb-0">
-                                    <a href="job-listings.php" class="badge">Freelance</a>
+                                    <a href="job-listings.php" class="badge">{{$job->category->category_name}}</a>
                                 </p>
                             </div>
                         </div>
@@ -210,11 +208,6 @@
                     </div>
                 </div>
                 @endforeach
-              
-                <div class="pagination-container">
-                    {{ $jobs->render("pagination::bootstrap-5") }}
-                </div>
-                
             </div>
         </div>
     </section>
@@ -243,6 +236,7 @@
             </div>
         </div>
     </section>
+
 
 </main>
 @endsection

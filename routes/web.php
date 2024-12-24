@@ -34,11 +34,11 @@ Route::get('/home', [PublicSiteController::class, 'showLandingPage'])->name('hom
 //jobs pages routes
 Route::get('/postJob', [PublicSiteController::class, 'showPostJobPage'])->name('postJob');
 Route::post('/jobs/create', [PublicSiteController::class, 'createJobPost'])->name('publishJob');
+Route::get('/jobs/{id}', [PublicSiteController::class, 'showJobDetails'])->name('JobDetails');
+Route::get('/jobs', [PublicSiteController::class, 'showJobs'])->name('jobs');
 //////////
 
-Route::get('/jobs', function () {
-    return view('user.jobs.jobs'); 
-})->name('jobs');
+
 
 
 //login routes

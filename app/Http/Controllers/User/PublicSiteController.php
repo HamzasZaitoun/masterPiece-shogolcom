@@ -37,6 +37,8 @@ class PublicSiteController extends Controller
 
 
     public function createJobPost(Request $request)
+
+
         {
             // Validation for job posting
             $validated = $request->validate([
@@ -81,4 +83,20 @@ class PublicSiteController extends Controller
         }
 
 
-}
+
+        public function showJobDetails($id)
+        {
+            $job =Job::findOrFail($id);
+            $similerJobs = Job::where('job_category', $job->job_category)->where('user_id', '!=', auth()->id())->limit(3)->get();
+
+            return view('user.jobs.jobDetails',compact('job','similerJobs'));
+        }
+
+        public function showJobs()
+        {
+            $jobs=Job::paginate(9);
+            return view('user.jobs.jobs',compact('jobs'));
+        }
+
+    
+    }

@@ -1078,6 +1078,8 @@ nav[aria-label="breadcrumb"] {
 {
   display: block;
   border-radius: 50%;
+  width: 80px;
+  height: 80px;
 }
 
 .job-body {
@@ -2013,4 +2015,20 @@ hr {
 .new-post-section
 {
   background-color: #219b9d0c;
+}
+.custom-btn2
+{
+  background: var(--secondary-color);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-size: var(--btn-font-size);
+  font-weight: var(--font-weight-normal);
+  line-height: normal;
+  padding: 15px 20px;
+}
+.custom-btn2:hover{
+  background: var(--custom-btn-bg-color);
+ 
+  color: var(--white-color);
 }
