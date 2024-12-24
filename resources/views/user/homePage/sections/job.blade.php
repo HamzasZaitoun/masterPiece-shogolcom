@@ -13,7 +13,8 @@
                @foreach($urgentJobs as $urgentJob)
                 <div class="job-thumb d-flex">
                     <div class="job-image-wrap bg-white shadow-lg">
-                        <img src="{{asset('uploads/jobs/'.$urgentJob->job_media)}}" class="job-image img-fluid" alt="">
+                        <img src="{{ $urgentJob->job_media ? asset('uploads/jobs/'.$urgentJob->job_media) : asset('assets/user/images/defaults/defaultJob.jpg') }}" class="urgent-job-image img-fluid" alt="">
+
                     </div>
 
                     <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">

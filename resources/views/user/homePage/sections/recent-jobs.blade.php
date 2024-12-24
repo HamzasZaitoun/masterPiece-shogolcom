@@ -10,11 +10,11 @@
 
             <div class="clearfix"></div>
             @foreach($recentJobs as $recentJob)
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-4 col-md-6 col-12 job-card">
                 <div class="job-thumb job-thumb-box">
                     <div class="job-image-box-wrap">
                         <a href="job-details.php">
-                            <img src="{{asset('uploads/jobs/'.$recentJob->job_media)}}" class="job-image img-fluid" alt="">
+                            <img src="{{ $recentJob->job_media ? asset('uploads/jobs/'.$recentJob->job_media) : asset('assets/user/images/defaults/defaultJob.jpg') }}" class="job-image img-fluid"  alt="">
                         </a>
 
                         <div class="job-image-box-wrap-info d-flex align-items-center">
@@ -30,7 +30,7 @@
 
                     <div class="job-body">
                         <h4 class="job-title">
-                            <a href="job-details.php" class="job-title-link">{{$recentJob->job_title}}</a>
+                            <a href="job-details.php" class="job-title-link">{{ \Illuminate\Support\Str::limit($recentJob->job_title, 15, '...') }}</a>
                         </h4>
 
                         <div class="d-flex align-items-center">
@@ -48,15 +48,15 @@
                         </div>
 
                         <div class="d-flex align-items-center">
-                            <p class="job-location">
+                            <span class="job-location">
                                 <i class="custom-icon bi-geo-alt me-1"></i>
                                 {{$recentJob->job_governorate . ' '. $recentJob->job_city}}
-                            </p>
+                            </span>
 
-                            <p class="job-date">
+                            <span class="job-date">
                                 <i class="custom-icon bi-clock me-1"></i>
                                 {{ $recentJob->created_at->diffForHumans()}}
-                            </p>
+                            </span>
                         </div>
 
                         <div class="d-flex align-items-center border-top pt-3">

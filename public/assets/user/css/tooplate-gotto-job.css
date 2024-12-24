@@ -1071,6 +1071,13 @@ nav[aria-label="breadcrumb"] {
   display: block;
   margin: auto;
   padding: 20px;
+  max-height: 200px;
+  width: 100%;
+}
+.urgent-job-image
+{
+  display: block;
+  border-radius: 50%;
 }
 
 .job-body {
@@ -1078,7 +1085,8 @@ nav[aria-label="breadcrumb"] {
 }
 
 .job-location {
-  min-width: 175px;
+  max-width: 175px;
+  font-size: small;
 }
 
 .job-location,
