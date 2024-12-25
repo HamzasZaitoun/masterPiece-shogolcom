@@ -43,12 +43,13 @@
 
                                     <div class="d-flex">
                                         <p class="mb-0">
-                                            <a href="job-listings.php"
+                                            <a href="{{route('filterJobs',['job_type' => $urgentJob->job_type,])}}"
                                                 class="badge badge-level">{{ $urgentJob->job_type }}</a>
                                         </p>
 
                                         <p class="mb-0">
-                                            <a href="job-listings.php"
+                                            <a href="{{route('filterJobs',['job_category' => $urgentJob->job_category,])}}"
+                                                class="badge badge-level"
                                                 class="badge">{{ $urgentJob->category->category_name }}</a>
                                         </p>
                                     </div>

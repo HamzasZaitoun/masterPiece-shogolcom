@@ -188,7 +188,7 @@
                                         </p>
 
                                         <p class="mb-0">
-                                            <a href="job-listings.php" class="badge">Freelance</a>
+                                            <a href="job-listings.php" class="badge">{{$job->category->category_name}}</a>
                                         </p>
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@
                                     <div class="d-flex align-items-center">
                                         <span class="job-location">
                                             <i class="custom-icon bi-geo-alt me-1"></i>
-                                            {{ $job->job_governorate . ' ' . $job->job_city }}
+                                            {{ $job->job_governorate . ', ' . $job->job_city }}
                                         </span>
 
                                         <span class="job-date">

@@ -1,271 +1,135 @@
 @extends('user.source.template')
 @section('content')
 <main>
-
+  
 <hr>
 <main class="main-profile">
     <div class="profile-head">
         <div class="profile-left">
-            <img id="profile-image" src="images/people-working-as-team-company.jpg" alt="profile image">
+            <img id="profile-image" src="{{ $user->profile_picture ? asset('uploads/users/' . $user->profile_picture) : asset('assets/user/images/defaults/defaultPFP2.jpg') }}"" alt="profile image">
             <div class="profile-info">
                 <h3 class="name">{{$user->first_name . ' ' . $user->last_name}}</h3>
                 
                 <p class="city">{{$user->user_governorate .', ' . $user->user_city}}</p>
             </div>
         </div>
-        <div class="profile-right ">
-            <div class="rating">
-                <!-- Star Rating: 5 Stars -->
-                <input type="radio" id="star5" name="rate" value="5" />
-                <label for="star5" title="5 stars">
-                    <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
-                    <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path>
-                    </svg>
-                </label>
-
-                <!-- Star Rating: 4 Stars -->
-                <input type="radio" id="star4" name="rate" value="4" />
-                <label for="star4" title="4 stars">
-                    <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
-                    <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path>
-                    </svg>
-                </label>
-
-                <!-- Star Rating: 3 Stars (Default selected) -->
-                <input type="radio" id="star3" name="rate" value="3" checked />
-                <label for="star3" title="3 stars">
-                    <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
-                    <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path>
-                    </svg>
-                </label>
-
-                <!-- Star Rating: 2 Stars -->
-                <input type="radio" id="star2" name="rate" value="2" />
-                <label for="star2" title="2 stars">
-                    <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
-                    <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path>
-                    </svg>
-                </label>
-
-                <!-- Star Rating: 1 Star -->
-                <input type="radio" id="star1" name="rate" value="1" />
-                <label for="star1" title="1 star">
-                    <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
-                    <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path>
-                    </svg>
-                </label>
-            </div>
+        <div class="profile-right">
+            <p> <strong> Member since:</strong> {{$user->created_at->format('Y-m-d')}}</p>
         </div>
     </div>
+    
     <hr>
     <div class="bio">
         <div class="bio-header">
-            <div class="bio-title"><h4 class="name">About me :</h4></div>            
+            <div class="bio-title"><h4 class="name">About {{$user->first_name}} :</h4></div>            
         </div>
         <div class="bio-body">
             <P>
                 {{$user->bio}}
             </P>
+            @if ($user->id === auth()->user()->id)
             <div class="bio-btn"> <a class="nav-link custom-btn btn" href="{{ route('editProfile') }}">edit profile</a> </div>
+            @endif
            
         </div>
     </div>
     <hr>
-    {{-- <!-- Navigation Bar for Tabs -->
+    <!-- Navigation Bar for Tabs -->
     <div class="content-nav">
-        <button class="tab-link active" data-tab="posts">Your Posts</button>
+        <button class="tab-link active" data-tab="posts">{{$user->first_name .'\'s'}} Posts</button>
         <button class="tab-link" data-tab="completed">Completed jobs</button>
         <button class="tab-link" data-tab="pending">Pending jobs</button>
     </div>
     <!-- Content Sections -->
-    <div class="content-section" id="posts">
+    <div class="content-section" id="posts"style="display: block;">
         <!-- Header with Title and Add Button -->
-        <div class="posts-header">
-            <h4 class="posts-title"></h4>
-            <button class="add-post-btn"onclick="location.href = 'newPost.php';">+ Add New Post</button>
-        </div>
 
+        @if ($user->id === auth()->user()->id)
+            <div class="posts-header">
+                <h4 class="posts-title"></h4>
+                <button class="add-post-btn" onclick="location.href = '{{ route('postJob') }}';">+ Post a new job</button>
+            </div>
+        @endif
+    
+    
         <!-- Centered Posts Container -->
         <div class="posts-list">
         <div class="job-thumb d-flex">
-                                <div class="job-image-wrap bg-white shadow-lg">
-                                    <img src="images/logos/google.png" class="job-image img-fluid" alt="">
-                                </div>
+                                
 
-                                <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
-                                    <div class="mb-3">
-                                        <h4 class="job-title mb-lg-0">
-                                            <a href="job-details.php" class="job-title-link">Technical Lead</a>
-                                        </h4>
+            <div class="col-lg-12 col-12">
 
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <p class="job-location mb-0">
-                                                <i class="custom-icon bi-geo-alt me-1"></i>
-                                                Kuala, Malaysia
-                                            </p>
+                @foreach ($userPosts as $job)
+                    <div class="job-thumb d-flex">
+                        <div class="job-image-wrap bg-white shadow-lg">
+                            <img src="{{ $job->job_media ? asset('uploads/jobs/' . $job->job_media) : asset('assets/user/images/defaults/defaultJob.jpg') }}"
+                                class="urgent-job-image img-fluid" alt="">
 
-                                            <p class="job-date mb-0">
-                                                <i class="custom-icon bi-clock me-1"></i>
-                                                10 hours ago
-                                            </p>
+                        </div>
 
-                                            <p class="job-price mb-0">
-                                                <i class="custom-icon bi-cash me-1"></i>
-                                                $20k
-                                            </p>
+                        <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
+                            <div class="mb-3">
+                                <h4 class="job-title mb-lg-0">
+                                    <a href="{{ route('JobDetails', $job->job_id) }}"
+                                        class="job-title-link">{{ \Illuminate\Support\Str::limit($job->job_title, 15, '...') }}</a>
+                                </h4>
 
-                                            <div class="d-flex">
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge badge-level">Internship</a>
-                                                </p>
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <p class="job-location mb-0">
+                                        <i class="custom-icon bi-geo-alt me-1"></i>
+                                        {{ $job->job_governorate . ', ' . $job->job_city }}
+                                    </p>
 
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge">Freelance</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <p class="job-date mb-0">
+                                        <i class="custom-icon bi-clock me-1"></i>
+                                        {{ $job->created_at->diffForHumans() }}
+                                    </p>
 
-                                    <div class="job-section-btn-wrap">
-                                        <a href="job-details.php" class="custom-btn btn">View</a>
+                                    <p class="job-price mb-0">
+                                        <i class="custom-icon bi-cash me-1"></i>
+                                        {{ $job->payment_amount }}
+                                    </p>
+
+                                    <div class="d-flex">
+                                        <p class="mb-0">
+                                            <a href="{{route('filterJobs',['job_type' => $job->job_type,])}}"
+                                                class="badge badge-level">{{ $job->job_type }}</a>
+                                        </p>
+
+                                        <p class="mb-0">
+                                            <a href="{{route('filterJobs',['job_category' => $job->job_category,])}}"
+                                                class="badge badge-level"
+                                                class="badge">{{ $job->category->category_name }}</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="job-section-btn-wrap">
+                                @if (!auth()->check() || (auth()->check() && auth()->user()->id != $job->user_id))
+                                    <a href="{{ route('JobDetails', $job->job_id) }}" class="custom-btn2 btn">Apply
+                                        now</a>
+                                        
+                                            
+                                        @else
+                                        <a href="{{ route('JobDetails', $job->job_id) }}" class="custom-btn btn">edit job</a>
+                                      
+                                @endif
+
+
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                <div class="pagination-container">
+                    {{ $userPosts->render('pagination::bootstrap-5') }}
+                </div>
+
+            </div>
+       </div>
                             <!-- 2 -->
-                            <div class="job-thumb d-flex">
-                                <div class="job-image-wrap bg-white shadow-lg">
-                                    <img src="images/logos/apple.png" class="job-image img-fluid" alt="">
-                                </div>
-
-                                <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
-                                    <div class="mb-3">
-                                        <h4 class="job-title mb-lg-0">
-                                            <a href="job-details.php" class="job-title-link">Business Director</a>
-                                        </h4>
-
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <p class="job-location mb-0">
-                                                <i class="custom-icon bi-geo-alt me-1"></i>
-                                                California, USA
-                                            </p>
-
-                                            <p class="job-date mb-0">
-                                                <i class="custom-icon bi-clock me-1"></i>
-                                                1 day ago
-                                            </p>
-
-                                            <p class="job-price mb-0">
-                                                <i class="custom-icon bi-cash me-1"></i>
-                                                $90k
-                                            </p>
-
-                                            <div class="d-flex">
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge badge-level">Senior</a>
-                                                </p>
-
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge">Full Time</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="job-section-btn-wrap">
-                                        <a href="job-details.php" class="custom-btn btn">View</a>
-                                    </div>
-                                </div>
-                            </div>
-                             <!--3  -->
-                             <div class="job-thumb d-flex">
-                                <div class="job-image-wrap bg-white shadow-lg">
-                                    <img src="images/logos/slack.png" class="job-image img-fluid" alt="">
-                                </div>
-
-                                <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
-                                    <div class="mb-3">
-                                        <h4 class="job-title mb-lg-0">
-                                            <a href="job-details.php" class="job-title-link">Dev Ops</a>
-                                        </h4>
-
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <p class="job-location mb-0">
-                                                <i class="custom-icon bi-geo-alt me-1"></i>
-                                                Bangkok, Thailand
-                                            </p>
-
-                                            <p class="job-date mb-0">
-                                                <i class="custom-icon bi-clock me-1"></i>
-                                                40 minutes ago
-                                            </p>
-
-                                            <p class="job-price mb-0">
-                                                <i class="custom-icon bi-cash me-1"></i>
-                                                $75k - 80k
-                                            </p>
-
-                                            <div class="d-flex">
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge badge-level">Senior</a>
-                                                </p>
-
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge">Part Time</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="job-section-btn-wrap">
-                                        <a href="job-details.php" class="custom-btn btn">View</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 4 -->
-                            <div class="job-thumb d-flex">
-                                <div class="job-image-wrap bg-white shadow-lg">
-                                    <img src="images/logos/creative-market.png" class="job-image img-fluid" alt="">
-                                </div>
-
-                                <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
-                                    <div class="mb-3">
-                                        <h4 class="job-title mb-lg-0">
-                                            <a href="job-details.php" class="job-title-link">UX Designer</a>
-                                        </h4>
-
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <p class="job-location mb-0">
-                                                <i class="custom-icon bi-geo-alt me-1"></i>
-                                                Bangkok, Thailand
-                                            </p>
-
-                                            <p class="job-date mb-0">
-                                                <i class="custom-icon bi-clock me-1"></i>
-                                                2 hours ago
-                                            </p>
-
-                                            <p class="job-price mb-0">
-                                                <i class="custom-icon bi-cash me-1"></i>
-                                                $100k
-                                            </p>
-
-                                            <div class="d-flex">
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge badge-level">Entry</a>
-                                                </p>
-
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge">Remote</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="job-section-btn-wrap">
-                                        <a href="job-details.php" class="custom-btn btn">View</a>
-                                    </div>
-                                </div>
-                            </div>
+                          
         </div>
     </div>
 
@@ -615,8 +479,50 @@
                                     </div>
                                 </div>
                             </div>
-    </div> --}}
+    </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const tabLinks = document.querySelectorAll(".tab-link");
+    const contentSections = document.querySelectorAll(".content-section");
+
+    // Function to switch between tabs
+    function switchTab(tabId) {
+        // Hide all content sections
+        contentSections.forEach(function (section) {
+            section.style.display = "none";
+        });
+
+        // Remove active class from all tabs
+        tabLinks.forEach(function (tab) {
+            tab.classList.remove("active");
+        });
+
+        // Show the selected content section and mark the tab as active
+        const activeContent = document.getElementById(tabId);
+        if (activeContent) {
+            activeContent.style.display = "block";
+        }
+
+        const activeTab = document.querySelector(`.tab-link[data-tab="${tabId}"]`);
+        if (activeTab) {
+            activeTab.classList.add("active");
+        }
+    }
+
+    // Set default active tab on page load (Your Posts)
+    switchTab("posts");
+
+    // Add event listeners to the tabs
+    tabLinks.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+            const tabId = tab.getAttribute("data-tab");
+            switchTab(tabId);
+        });
+    });
+});
 
 
+</script>
 </main>
 @endsection

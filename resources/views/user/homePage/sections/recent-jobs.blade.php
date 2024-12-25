@@ -35,7 +35,7 @@
 
                         <div class="d-flex align-items-center">
                             <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mt-2 mb-4">
-                                <img src="{{asset('assets/user/images/logos/salesforce.png')}}" class="job-image me-3 img-fluid" alt="">
+                                <img src="{{ $job->user->profile_picture ? asset('uploads/users/' . $job->user->profile_picture) : asset('assets/user/images/defaults/defaultPFP2.jpg') }}" class="job-image2 " alt="">
 
                                 <p class="mb-0">{{$job->user->first_name .' ' . $job->user->last_name}}</p>
                             </div>

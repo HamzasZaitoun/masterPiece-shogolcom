@@ -12,5 +12,5 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById(targetTab).style.display = 'block';
         });
     });
-    document.getElementById('posts').style.display = 'block';
+    // document.getElementById('posts').style.display = 'block';
 });

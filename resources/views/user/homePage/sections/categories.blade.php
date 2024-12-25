@@ -8,7 +8,7 @@
             @foreach($categories as $category)
             <div class="col-lg-2 col-md-4 col-6">
                 <div class="categories-block">
-                    <a href="#" class="d-flex flex-column justify-content-center align-items-center h-100">
+                    <a href="{{route('filterJobs',['job_category' => $category->category_id,])}}" class="d-flex flex-column justify-content-center align-items-center h-100">
                         <img src="{{asset('uploads/categories/' . $category->category_picture) }}" width="50px" height="50px"  alt="">
                         <p class="categories-block-title">{{$category->category_name}}</p>
 

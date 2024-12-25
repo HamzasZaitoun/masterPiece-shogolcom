@@ -1074,6 +1074,14 @@ nav[aria-label="breadcrumb"] {
   max-height: 280px;
   width: 100%;
 }
+.job-image2
+{
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
 .urgent-job-image
 {
   display: block;

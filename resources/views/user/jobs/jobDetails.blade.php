@@ -86,10 +86,6 @@
                             <div class="job-detail-share d-flex align-items-center">
                                 <p class="mb-0 me-lg-4 me-3">Share:</p>
 
-                                <a href="#" class="bi-facebook"></a>
-
-                                <a href="#" class="bi-twitter mx-3"></a>
-
                                 <a href="#" class="bi-share"></a>
                             </div>
                         </div>
@@ -100,23 +96,20 @@
                     <div class="job-thumb job-thumb-detail-box bg-white shadow-lg">
                         <div class="d-flex align-items-center">
                             <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mb-3">
-                                <img src="images/logos/google.png" class="job-image me-3 img-fluid" alt="">
-
-                                <p class="mb-0">Google</p>
+                                <img src="{{ $job->user->profile_picture ? asset('uploads/users/' . $job->user->profile_picture) : asset('assets/user/images/defaults/defaultPFP2.jpg') }}" class="urgent-job-image" alt="">
                             </div>
-
+                
                             <a href="#" class="bi-bookmark ms-auto me-2"></a>
-
+                
                             <a href="#" class="bi-heart"></a>
                         </div>
-
-                        <h6 class="mt-3 mb-2">About {{$job->user->first_name}}</h6>
-
-                        <p>{{$job->user->bio}}</p>
-
-                       
+                
+                        <h6 class="mt-3 mb-2">About <a href="{{ route('userProfile', $job->user->id) }}">{{ $job->user->first_name }}</a></h6>
+                
+                        <p>{{ $job->user->bio }}</p>
                     </div>
                 </div>
+                
 
             </div>
         </div>
@@ -164,7 +157,7 @@
     
                             <div class="d-flex align-items-center">
                                 <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mt-2 mb-4">
-                                    <img src="{{asset('assets/user/images/logos/salesforce.png')}}" class="job-image me-3 img-fluid" alt="">
+                                    <img src="{{ $job->user->profile_picture ? asset('uploads/users/' . $job->user->profile_picture) : asset('assets/user/images/defaults/defaultPFP2.jpg') }}" class="job-image2 " alt="">
     
                                     <p class="mb-0">{{$job->user->first_name .' ' . $job->user->last_name}}</p>
                                 </div>

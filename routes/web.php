@@ -38,6 +38,8 @@ Route::get('/jobs/{id}', [PublicSiteController::class, 'showJobDetails'])->name(
 Route::get('/jobs', [PublicSiteController::class, 'showJobs'])->name('jobs');
 Route::get('/filterjobs', [PublicSiteController::class, 'showFilterdJobs'])->name('filterJobs');
 
+Route::get('/user/{id}', [ProfileController::class, 'showProfile'])->name('userProfile');
+
 
 
 //////////
@@ -182,7 +184,7 @@ Route::get('/admin/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('editProfile');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('updateProfile');
 });
 
 require __DIR__ . '/auth.php';

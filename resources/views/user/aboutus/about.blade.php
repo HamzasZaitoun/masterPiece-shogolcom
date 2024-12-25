@@ -9,7 +9,7 @@
                 <div class="row">
                     
                     <div class="col-lg-12 col-12 text-center">
-                        <h1 class="text-white">About Gotto</h1>
+                        <h1 class="text-white">About Shogholcom</h1>
 
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
@@ -31,9 +31,9 @@
 
                     <div class="col-lg-5 col-12">
                         <div class="about-info-text">
-                            <h2 class="mb-0">Introducing Gotto Job</h2>
+                            <h2 class="mb-0">Shogholcom</h2>
 
-                            <h4 class="mb-2">Get hired. Get your new job</h4>
+                            <h4 class="mb-2">Get hired. Or post job</h4>
 
                             <p>Thank you for visiting our Gotto Job website. Are you looking for best HTML templates? Please visit Tooplate website to download free templates.</p>
 
