@@ -2,7 +2,7 @@
 @section('content')
     <h1>Jobs Dashboard</h1>
     <h2>Add Job</h2>
-    {{-- @if ($errors->all())
+    @if ($errors->all())
         <div>
             <ul>
                 @foreach ($errors->all() as $error)
@@ -12,7 +12,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif --}}
+    @endif
     <form class="form" id="addJobForm" action="{{ route('admin.jobs.storeJob') }}" method="POST"
         enctype="multipart/form-data">
         @csrf
@@ -25,7 +25,7 @@
                 <option value="" disabled selected>Select User</option>
                 @foreach (\App\Models\User::all() as $user)
                     <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                        {{ $user->name }} (ID: {{ $user->id }})
+                        {{ $user->first_name }} (ID: {{ $user->id }})
                     </option>
                 @endforeach
             </select>
@@ -51,27 +51,27 @@
             @enderror
         </div>
 
-        <!-- Governate Dropdown -->
+        <!-- governorate Dropdown -->
         <div class="select-container">
-            {{-- <label for="governate">Governate</label> --}}
-            <select class="select" id="governate" name="job_governate" required>
-                <option value="" disabled selected>Select Governate</option>
-                @foreach (\App\Models\Governate::all() as $governate)
-                    <option value="{{ $governate->governate_name }}"
-                        {{ old('job_governate') == $governate->governate_name ? 'selected' : '' }}>
-                        {{ $governate->governate_name }}
-                    </option>
+            {{-- <label for="user_governorate">governorate</label> --}}
+            <select class="select" id="job_governorate" name="job_governorate" required>
+                <option value="" disabled selected>Select governorate</option>
+                @foreach (\App\Models\Governorate::all() as $governorate)
+                    <option value="{{ $governorate->governorate_name }}">{{ $governorate->governorate_name }}</option>
                 @endforeach
             </select>
-            @error('job_governate')
+
+            @error('user_governorate')
                 <span class="error-message">{{ $message }}</span>
             @enderror
         </div>
+        <!-- City -->
         <div class="select-container">
             {{-- <label for="user_city">City</label> --}}
-            <select class="select" id="user_city" name="user_city" required>
+            <select class="select" id="job_city" name="job_city" required>
                 <option value="" disabled selected>Select City</option>
             </select>
+
             @error('user_city')
                 <span class="error-message">{{ $message }}</span>
             @enderror
@@ -132,7 +132,7 @@
         <div class="select-container">
             {{-- <label for="job_visibility">job visibility</label> --}}
             <select class="select" id="job_visibility" name="job_visibility" required>
-                <option value="" disabled selected>Select Urgency</option>
+                <option value="" disabled selected>job visibility</option>
                 <option value="public" {{ old('job_visibility') == 'public' ? 'selected' : '' }}>Yes</option>
                 <option value="private" {{ old('job_visibility') == 'private' ? 'selected' : '' }}>No</option>
             </select>
@@ -253,6 +253,7 @@
                 <option value="completed" {{ old('payment_status') == 'completed' ? 'selected' : '' }}>Completed</option>
                 <option value="refunded" {{ old('payment_status') == 'refunded' ? 'selected' : '' }}>Refunded</option>
             </select>
+
             @error('payment_status')
                 <span class="error-message">{{ $message }}</span>
             @enderror
@@ -262,20 +263,15 @@
             <button class="create-btn" type="submit">Add Job</button>
         </div>
     </form>
-
     <script>
-        // Add event listener for governate change
-        document.getElementById('user_governate').addEventListener('change', function() {
-            var governateId = this.value;
-            console.log(governateId); // Log the selected governateId
-
-            if (governateId) {
-                fetch(`/admin/users/cities/${governateId}`)
+        document.getElementById('job_governorate').addEventListener('change', function() {
+            var governorateId = this.value;
+            if (governorateId) {
+                fetch(`/admin/users/cities/${governorateId}`)
                     .then(response => response.json())
                     .then(cities => {
-                        var citySelect = document.getElementById('user_city');
-                        citySelect.innerHTML =
-                            '<option value="" disabled selected>Select City</option>'; // Reset cities
+                        var citySelect = document.getElementById('job_city');
+                        citySelect.innerHTML = '<option value="" disabled selected>Select City</option>';
                         cities.forEach(city => {
                             var option = document.createElement('option');
                             option.value = city;
@@ -284,7 +280,7 @@
                         });
                     });
             } else {
-                document.getElementById('user_city').innerHTML =
+                document.getElementById('job_city').innerHTML =
                     '<option value="" disabled selected>Select City</option>';
             }
         });

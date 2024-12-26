@@ -13,10 +13,16 @@
                 <ul class="dropdown-menu">
                     <li><a href="{{route('admin.users.adminProfile')}}"><i class="bi bi-person-arms-up"></i>Profile</a></li>
                     <li>
-                    {{-- <a href="{{route('admin.dashboard')}}"> --}}
-                    <i class="bi bi-box-arrow-right"></i> logout
-                    </a>
+                        <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
                     </li>
+                    
+                    
+                    
                 </ul>
                 </div>
                 </div>

@@ -19,7 +19,7 @@
             </div>
 
             <div class="col-lg-6 col-12">
-                <form class="custom-form hero-form" action="#" method="get" role="form">
+                <form class="custom-form hero-form" action="{{route('jobs')}}" method="get" role="form">
                     <h4 class="text-white mb-3">Are you looking for seasonal job?</h4>
                     <div class="row">
                         <div class="col-lg-12 col-12">

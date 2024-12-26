@@ -34,7 +34,7 @@
 
             <div class="sidebar">
                 {{-- "{{Route('admin.users')}}" --}}
-                <a class="nav-link">
+                <a href="{{ Route('admin') }}" class="nav-link">
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
@@ -82,10 +82,7 @@
                 </a>
                 {{-- <a href="{{route('admin.dashboard')}}"> --}}
                 <a href="#">
-                    <span class="material-icons-sharp">
-                        logout
-                    </span>
-                    <h3>Logout</h3>
+                   
                 </a>
             </div>
         </aside>

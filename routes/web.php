@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\User\PublicSiteController;
+use App\Http\Controllers\User\UserJobController;
+use App\Http\Controllers\User\UserApplicationController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -41,8 +43,19 @@ Route::get('/filterjobs', [PublicSiteController::class, 'showFilterdJobs'])->nam
 Route::get('/user/{id}', [ProfileController::class, 'showProfile'])->name('userProfile');
 
 
+////////////////////////
+//job routes
+Route::get('/jobs/{job_id}/apply', [PublicSiteController::class, 'applyToJob'])->name('applyToJob');
+Route::get('/jobs/{job_id}/delete-application', [PublicSiteController::class, 'deleteApplication'])->name('deleteApplication');
+
+Route::get('/jobs/{job_id}/archiveJob', [UserJobController::class, 'archiveJob'])->name('archiveJob');
+
+
 
 //////////
+//application routes
+Route::get('/jobs/reject/{id}', [UserApplicationController::class, 'regectApplication'])->name('regectApplication');
+
 
 
 
@@ -70,7 +83,9 @@ Route::get('/contact', function () {
 
 
 
-
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+})->name('admin');
 
 Route::controller(UserController::class)->prefix('admin/users')->name('admin.users.')->group(function () {
     Route::get('/', 'index')->name('index');

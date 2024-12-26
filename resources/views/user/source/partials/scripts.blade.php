@@ -7,12 +7,46 @@
 <script src="{{asset('assets/user/js/counter.js')}}"></script>
 <script src="{{asset('assets/user/js/custom.js')}}"></script>
 <script src="{{asset('assets/user/js/min.js')}}"></script>
-@if (session('status'))
+@if (session('success') || session('error') || session('info'))
 <script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Profile Updated!',
-        text: 'Your profile has been successfully updated.',
-    });
+    function showAlert(type, title, message, redirectUrl = null) {
+        Swal.fire({
+            icon: type,     // 'success', 'error', 'warning', 'info', or 'question'
+            title: title,
+            text: message,
+            confirmButtonText: 'OK'
+        }).then(() => {
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
+        });
+    }
+
+    // Show the alert based on session data
+    @if (session('success'))
+        showAlert('success', 'Success', '{{ session('success') }}');
+    @elseif (session('error'))
+        showAlert('error', 'Error', '{{ session('error') }}');
+    @elseif (session('info'))
+        showAlert('info', 'Info', '{{ session('info') }}');
+    @endif
 </script>
 @endif
+<script>
+    function confirmAction(routeUrl, message = "Are you sure?", confirmText = "Yes, do it!", cancelText = "Cancel", icon = "warning") {
+        Swal.fire({
+            title: 'Confirm Action',
+            text: message,
+            icon: icon,
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: confirmText,
+            cancelButtonText: cancelText
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = routeUrl;
+            }
+        });
+    }
+    </script>

@@ -14,7 +14,7 @@ class storeUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:3', 'max:20'],
+            'first_name' => ['required', 'string', 'min:3', 'max:20'],
             'last_name' => ['required', 'string', 'min:3', 'max:20'],
             'gender' => ['required'],
             'mobile_number' => ['required', 'integer'],
@@ -25,7 +25,7 @@ class storeUserRequest extends FormRequest
             'bio' => ['nullable'],
             'role' => ['required'],
             'accountStatus' => ['required'],
-            'user_governate' => ['required', 'string', 'max:255'],  // New field validation
+            'user_governorate' => ['required', 'string', 'max:255'],  // New field validation
             'user_city' => ['required', 'string', 'max:255'],        // New field validation
             'user_detailed_location' => ['required', 'string', 'max:255'],  // New field validation
         ];

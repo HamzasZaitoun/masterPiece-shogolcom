@@ -18,7 +18,7 @@
             <img class="testimonial-image" src="{{ asset('uploads/users/' . $review->user->profile_picture) }}"
                 alt="User Image">
             <div class="testimonial-info">
-                <h3 class="testimonial-name">{{ $review->user->name }} {{ $review->user->last_name }}</h3>
+                <h3 class="testimonial-name">{{ $review->user->first_name }} {{ $review->user->last_name }}</h3>
                 {{-- <p class="testimonial-role">Created At: {{ $review->created_at }}</p> --}}
             </div>
         </div>

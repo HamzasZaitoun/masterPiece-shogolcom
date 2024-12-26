@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use App\Models\Governate;
+use App\Models\Governorate;
 
 class JobController extends Controller
 {
@@ -29,15 +29,15 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function getCitiesByGovernate($governate)
+    public function getCitiesBygovernorate($governorate)
     {
         // Load the JSON file containing cities
-        $json = File::get(resource_path('data/governates.json'));
+        $json = File::get(resource_path('data/governorates.json'));
         $cities = json_decode($json, true);
 
-        // Filter cities based on the selected governate
-        if (isset($cities[$governate])) {
-            $filteredCities = $cities[$governate];
+        // Filter cities based on the selected governorate
+        if (isset($cities[$governorate])) {
+            $filteredCities = $cities[$governorate];
         } else {
             $filteredCities = [];
         }
@@ -51,7 +51,7 @@ class JobController extends Controller
             'user_id' => 'required|exists:users,id',
             'job_title' => 'required|string|max:255',
             'job_description' => 'required|string',
-            'job_governate' => 'required|string|max:255',
+            'job_governorate' => 'required|string|max:255',
             'job_city' => 'required|string|max:255',
             'job_type' => 'required|in:day,month,project',
             'payment_amount' => 'required|numeric|min:0',
@@ -64,6 +64,8 @@ class JobController extends Controller
             'job_visibility' => 'required|in:public,private',
             'number_of_workers' => 'required|integer|min:1',
             'job_media' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'job_detailed_location' => 'nullable|string|max:255',
+            'job_category'=> 'required|exists:categories,category_id',
         ]);
 
         $job = new Job($validated);
@@ -105,7 +107,7 @@ class JobController extends Controller
         $validated = $request->validate([
             'job_title' => 'required|string|max:255',
             'job_description' => 'required|string',
-            'job_governate' => 'required|string|max:255',
+            'job_governorate' => 'required|string|max:255',
             'job_city' => 'required|string|max:255',
             'job_type' => 'required|in:day,month,project',
             'payment_amount' => 'required|numeric|min:0',

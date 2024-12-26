@@ -2,12 +2,23 @@
 @section('content')
     <h1>Users Dashboard</h1>
     <h2>Add User</h2>
+    @if ($errors->all())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li class="text-danger">
+                        {{ $error }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form class="form" id="addUserForm" action="{{ route('admin.users.storeUser') }}" method="POST"
         enctype="multipart/form-data">
         @csrf
 
         <div class="input-field">
-            <input class="input" placeholder="First Name" type="text" id="name" name="name"
+            <input class="input" placeholder="First Name" type="text" id="name" name="first_name"
                 value="{{ old('name') }}" required>
             {{-- <label for="name"></label> --}}
             @error('name')
@@ -84,19 +95,19 @@
             @enderror
         </div>
 
-        <!-- Governate -->
+        <!-- governorate -->
         <div class="select-container">
-            {{-- <label for="user_governate">Governate</label> --}}
-            <select class="select" id="user_governate" name="user_governate" required>
-                <option value="" disabled selected>Select Governate</option>
-                @foreach (\App\Models\Governate::all() as $governate)
-                    <option value="{{ $governate->governate_name }}"
-                        {{ old('user_governate') == $governate->governate_name ? 'selected' : '' }}>
-                        {{ $governate->governate_name }}
+            {{-- <label for="user_governorate">governorate</label> --}}
+            <select class="select" id="user_governorate" name="user_governorate" required>
+                <option value="" disabled selected>Select governorate</option>
+                @foreach (\App\Models\governorate::all() as $governorate)
+                    <option value="{{ $governorate->governorate_name }}"
+                        {{ old('user_governorate') == $governorate->governorate_name ? 'selected' : '' }}>
+                        {{ $governorate->governorate_name }}
                     </option>
                 @endforeach
             </select>
-            @error('user_governate')
+            @error('user_governorate')
                 <span class="error-message">{{ $message }}</span>
             @enderror
         </div>
@@ -161,13 +172,13 @@
     </form>
 
     <script>
-        // Add event listener for governate change
-        document.getElementById('user_governate').addEventListener('change', function() {
-            var governateId = this.value;
-            console.log(governateId); // Log the selected governateId
+        // Add event listener for governorate change
+        document.getElementById('user_governorate').addEventListener('change', function() {
+            var governorateId = this.value;
+            console.log(governorateId); // Log the selected governorateId
 
-            if (governateId) {
-                fetch(`/admin/users/cities/${governateId}`)
+            if (governorateId) {
+                fetch(`/admin/users/cities/${governorateId}`)
                     .then(response => response.json())
                     .then(cities => {
                         var citySelect = document.getElementById('user_city');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Application;
 use App\Models\Governorate;
 use App\Models\Job;
 use App\Models\User;
@@ -20,10 +21,24 @@ class ProfileController extends Controller
     public function show(Request $request): View
     {
         // dd($request->user());
+        
+        // get user posts
         $userPosts = Job::where('user_id', $request->user()->id)->paginate(5);
+
+        // get user pending applications 
+        $pendingApplications = Application::where('user_id', $request->user()->id)
+        ->where('application_status', 'pending')
+        ->paginate(5);
+
+        //get user archived posts
+        $archivedPosts=Job::where('user_id',$request->user()->id)->where('job_visibility','private')->paginate(5);
+    
+        // dd($pendingApplications);
         return view('user.profile.profile', [
             'user' => $request->user(),
             'userPosts'=>$userPosts,
+            'pendingApplications'=> $pendingApplications,
+            'archivedPosts'=>$archivedPosts,
         ]);
     }
 
@@ -90,6 +105,7 @@ public function showProfile($id)
 {
     $user = User::findOrFail($id);
     $userPosts = Job::where('user_id', $user->id)->paginate(5);
+    
     // dd($user);
         return view('user.profile.profile', [
             'user' => $user,
@@ -108,7 +124,8 @@ public function showProfile($id)
         ]);
 
         $user = $request->user();
-
+        $user->last_login = now();
+        $user->save(); 
         Auth::logout();
 
         $user->delete();

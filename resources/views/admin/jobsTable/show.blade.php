@@ -23,8 +23,8 @@
                     <td>{{ $job->job_description }}</td>
                 </tr>
                 <tr>
-                    <th>Job Governate</th>
-                    <td>{{ $job->job_governate }}</td>
+                    <th>Job governorate</th>
+                    <td>{{ $job->job_governorate }}</td>
                 </tr>
                 <tr>
                     <th>Job City</th>
@@ -138,7 +138,7 @@
                 <img id="job-profile-image" src="{{ asset('uploads/jobs/' . $job->job_media) }}" alt="Profile Image">
                 <div class="job-info">
                     <h3 class="job-name">{{ $job->job_title }} ({{ $job->job_id }})</h3>
-                    <span>Posted By : {{ $job->user->name . ' ' . $job->user->last_name }}</span>
+                    <span>Posted By : {{ $job->user->first_name . ' ' . $job->user->last_name }}</span>
                 </div>
             </div>
         </div>
@@ -147,8 +147,8 @@
             <h4 class="section-title">Job Information</h4>
             <table class="job-table">
                 <tr>
-                    <th>Governate:</th>
-                    <td>{{ $job->job_governate }}</td>
+                    <th>governorate:</th>
+                    <td>{{ $job->job_governorate }}</td>
                     <th>City:</th>
                     <td>{{ $job->job_city }}</td>
                 </tr>

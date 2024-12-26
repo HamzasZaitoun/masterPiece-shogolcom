@@ -42,8 +42,8 @@
                     <td>{{ $user->user_city }}</td>
                 </tr>
                 <tr>
-                    <th>Governate</th>
-                    <td>{{ $user->user_governate }}</td> <!-- Assuming 'governate' is a column in the users table -->
+                    <th>governorate</th>
+                    <td>{{ $user->user_governorate }}</td> <!-- Assuming 'governorate' is a column in the users table -->
                 </tr>
                 <tr>
                     <th>Bio</th>
@@ -86,7 +86,7 @@
             <div class="profile-left">
                 <img id="profile-image" src="{{ asset('uploads/users/' . $user->profile_picture) }}" alt="profile image">
                 <div class="profile-info">
-                    <h3 class="name">{{ $user->name }} {{ $user->last_name }}</h3>
+                    <h3 class="name">{{ $user->first_name }} {{ $user->last_name }}</h3>
                     <p class="headline">User ID: {{ $user->id }}</p>
                     <p class="headline">Email: {{ $user->email }}</p>
                     <p class="city">Mobile Number: {{ $user->mobile_number }}</p>
@@ -121,8 +121,8 @@
             <div class="bio-body">
                 <table>
                     <tr>
-                        <th>Governate :</th>
-                        <td>{{ $user->user_governate }}</td>
+                        <th>governorate :</th>
+                        <td>{{ $user->user_governorate }}</td>
                         <th>City :</th>
                         <td>{{ $user->user_city }}</td>
                     </tr>

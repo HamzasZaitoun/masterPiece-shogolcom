@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Governorate;
 use App\Models\Job;
+use App\Models\Application;
 
 class PublicSiteController extends Controller
 {
@@ -88,8 +89,14 @@ class PublicSiteController extends Controller
         {
             $job =Job::findOrFail($id);
             $similerJobs = Job::where('job_category', $job->job_category)->where('user_id', '!=', auth()->id())->limit(3)->get();
+            $existingApplication = Application::where('job_id', $job->job_id)
+            ->where('user_id', auth()->id())
+            ->first();
+            $hasApplied = $existingApplication ? true : false;
+            $jobApplications=Application::where('job_id',$job->job_id)->where('application_status','pending')->paginate(3);
 
-            return view('user.jobs.jobDetails',compact('job','similerJobs'));
+            return view('user.jobs.jobDetails',compact('job','similerJobs',
+            'hasApplied','jobApplications'));
         }
 
         public function showJobs()
@@ -101,7 +108,7 @@ class PublicSiteController extends Controller
             return view('user.jobs.jobs',compact('jobs','categories','governorates'));
         }
 
-        public function showFilterdJobs(Request $request)
+    public function showFilterdJobs(Request $request)
 {
     
     $jobTitle = $request->input('job_title');
@@ -156,6 +163,50 @@ private function getPaymentRange($range)
             return [0, PHP_INT_MAX];
     }
 }
+
+
+public function applyToJob(Request $request, $job_id)
+{
+    $user_id = auth()->user()->id; 
+    
+    // Check if user has already applied to this job
+    
+   
+    // Insert the application
+    Application::insert([
+        'job_id' => $job_id,
+        'user_id' => $user_id,
+        'application_status' => 'pending', // Default status
+        'applied_at' => now(),
+    ]);
+
+   return redirect()->route('JobDetails',$job_id)->with('success','appplied succefully');
+}
+
+public function deleteApplication($job_id)
+{
+    $user_id = auth()->user()->id;
+
+    // Check if the application exists
+    $existingApplication = Application::where('job_id', $job_id)
+        ->where('user_id', $user_id)
+        ->first();
+
+    if ($existingApplication) {
+        // Delete the application
+        Application::where('job_id', $job_id)
+            ->where('user_id', $user_id)
+            ->delete();
+
+        return redirect()->route('JobDetails', $job_id)->with('success', 'Your application has been deleted.');
+    }
+
+    return redirect()->route('JobDetails', $job_id)->with('error', 'You have not applied for this job.');
+}
+
+
+////////////////////
+
 
     
     }

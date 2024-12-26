@@ -11,7 +11,7 @@
             <select class="select" name="user_id" required>
                 @foreach ($users as $user)
                     <option value="{{ $user->id }}" {{ $user->id == $application->user_id ? 'selected' : '' }}>
-                        {{ $user->name }}
+                        {{ $user->first_name }}
                     </option>
                 @endforeach
             </select>

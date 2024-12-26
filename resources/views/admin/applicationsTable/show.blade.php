@@ -14,7 +14,7 @@
     <div class="category-container">
         <div class="category">
             {{-- <Small>{{ $application->user->name}} Application</Small> --}}
-            <span class="mt-4">{{ $application->user->name . ' ' . $application->user->last_name ?? 'N/A' }} #
+            <span class="mt-4">{{ $application->user->first_name . ' ' . $application->user->last_name ?? 'N/A' }} #
                 {{ $application->application_id }}</span>
             <table table class="job-table Tapplication">
                 <tr>
