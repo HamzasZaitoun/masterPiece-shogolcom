@@ -15,32 +15,40 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+    
     public function show(Request $request): View
-    {
-        // dd($request->user());
-        
-        // get user posts
-        $userPosts = Job::where('user_id', $request->user()->id)->paginate(5);
+{
+    // Get the logged-in user
+    $user = $request->user();
 
-        // get user pending applications 
-        $pendingApplications = Application::where('user_id', $request->user()->id)
+    // Get user posts (jobs posted by the user)
+    $userPosts = Job::where('user_id', $user->id)->where('job_status', 'open')
+    ->orderBy('created_at', 'desc') 
+    ->paginate(5);
+
+
+    // Get user pending applications
+    $pendingApplications = Application::where('user_id', $user->id)
         ->where('application_status', 'pending')
         ->paginate(5);
 
-        //get user archived posts
-        $archivedPosts=Job::where('user_id',$request->user()->id)->where('job_visibility','private')->paginate(5);
-    
-        // dd($pendingApplications);
-        return view('user.profile.profile', [
-            'user' => $request->user(),
-            'userPosts'=>$userPosts,
-            'pendingApplications'=> $pendingApplications,
-            'archivedPosts'=>$archivedPosts,
-        ]);
-    }
+    // Get user archived posts (private jobs)
+    $archivedPosts = Job::where('user_id', $user->id)
+        ->where('job_visibility', 'private')
+        ->paginate(5);
+
+    // Get user current jobs
+    $currentJobs = $this->getCurrentJobs($user->id);
+    // dd($currentJobs);
+    return view('user.profile.profile', [
+        'user' => $user,
+        'userPosts' => $userPosts,
+        'pendingApplications' => $pendingApplications,
+        'archivedPosts' => $archivedPosts,
+        'currentJobs'=>$currentJobs,
+    ]);
+}
+
 
 
     public function edit(Request $request): View
@@ -112,6 +120,31 @@ public function showProfile($id)
             'userPosts'=>$userPosts,
         ]);
 }
+
+
+
+
+
+public function getCurrentJobs($userId)
+{
+    // First query: Select closed jobs for the user
+    $closedJobsQuery = Job::where('user_id', $userId)
+        ->where('job_status', 'closed');
+
+    // Second query: Select jobs from accepted applications for the user
+    $acceptedApplicationsQuery = Application::join('jobs', 'applications.job_id', '=', 'jobs.job_id')
+        ->select('jobs.*') // Select only job fields
+        ->where('applications.user_id', $userId)
+        ->where('applications.application_status', 'accepted');
+
+    // Combine both queries using UNION ALL and get the results
+    $allJobs = $closedJobsQuery
+        ->unionAll($acceptedApplicationsQuery)
+        ->get();
+
+    return $allJobs;
+}
+
 
 
     /**

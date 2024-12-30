@@ -36,21 +36,107 @@
     <hr>
     <!-- Navigation Bar for Tabs -->
     <div class="content-nav">
-        <button class="tab-link active" data-tab="posts">{{$user->first_name .'\'s'}} Posts</button>
+        @if(auth()->check() && auth()->user()->id === $user->id)
+        <button class="tab-link text-danger" data-tab="current">your current job!</button>
+        @endif
+        <button class="tab-link active" data-tab="posts">
+            @if(auth()->user()->id === $user->id)
+            Your
+            @else
+            {{$user->first_name .'\'s'}} 
+            @endif
+            Posts</button>
 
         @if(auth()->check() && auth()->user()->id === $user->id)
-        <button class="tab-link" data-tab="pending">Pending jobs</button>
+        <button class="tab-link" data-tab="pending"> Your Pending applications</button>
         @endif
 
         <button class="tab-link" data-tab="completed">Completed jobs</button>
 
         @if(auth()->check() && auth()->user()->id === $user->id)
-        <button class="tab-link" data-tab="archived">archived posts</button>
+        <button class="tab-link" data-tab="archived">Your archived posts</button>
         @endif
 
 
     </div>
     <!--user posts section -->
+    @if(auth()->check() && auth()->user()->id === $user->id)
+    <div class="content-section" id="current"style="display: block;">
+        <!-- Header with Title and Add Button -->
+        <!-- Centered Posts Container -->
+        <div class="posts-list">
+        <div class="job-thumb d-flex">
+                                
+
+            <div class="col-lg-12 col-12">
+
+                @foreach ($currentJobs as $job)
+                    <div class="job-thumb d-flex">
+                        <div class="job-image-wrap bg-white shadow-lg">
+                            <img src="{{ $job->job_media ? asset('uploads/jobs/' . $job->job_media) : asset('assets/user/images/defaults/defaultJob.jpg') }}"
+                                class="urgent-job-image img-fluid" alt="">
+
+                        </div>
+
+                        <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
+                            <div class="mb-3">
+                                <h4 class="job-title mb-lg-0">
+                                    <a href="{{ route('JobDetails', $job->job_id) }}"
+                                        class="job-title-link">{{ \Illuminate\Support\Str::limit($job->job_title, 15, '...') }}</a>
+                                </h4>
+
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <p class="job-location mb-0">
+                                        <i class="custom-icon bi-geo-alt me-1"></i>
+                                        {{ $job->job_governorate . ', ' . $job->job_city }}
+                                    </p>
+
+                                    <p class="job-date mb-0">
+                                        <i class="custom-icon bi-clock me-1"></i>
+                                        {{ $job->created_at->diffForHumans() }}
+                                    </p>
+
+                                    <p class="job-price mb-0">
+                                        <i class="custom-icon bi-cash me-1"></i>
+                                        {{ $job->payment_amount }}
+                                    </p>
+
+                                    <div class="d-flex">
+                                        <p class="mb-0">
+                                            <a href="{{route('filterJobs',['job_type' => $job->job_type,])}}"
+                                                class="badge badge-level">{{ $job->job_type }}</a>
+                                        </p>
+
+                                        <p class="mb-0">
+                                            <a href="{{route('filterJobs',['job_category' => $job->job_category,])}}"
+                                                class="badge badge-level"
+                                                class="badge">{{ $job->category->category_name }}</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="job-section-btn-wrap">
+                            
+                                        <a href="{{ route('JobDetails', $job->job_id) }}" class="custom-btn btn">complete The job!</a>
+                                      
+                              
+
+
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+              
+
+            </div>
+       </div>
+                            <!-- 2 -->
+                          
+        </div>
+    </div>
+    @endif
     <div class="content-section" id="posts"style="display: block;">
         <!-- Header with Title and Add Button -->
 
@@ -144,12 +230,13 @@
         </div>
     </div>
     {{-- end of user posts section --}}
-    @if(auth()->check() && auth()->user()->id === $user->id)
+    @if(auth()->check() && auth()->user()->id === $user->id )
     <div class="content-section" id="pending"  style="display: none;">
     <div class="job-thumb d-flex">
         <div class="col-lg-12 col-12">
            
             @foreach ($pendingApplications as $application)
+            @if($application->job) 
                 <div class="job-thumb d-flex">
                     <div class="job-image-wrap bg-white shadow-lg">
                         <img src="{{ $application->job->job_media ? asset('uploads/jobs/' . $application->job->job_media) : asset('assets/user/images/defaults/defaultJob.jpg') }}"
@@ -203,6 +290,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             @endforeach
 
             <div class="pagination-container">

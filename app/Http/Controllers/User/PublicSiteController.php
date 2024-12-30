@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\WebsiteReviewController;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Governorate;
 use App\Models\Job;
+use App\Models\Review;
 use App\Models\Application;
 
 class PublicSiteController extends Controller
@@ -14,16 +16,28 @@ class PublicSiteController extends Controller
     public function showLandingPage() {
         $categories = Category::all(); 
         
-        
+        //get recent jobs
         $recentJobs = Job::orderBy('created_at', 'desc')->limit(6)->get();
-    
         
+        // $existingApplication = Application::where('job_id', $job->job_id)
+        // ->where('user_id', auth()->id())
+        // ->first();
+        // $hasApplied = $existingApplication ? true : false;
+        
+        //get urgent jobs
         $urgentJobs = Job::where('is_urgent', true)->limit(5)->get();
+
+        //get testimonials
+        $testimonials=Review::where('is_approved',1)->get();
+        // dd($testimonials);
+
         // dd($categories);
         return view('user.homePage.index', [
             'categories' => $categories,
             'recentJobs' => $recentJobs,
-            'urgentJobs' => $urgentJobs
+            'urgentJobs' => $urgentJobs,
+            'testimonials'=>$testimonials,
+            // 'hasApplied'=>$hasApplied
         ]);
     }
 
@@ -87,16 +101,31 @@ class PublicSiteController extends Controller
 
         public function showJobDetails($id)
         {
+            //find the job 
             $job =Job::findOrFail($id);
+
+            //get similer jobs
             $similerJobs = Job::where('job_category', $job->job_category)->where('user_id', '!=', auth()->id())->limit(3)->get();
+
+            //check if the user applied for the job
             $existingApplication = Application::where('job_id', $job->job_id)
             ->where('user_id', auth()->id())
             ->first();
+
+            //store the check result
             $hasApplied = $existingApplication ? true : false;
+
+            //check if the user accepted in the job
+            $isAccepted=$existingApplication?($existingApplication->application_status === 'accepted'):false;
+        
+            //get all job applications
             $jobApplications=Application::where('job_id',$job->job_id)->where('application_status','pending')->paginate(3);
 
+            //get all the accepted workers in the job
+            $workers=Application::where('job_id',$job->job_id)->where('application_status', 'accepted')->paginate(3);
+
             return view('user.jobs.jobDetails',compact('job','similerJobs',
-            'hasApplied','jobApplications'));
+            'hasApplied','jobApplications','isAccepted','workers'));
         }
 
         public function showJobs()

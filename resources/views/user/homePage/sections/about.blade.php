@@ -16,12 +16,14 @@
 
             <div class="col-lg-6 col-12">
                 <div class="custom-text-block">
-                    <h2 class="text-white mb-2">Introduction Gotto</h2>
+                    <h2 class="text-white mb-2">Shogholcom</h2>
 
-                    <p class="text-white">Gotto Job is a free website template for job portals. This layout is based on Bootstrap 5 CSS framework. Thank you for visiting <a href="https://www.tooplate.com" target="_parent">Tooplate website</a>. Images are from <a href="https://www.freepik.com/" target="_blank">FreePik</a> website.</p>
+                    <p class="text-white">
+                        Shogholcom is a dynamic platform designed to connect job seekers with employers offering short-term, seasonal, or temporary opportunities. Whether you're looking to fill a position for a few days, weeks, or during peak seasons, Shogholcom makes it easy to post and manage job listings. Job seekers can browse and apply for available roles, engage directly with employers, and track the status of their applications—all in one place.
+                    </p>
 
                     <div class="custom-border-btn-wrap d-flex align-items-center mt-5">
-                        <a href="about.php" class="custom-btn custom-border-btn btn me-4">Get to know us</a>
+                        <a href="{{route('about')}}" class="custom-btn custom-border-btn btn me-4">Get to more about know us</a>
 
                         <a href="#job-section" class="custom-link smoothscroll">Explore Jobs</a>
                     </div>

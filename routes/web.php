@@ -3,6 +3,7 @@
 use App\Http\Controllers\User\PublicSiteController;
 use App\Http\Controllers\User\UserJobController;
 use App\Http\Controllers\User\UserApplicationController;
+use App\Http\Controllers\User\UserContactController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -49,15 +50,21 @@ Route::get('/jobs/{job_id}/apply', [PublicSiteController::class, 'applyToJob'])-
 Route::get('/jobs/{job_id}/delete-application', [PublicSiteController::class, 'deleteApplication'])->name('deleteApplication');
 
 Route::get('/jobs/{job_id}/archiveJob', [UserJobController::class, 'archiveJob'])->name('archiveJob');
-
+Route::post('/jobs/cancelJob/{id}', [UserJobController::class, 'cancelJob'])->name('cancelJob');
 
 
 //////////
 //application routes
 Route::get('/jobs/reject/{id}', [UserApplicationController::class, 'regectApplication'])->name('regectApplication');
+Route::get('/jobs/accept/{id}', [UserApplicationController::class, 'acceptApplication'])->name('acceptApplication');
 
 
 
+
+//////////////////////////
+// contact routes 
+Route::get('/contact',[UserContactController::class, 'show'])->name('contact');
+Route::post('/storeContact',[UserContactController::class, 'store'])->name('contact.store');
 
 
 //login routes
@@ -75,9 +82,7 @@ Route::get('/cities', [CityController::class, 'getCities']);
 Route::get('/about', function () {
     return view('user.aboutus.about'); // Or return the appropriate view
 })->name('about');
-Route::get('/contact', function () {
-    return view('user.contact.contact'); // Or return the appropriate view
-})->name('contact');
+
 
 
 

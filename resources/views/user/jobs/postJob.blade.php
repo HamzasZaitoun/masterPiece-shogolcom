@@ -88,7 +88,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-12">
-                                    <label for="job_detailed_location">Job detaile location(optional):</label>
+                                    <label for="job_detailed_location">Job detailed location:</label>
                                     <input type="text" name="job_detailed_location" id="job_detailed_location" class="form-control"
                                         placeholder="Enter City" maxlength="255" value="{{ old('job_detailed_location') }}">
                                 </div>
@@ -122,6 +122,11 @@
                                     <label for="start_date">Start Date</label>
                                     <input type="date" name="start_date" id="start_date" class="form-control" required
                                     value="{{ old('start_date') }}">
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <label for="job_duration">Job duration(in days)</label>
+                                    <input type="number" name="job_duration" id="job_duration"
+                                        class="form-control" placeholder="enter job duration in days" min="1" value="{{ old('job_duration') }}">
                                 </div>
 
                             </div>

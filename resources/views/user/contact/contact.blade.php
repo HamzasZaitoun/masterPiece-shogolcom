@@ -29,81 +29,79 @@
         <div class="container">
             <div class="row justify-content-center">
 
-                <div class="col-lg-6 col-12 mb-lg-5 mb-3">
-                    <iframe class="google-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4722.136219194832!2d10.772202738834757!3d59.917660271855105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46416fa8eba7e84d%3A0xf4e943975503fa30!2sUrtehagen%20(herb%20garden)!5e1!3m2!1sen!2sth!4v1680951932259!5m2!1sen!2sth" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+               
+                @if ($errors->all())
+                <div>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-danger">
+                                {{ $error }}
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-
-                <div class="col-lg-5 col-12 mb-3 mx-auto">
-                    <div class="contact-info-wrap">
-                        <div class="contact-info d-flex align-items-center mb-3">
-                            <i class="custom-icon bi-building"></i>
-
-                            <p class="mb-0">
-                                <span class="contact-info-small-title">Office</span>
-
-                                Akershusstranda 20, 0150 Oslo, Norway
-                            </p>
-                        </div>
-
-                        <div class="contact-info d-flex align-items-center">
-                            <i class="custom-icon bi-globe"></i>
-
-                            <p class="mb-0">
-                                <span class="contact-info-small-title">Website</span>
-
-                                <a href="#" class="site-footer-link">
-                                    www.jobportal.co
-                                </a>
-                            </p>
-                        </div>
-
-                        <div class="contact-info d-flex align-items-center">
-                            <i class="custom-icon bi-telephone"></i>
-
-                            <p class="mb-0">
-                                <span class="contact-info-small-title">Phone</span>
-
-                                <a href="tel: 305-240-9671" class="site-footer-link">
-                                    305-240-9671
-                                </a>
-                            </p>
-                        </div>
-
-                        <div class="contact-info d-flex align-items-center">
-                            <i class="custom-icon bi-envelope"></i>
-
-                            <p class="mb-0">
-                                <span class="contact-info-small-title">Email</span>
-
-                                <a href="mailto:info@yourgmail.com" class="site-footer-link">
-                                    info@jobportal.co
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            @endif
 
                 <div class="col-lg-8 col-12 mx-auto">
-                    <form class="custom-form contact-form" action="#" method="post" role="form">
-                        <h2 class="text-center mb-4">Project in mind? Let’s Talk</h2>
+                    <form class="custom-form contact-form" action="{{route('contact.store')}}" method="post" role="form">
+                        @csrf
+                        <h2 class="text-center mb-4">Contact us!</h2>
 
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
-                                <label for="first-name">Full Name</label>
-
-                                <input type="text" name="full-name" id="full-name" class="form-control" placeholder="Jack Doe" required>
+                                <label for="full-name">Full Name</label>
+                            
+                                @auth
+                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}"> 
+                                    <input type="text" id="full-name" class="form-control" value="{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}" disabled>
+                                @else
+                                    <!-- If the user is a guest -->
+                                    <input type="text" name="full_name" id="full-name" class="form-control mb-2" placeholder="full name" required>
+                                @endauth
                             </div>
+                            
 
                             <div class="col-lg-6 col-md-6 col-12">
                                 <label for="email">Email Address</label>
-
-                                 <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Jackdoe@gmail.com" required>
+                            
+                                @auth
+                                    <!-- If the user is logged in, prefill the email address -->
+                                    <input type="email" name="email" id="email" class="form-control" value="{{ auth()->user()->email }}" required>
+                                @else
+                                    <!-- If the user is a guest, show an empty email field -->
+                                    <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Jackdoe@gmail.com" required>
+                                @endauth
                             </div>
-
+                            
+                            <div class="form-group">
+                                <label for="category">Why do you contact us?</label>
+                                <select name="category" id="category" class="form-control form-select" required>
+                                    <option value="" disabled selected>why do you contact us?</option>
+                                    <option value="Technical Issue">Technical Issue</option>
+                                    <option value="Feedback">Feedback</option>
+                                    <option value="General Inquiry">General</option>
+                                    @auth
+                                    <option value="Review" selected>Review</option>
+                                    @endauth
+                                </select>
+                            </div>
+                            @auth
+                            <div id="review-section" style="display: block; margin-top: 20px;">
+                                <label for="rating">Please rate us:</label>
+                                <div id="stars" class="star-rating">
+                                    <span class="star" data-value="1">&#9734;</span>
+                                    <span class="star" data-value="2">&#9734;</span>
+                                    <span class="star" data-value="3">&#9734;</span>
+                                    <span class="star" data-value="4">&#9734;</span>
+                                    <span class="star" data-value="5">&#9734;</span>
+                                </div>
+                                <input type="hidden" name="rating" id="rating" value="0">
+                            </div>
+                            @endauth
                             <div class="col-lg-12 col-12">
                                 <label for="message">Message</label>
 
-                                <textarea name="message" rows="6" class="form-control" id="message" placeholder="What can we help you?"></textarea>
+                                <textarea name="message" rows="6" class="form-control" id="message" placeholder="What can we help you?" required></textarea>
                             </div>
 
                             <div class="col-lg-4 col-md-4 col-6 mx-auto">
@@ -124,9 +122,11 @@
             <div class="row">
 
                 <div class="col-lg-6 col-10">
-                    <h2 class="text-white mb-2">Over 10k opening jobs</h2>
-
-                    <p class="text-white">Gotto Job is a free HTML CSS template for job hunting related websites. This layout is based on the famous Bootstrap 5 CSS framework. Thank you for visiting Tooplate website.</p>
+                    <h2 class="text-white mb-2"> job Opportunities</h2>
+                
+                    <p class="text-white">
+                        Shogholcom offers a wide range of seasonal and temporary job openings across various industries. Connect with trusted employers and find the perfect job that matches your skills and schedule—all on Shogholcom.
+                    </p>
                 </div>
 
                 <div class="col-lg-4 col-12 ms-auto">
@@ -143,4 +143,30 @@
     </section>
 
 </main>
+<script>
+    document.getElementById('category').addEventListener('change', function() {
+        const reviewSection = document.getElementById('review-section');
+        if (this.value === 'Review') {
+            reviewSection.style.display = 'block';
+        } else {
+            reviewSection.style.display = 'none';
+            document.getElementById('rating').value = 0; // Reset rating when not in review mode
+        }
+    });
+
+    // Handle star rating
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = this.getAttribute('data-value');
+            document.getElementById('rating').value = rating;
+
+            // Reset all stars and highlight the selected ones
+            stars.forEach(s => s.innerHTML = '&#9734;'); // Empty star
+            for (let i = 0; i < rating; i++) {
+                stars[i].innerHTML = '&#9733;'; // Filled star
+            }
+        });
+    });
+</script>
 @endsection

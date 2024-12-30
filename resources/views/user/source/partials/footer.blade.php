@@ -7,8 +7,8 @@
                     <img src="{{asset('assets/user/images/publicSiteLogo.png')}}" class="img-fluid logo-image">
 
                     <div class="d-flex flex-column">
-                        <strong class="logo-text">Gotto</strong>
-                        <small class="logo-slogan">Online Job Portal</small>
+                        <strong class="logo-text">Shogholcom</strong>
+                        <small class="logo-slogan">Your online seasonal job portal</small>
                     </div>
                 </div>  
 
@@ -16,7 +16,7 @@
                     <i class="custom-icon bi-globe me-1"></i>
 
                     <a href="#" class="site-footer-link">
-                        www.jobbportal.com
+                        www.Shogholcom.com
                     </a>
                 </p>
 
@@ -24,7 +24,7 @@
                     <i class="custom-icon bi-telephone me-1"></i>
 
                     <a href="tel: 305-240-9671" class="site-footer-link">
-                        305-240-9671
+                       +962 795-295-956
                     </a>
                 </p>
 
@@ -32,19 +32,19 @@
                     <i class="custom-icon bi-envelope me-1"></i>
 
                     <a href="mailto:info@yourgmail.com" class="site-footer-link">
-                        info@jobportal.co
+                        info@Shogholcom.co
                     </a>
                 </p>
 
             </div>
 
             <div class="col-lg-2 col-md-3 col-6 ms-lg-auto">
-                <h6 class="site-footer-title">Company</h6>
+                <h6 class="site-footer-title text-center">Company</h6>
 
-                <ul class="footer-menu">
+                <ul class="footer-menu text-center">
                     <li class="footer-menu-item"><a href="{{route('about')}}" class="footer-menu-link">About</a></li>
 
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Blog</a></li>
+                   
 
                     <li class="footer-menu-item"><a href="{{route('jobs')}}" class="footer-menu-link">Jobs</a></li>
 
@@ -53,15 +53,9 @@
             </div>
 
             <div class="col-lg-2 col-md-3 col-6">
-                <h6 class="site-footer-title">Resources</h6>
+                <h6 class="site-footer-title"></h6>
 
-                <ul class="footer-menu">
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Guide</a></li>
-
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">How it works</a></li>
-
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Salary Tool</a></li>
-                </ul>
+                
             </div>
 
             <div class="col-lg-4 col-md-8 col-12 mt-3 mt-lg-0">
@@ -90,7 +84,7 @@
             <div class="row">
 
                 <div class="col-lg-4 col-12 d-flex align-items-center">
-                    <p class="copyright-text">Copyright © Gotto Job 2048</p>
+                    <p class="copyright-text">Copyright © Shogholcom 2025</p>
 
                     <ul class="footer-menu d-flex">
                         <li class="footer-menu-item"><a href="#" class="footer-menu-link">Privacy Policy</a></li>

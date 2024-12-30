@@ -1228,6 +1228,11 @@ nav[aria-label="breadcrumb"] {
 .contact-form button[type="submit"] {
   margin-bottom: 0;
 }
+.star-rating .star {
+  font-size: 30px;
+  cursor: pointer;
+  color: #ffcc00;
+}
 
 .google-map {
   display: block;

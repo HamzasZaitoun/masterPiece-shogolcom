@@ -27,13 +27,11 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{ in_array(Route::currentRouteName(), ['job-listings', 'job-details', 'post-job']) ? 'active' : '' }}" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Jobs</a>
             
-                        {{-- <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                            <li><a class="dropdown-item {{ Route::currentRouteName() == '' ? 'active' : '' }}" href="{{ route('job-listings') }}">Job Listings</a></li>
+                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                            <li><a class="dropdown-item {{ Route::currentRouteName() == '' ? 'active' : '' }}" href="{{ route('jobs') }}">Job Listings</a></li>
             
-                            <li><a class="dropdown-item {{ Route::currentRouteName() == '' ? 'active' : '' }}" href="{{ route('job-details') }}">Job Details</a></li>
-            
-                            <li><a class="dropdown-item {{ Route::currentRouteName() == '' ? 'active' : '' }}" href="{{ route('post-job') }}">Post a Job</a></li>
-                        </ul> --}}
+                            <li><a class="dropdown-item {{ Route::currentRouteName() == '' ? 'active' : '' }}" href="{{ route('postJob') }}">Post a Job</a></li>
+                        </ul>
                     </li>
             
                     <li class="nav-item">

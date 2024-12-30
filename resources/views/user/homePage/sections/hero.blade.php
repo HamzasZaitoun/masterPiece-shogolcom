@@ -8,7 +8,7 @@
                 <div class="hero-section-text mt-5">
                     <h6 class="text-white">post seasonal jobs or apply for one.</h6>
 
-                    <h1 class="hero-title text-white mt-4 mb-4">Find the Perfect Job<br> or Post One Today!</h1>
+                    <h1 class="hero-title text-white mt-4 mb-4">Find the Perfect seasonal Job<br> or Post One Today!</h1>
                     @auth
                     <a href="{{route('postJob')}}" class="custom-btn text-white hero-border-btn custom-border-btn btn">Post Now</a>
                     @endauth

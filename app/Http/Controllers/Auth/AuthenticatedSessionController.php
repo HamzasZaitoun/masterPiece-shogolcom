@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('admin.dashboard'); 
             }
 
-            return redirect()->route('home'); 
+            return redirect()->intended(); 
         }
 
         // If the credentials are incorrect, or the user is not found
@@ -58,6 +58,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->back();
     }
 }

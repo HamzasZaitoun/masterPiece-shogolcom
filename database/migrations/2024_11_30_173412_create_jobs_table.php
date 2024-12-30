@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('job_description');
             $table->string('job_governorate', 255);
             $table->string('job_city', 255);
-            $table->string('job_detailed_location', 255);
+            $table->string('job_detailed_location', 255)->nullable();
             $table->enum('job_type', ['day', 'month', 'project']);
             $table->decimal('payment_amount', 10, 2);
             $table->integer('job_duration')->nullable(); // Optional
