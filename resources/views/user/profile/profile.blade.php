@@ -69,7 +69,7 @@
                                 
 
             <div class="col-lg-12 col-12">
-
+                
                 @foreach ($currentJobs as $job)
                     <div class="job-thumb d-flex">
                         <div class="job-image-wrap bg-white shadow-lg">

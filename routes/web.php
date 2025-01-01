@@ -57,6 +57,7 @@ Route::post('/jobs/cancelJob/{id}', [UserJobController::class, 'cancelJob'])->na
 //application routes
 Route::get('/jobs/reject/{id}', [UserApplicationController::class, 'regectApplication'])->name('regectApplication');
 Route::get('/jobs/accept/{id}', [UserApplicationController::class, 'acceptApplication'])->name('acceptApplication');
+Route::get('/jobs/complete/{id}', [UserApplicationController::class, 'completeJob'])->name('completeJobByApplication');
 
 
 

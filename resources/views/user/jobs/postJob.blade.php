@@ -44,9 +44,9 @@
                                 </div>
                                 
                                 <div class="col-lg-4 col-md-4 col-12" id="customCategory" style="display:none;">
-                                    <label for="custom_category">Custom Category</label>
+                                    <label for="custom_category"> Category</label>
                                     <input type="text" name="custom_category" id="custom_category" class="form-control"
-                                        placeholder="Enter Custom Category" maxlength="255" value="{{old('custom_category')}}">
+                                        placeholder="Enter job Category" maxlength="255" value="{{old('custom_category')}}">
                                 </div>
                                 
 

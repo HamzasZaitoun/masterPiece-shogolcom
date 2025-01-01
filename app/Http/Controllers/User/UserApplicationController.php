@@ -60,6 +60,17 @@ class UserApplicationController extends Controller
         }
     }
     
+    public function completeJob($id)
+    {
+        $application=Application::findOrFail($id);
+        if($application && $application->application_status==='accepted')
+        {
+            $application->completed_at = now();
+            $application->save();
 
+            return redirect()->route('profile')->with('success','job completed succefully');
+        }
+        return redirect()->back()->with('error','something went wrong!');
+    }
 
 }

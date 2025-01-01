@@ -125,7 +125,7 @@ class PublicSiteController extends Controller
             $workers=Application::where('job_id',$job->job_id)->where('application_status', 'accepted')->paginate(3);
 
             return view('user.jobs.jobDetails',compact('job','similerJobs',
-            'hasApplied','jobApplications','isAccepted','workers'));
+            'hasApplied','jobApplications','isAccepted','workers','existingApplication'));
         }
 
         public function showJobs()

@@ -101,9 +101,9 @@
                                         </a>
                                         <a href="#" class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">Save this
                                             job</a>
-                                    @elseif($isAccepted)
+                                    @elseif($isAccepted && @isset($existingApplication))
                                         <a class="custom-btn btn mt-2 btn-primary"
-                                            onclick="confirmAction('{{ route('applyToJob', $job->job_id) }}', 'did you read all the job information!', 'Yes, apply now!', 'keep reading', 'info')">
+                                            onclick="confirmAction('{{ route('completeJobByApplication',$existingApplication->application_id) }}', 'did you finish all the job requirements?', 'Yes, mark the job as completed!', 'wait! i forgot something', 'info')">
                                             Complete the job
 
                                         </a>
@@ -416,10 +416,14 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
                     <div class="row align-items-center">
 
                         <div class="col-lg-6 col-12 mb-lg-4">
-                            <h3>job workers</h3>
+                            @if(auth()->user()->id===$job->user_id)
+                            <h3>Your workers</h3>
 
-                            <p><strong>Over 10k opening jobs</strong> Lorem Ipsum dolor sit amet, consectetur adipsicing
-                                kengan omeg kohm tokito adipcingi elit eismuod larehai</p>
+                            <p><strong>bellow you find the list of the workers working in your job </strong></p>
+                            @else
+                            <h3>Job workers</h3>
+                            <p><strong>bellow you find the list of the workers working on this job with you</strong></p>
+                            @endif
                         </div>
 
                         <div class="col-lg-4 col-12 d-flex ms-auto mb-5 mb-lg-4">
@@ -429,7 +433,11 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="job-thumb job-thumb-box">
                                     <div class="job-image-box-wrap">
+                                        @if(auth()->user()->id===$application->user_id)
+                                        <a href="{{ route('profile')}}">
+                                        @else
                                         <a href="{{ route('userProfile', $application->user_id) }}">
+                                        @endif
                                             <img src="{{ $application->user->profile_picture ? asset('uploads/users/' . $application->user->profile_picture) : asset('assets/user/images/defaults/defaultPFP2.jpg') }}"
                                                 class="job-image img-fluid" alt="go to profile">
                                         </a>
@@ -441,7 +449,7 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
                                         <h4 class="job-title">
                                             @if(auth()->user()->id===$application->user_id)
 
-                                            <a href="{{ route('profile', $application->user_id) }}"
+                                            <a href="{{ route('profile')}}"
                                                 class="job-title-link">You</a>
                                             @else
                                             <a href="{{ route('userProfile', $application->user_id) }}"
@@ -457,8 +465,14 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
                                         </div>
                                         <div class="d-flex align-items-center">
                                             
-                                           <p> job progress: {{$application->completed_at ? $application->user->first_name . ' completed the job' . $application->completed_at->diffForHumans(): $application->user->first_name .' is still working'}}
-                                           </p>
+                                            <p class="{{ $application->completed_at ? 'text-success' : 'text-danger' }}">
+                                                {{ $application->completed_at 
+                                                    ? $application->user->first_name . ' completed the job succefully ' 
+                                                    : $application->user->first_name . ' is still working' }}
+                                            </p>
+                                            
+                                            
+                                            
                                         </div>
                                         
                                     </div>
