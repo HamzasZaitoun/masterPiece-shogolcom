@@ -66,10 +66,13 @@
         <!-- Centered Posts Container -->
         <div class="posts-list">
         <div class="job-thumb d-flex">
-                                
-
+            
+            
+            @if($currentJobs->isEmpty())
+            <p>your jobs will appear here</p>
+            @else
             <div class="col-lg-12 col-12">
-                
+
                 @foreach ($currentJobs as $job)
                     <div class="job-thumb d-flex">
                         <div class="job-image-wrap bg-white shadow-lg">
@@ -127,10 +130,8 @@
                         </div>
                     </div>
                 @endforeach
-
-              
-
             </div>
+            @endif
        </div>
                             <!-- 2 -->
                           
@@ -233,8 +234,11 @@
     @if(auth()->check() && auth()->user()->id === $user->id )
     <div class="content-section" id="pending"  style="display: none;">
     <div class="job-thumb d-flex">
-        <div class="col-lg-12 col-12">
-           
+
+        @if($pendingApplications->isEmpty())
+         <p> there is no pending applications, <a href="{{route('jobs')}}"> apply for jobs now!</a></p>
+        @else
+        <div class="col-lg-12 col-12">   
             @foreach ($pendingApplications as $application)
             @if($application->job) 
                 <div class="job-thumb d-flex">
@@ -298,182 +302,87 @@
             </div>
 
         </div>
+        @endif
     </div>
     </div>
     @endif
 
     
     <div class="content-section" id="completed" style="display: none;">
-    <div class="job-thumb d-flex">
-                                <div class="job-image-wrap bg-white shadow-lg">
-                                    <img src="images/logos/google.png" class="job-image img-fluid" alt="">
-                                </div>
 
-                                <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
-                                    <div class="mb-3">
-                                        <h4 class="job-title mb-lg-0">
-                                            <a href="job-details.php" class="job-title-link">Technical Lead</a>
-                                        </h4>
 
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <p class="job-location mb-0">
-                                                <i class="custom-icon bi-geo-alt me-1"></i>
-                                                Kuala, Malaysia
-                                            </p>
+        @if($completedJobs->isEmpty())
+        <p> there is no completed jobs... go and accomplish some!</p>
+        @else
 
-                                            <p class="job-date mb-0">
-                                                <i class="custom-icon bi-clock me-1"></i>
-                                                10 hours ago
-                                            </p>
+        <div class="col-lg-12 col-12">
+        @foreach ($completedJobs as $job)
+        <div class="job-thumb d-flex">
+            <div class="job-image-wrap bg-white shadow-lg">
+                <img src="{{ $job->job_media ? asset('uploads/jobs/' . $job->job_media) : asset('assets/user/images/defaults/defaultJob.jpg') }}"
+                    class="urgent-job-image img-fluid" alt="">
 
-                                            <p class="job-price mb-0">
-                                                <i class="custom-icon bi-cash me-1"></i>
-                                                $20k
-                                            </p>
+            </div>
 
-                                            <div class="d-flex">
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge badge-level">Internship</a>
-                                                </p>
+            <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
+                <div class="mb-3">
+                    <h4 class="job-title mb-lg-0">
+                        <h3>{{ \Illuminate\Support\Str::limit($job->job_title, 15, '...') }}</h3>
+                    </h4>
 
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge">Freelance</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 2 -->
-                            <div class="job-thumb d-flex">
-                                <div class="job-image-wrap bg-white shadow-lg">
-                                    <img src="images/logos/apple.png" class="job-image img-fluid" alt="">
-                                </div>
+                    <div class="d-flex flex-wrap align-items-center">
+                        <p class="job-location mb-0">
+                            <i class="custom-icon bi-geo-alt me-1"></i>
+                            {{ $job->job_governorate . ', ' . $job->job_city }}
+                        </p>
 
-                                <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
-                                    <div class="mb-3">
-                                        <h4 class="job-title mb-lg-0">
-                                            <a href="job-details.php" class="job-title-link">Business Director</a>
-                                        </h4>
+                        <p class="job-date mb-0">
+                            <i class="custom-icon bi-clock me-1"></i>
+                            {{ $job->created_at->diffForHumans() }}
+                        </p>
 
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <p class="job-location mb-0">
-                                                <i class="custom-icon bi-geo-alt me-1"></i>
-                                                California, USA
-                                            </p>
+                        <p class="job-price mb-0">
+                            <i class="custom-icon bi-cash me-1"></i>
+                            {{ $job->payment_amount }}
+                        </p>
 
-                                            <p class="job-date mb-0">
-                                                <i class="custom-icon bi-clock me-1"></i>
-                                                1 day ago
-                                            </p>
+                        <div class="d-flex">
+                            <p class="mb-0">
+                                <a href="{{route('filterJobs',['job_type' => $job->job_type,])}}"
+                                    class="badge badge-level">{{ $job->job_type }}</a>
+                            </p>
 
-                                            <p class="job-price mb-0">
-                                                <i class="custom-icon bi-cash me-1"></i>
-                                                $90k
-                                            </p>
+                            <p class="mb-0">
+                                <a href="{{route('filterJobs',['job_category' => $job->job_category,])}}"
+                                    class="badge badge-level"
+                                    class="badge">{{ $job->category->category_name }}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-                                            <div class="d-flex">
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge badge-level">Senior</a>
-                                                </p>
+                <div class="job-section-btn-wrap text-success">
+                    
+                    the job completed on {{$job->updated_at->toDateString();}}
 
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge">Full Time</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                             <!--3  -->
-                             <div class="job-thumb d-flex">
-                                <div class="job-image-wrap bg-white shadow-lg">
-                                    <img src="images/logos/slack.png" class="job-image img-fluid" alt="">
-                                </div>
-
-                                <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
-                                    <div class="mb-3">
-                                        <h4 class="job-title mb-lg-0">
-                                            <a href="job-details.php" class="job-title-link">Dev Ops</a>
-                                        </h4>
-
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <p class="job-location mb-0">
-                                                <i class="custom-icon bi-geo-alt me-1"></i>
-                                                Bangkok, Thailand
-                                            </p>
-
-                                            <p class="job-date mb-0">
-                                                <i class="custom-icon bi-clock me-1"></i>
-                                                40 minutes ago
-                                            </p>
-
-                                            <p class="job-price mb-0">
-                                                <i class="custom-icon bi-cash me-1"></i>
-                                                $75k - 80k
-                                            </p>
-
-                                            <div class="d-flex">
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge badge-level">Senior</a>
-                                                </p>
-
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge">Part Time</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 4 -->
-                            <div class="job-thumb d-flex">
-                                <div class="job-image-wrap bg-white shadow-lg">
-                                    <img src="images/logos/creative-market.png" class="job-image img-fluid" alt="">
-                                </div>
-
-                                <div class="job-body d-flex flex-wrap flex-auto align-items-center ms-4">
-                                    <div class="mb-3">
-                                        <h4 class="job-title mb-lg-0">
-                                            <a href="job-details.php" class="job-title-link">UX Designer</a>
-                                        </h4>
-
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <p class="job-location mb-0">
-                                                <i class="custom-icon bi-geo-alt me-1"></i>
-                                                Bangkok, Thailand
-                                            </p>
-
-                                            <p class="job-date mb-0">
-                                                <i class="custom-icon bi-clock me-1"></i>
-                                                2 hours ago
-                                            </p>
-
-                                            <p class="job-price mb-0">
-                                                <i class="custom-icon bi-cash me-1"></i>
-                                                $100k
-                                            </p>
-
-                                            <div class="d-flex">
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge badge-level">Entry</a>
-                                                </p>
-
-                                                <p class="mb-0">
-                                                    <a href="job-listings.php" class="badge">Remote</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+            </div>
+           
+        </div>
+        @endforeach 
+        </div>
+    @endif
     </div>
     
     @if(auth()->check() && auth()->user()->id === $user->id)
     <div class="content-section" id="archived" style="display: none;">
         
+        @if($archivedPosts->isEmpty())
+        <p>there is no archived posts..</p>
+          @else
         <div class="col-lg-12 col-12">
-
+                
+               
                 @foreach ($archivedPosts as $job)
                     <div class="job-thumb d-flex">
                         <div class="job-image-wrap bg-white shadow-lg">
@@ -540,11 +449,12 @@
                 <div class="pagination-container">
                     {{ $archivedPosts->render('pagination::bootstrap-5') }}
                 </div>
+               
 
             </div> 
-        
-    </div>
-    @endif
+            @endif
+        </div>
+        @endif
 <script>
     document.addEventListener("DOMContentLoaded", function () {
     const tabLinks = document.querySelectorAll(".tab-link");

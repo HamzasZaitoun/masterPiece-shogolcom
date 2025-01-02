@@ -10,11 +10,17 @@ class CreateUserToUserReviewsTable extends Migration
     {
         Schema::create('user_to_user_reviews', function (Blueprint $table) {
             $table->id('review_id'); 
+            $table->foreignId('reviewer_id')->constrained('users');
+            $table->foreignId('reviewed_id')->constrained('users');
+            $table->enum('reviewer_role', ['worker', 'employer']);
+            $table->foreignId('job_id')->constrained('jobs');
             $table->foreignId('application_id')->constrained('applications');
-            $table->decimal('rating', 3, 2);
+            $table->integer ('rating');
             $table->text('review_text')->nullable();
             $table->timestamps(); 
             $table->softDeletes();
+          
+
         });
     }
 

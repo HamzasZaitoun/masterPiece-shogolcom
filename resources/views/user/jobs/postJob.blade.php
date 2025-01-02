@@ -184,7 +184,7 @@
     <script>
  $(document).ready(function(){
         $('#job_category').change(function(){
-            if ($(this).val() == '2') {
+            if ($(this).val() == '6') {
                 $('#customCategory').show();
                 $('#jobType').attr('class', 'col-lg-12');
 

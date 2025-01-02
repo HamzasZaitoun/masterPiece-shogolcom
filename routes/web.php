@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\User\PublicSiteController;
+use App\Http\Controllers\User\SearchAndFilterController;
 use App\Http\Controllers\User\UserJobController;
 use App\Http\Controllers\User\UserApplicationController;
 use App\Http\Controllers\User\UserContactController;
@@ -39,25 +40,31 @@ Route::get('/postJob', [PublicSiteController::class, 'showPostJobPage'])->name('
 Route::post('/jobs/create', [PublicSiteController::class, 'createJobPost'])->name('publishJob');
 Route::get('/jobs/{id}', [PublicSiteController::class, 'showJobDetails'])->name('JobDetails');
 Route::get('/jobs', [PublicSiteController::class, 'showJobs'])->name('jobs');
-Route::get('/filterjobs', [PublicSiteController::class, 'showFilterdJobs'])->name('filterJobs');
+
+// search and filter route
+Route::get('/filterjobs', [SearchAndFilterController::class, 'showFilterdJobs'])->name('filterJobs');
+
+
 
 Route::get('/user/{id}', [ProfileController::class, 'showProfile'])->name('userProfile');
 
 
 ////////////////////////
 //job routes
-Route::get('/jobs/{job_id}/apply', [PublicSiteController::class, 'applyToJob'])->name('applyToJob');
-Route::get('/jobs/{job_id}/delete-application', [PublicSiteController::class, 'deleteApplication'])->name('deleteApplication');
 
 Route::get('/jobs/{job_id}/archiveJob', [UserJobController::class, 'archiveJob'])->name('archiveJob');
+Route::get('/jobs/{job_id}/unArchiveJob', [UserJobController::class, 'unArchiveJob'])->name('unArchiveJob');
 Route::post('/jobs/cancelJob/{id}', [UserJobController::class, 'cancelJob'])->name('cancelJob');
+Route::post('/jobs/completeJob/{id}', [UserJobController::class, 'completeJob'])->name('completeJob');
 
 
 //////////
 //application routes
 Route::get('/jobs/reject/{id}', [UserApplicationController::class, 'regectApplication'])->name('regectApplication');
 Route::get('/jobs/accept/{id}', [UserApplicationController::class, 'acceptApplication'])->name('acceptApplication');
-Route::get('/jobs/complete/{id}', [UserApplicationController::class, 'completeJob'])->name('completeJobByApplication');
+Route::post('/jobs/complete/{id}', [UserApplicationController::class, 'completeJobByApplication'])->name('completeJobByApplication');
+Route::get('/jobs/{job_id}/apply', [UserApplicationController::class, 'applyToJob'])->name('applyToJob');
+Route::get('/jobs/{job_id}/delete-application', [UserApplicationController::class, 'deleteApplication'])->name('deleteApplication');
 
 
 

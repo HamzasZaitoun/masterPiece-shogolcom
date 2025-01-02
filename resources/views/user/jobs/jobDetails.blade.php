@@ -1,6 +1,6 @@
 @extends('user.source.template')
 @section('content')
-  
+
     <main>
         {{-- @dd($job->job_status) --}}
         <header class="site-header">
@@ -75,11 +75,11 @@
 
                             <p><strong>Number of workers needed: </strong>{{ $job->number_of_workers }}</p>
 
-                            <p><strong>job duration: </strong>{{ $job->job_duration}} days</p>
+                            <p><strong>job duration: </strong>{{ $job->job_duration }} days</p>
 
 
                             {{-- check if the user is not the job owner//job seeker mode --}}
-                            @if (!auth()->check() || (auth()->check() && auth()->user()->id != $job->user_id)) 
+                            @if (!auth()->check() || (auth()->check() && auth()->user()->id != $job->user_id))
 
                                 <div class="d-flex justify-content-center flex-wrap mt-5 border-top pt-4">
                                     @if ($hasApplied && $job->job_status != 'closed')
@@ -93,26 +93,37 @@
                                         <a href="{{ route('login') }}" class="custom-btn btn mt-2 btn-primary">
                                             login to apply
                                         </a>
-                                        
                                     @elseif(!$hasApplied)
                                         <a class="custom-btn btn mt-2 btn-primary"
                                             onclick="confirmAction('{{ route('applyToJob', $job->job_id) }}', 'did you read all the job information!', 'Yes, apply now!', 'keep reading', 'info')">
                                             Apply Now
                                         </a>
-                                        <a href="#" class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">Save this
+                                        <a href="#" class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">Save
+                                            this
                                             job</a>
-                                    @elseif($isAccepted && @isset($existingApplication))
-                                        <a class="custom-btn btn mt-2 btn-primary"
-                                            onclick="confirmAction('{{ route('completeJobByApplication',$existingApplication->application_id) }}', 'did you finish all the job requirements?', 'Yes, mark the job as completed!', 'wait! i forgot something', 'info')">
-                                            Complete the job
+                                    @elseif($isAccepted && isset($existingApplication))
+                                        <!-- Complete Job for worker Button  -->
+                                        @if($isCompleted)
+                                        <button class="custom-btn btn mt-2" data-bs-toggle="modal"
+                                        data-bs-target="#completeJobModal" disabled>
+                                      well done, you completed this job!
+                                    </button>
+                                        @else
+                                        <a class="custom-btn btn mt-2" data-bs-toggle="modal"
+                                        data-bs-target="#completeJobModal">
+                                        Complete the job
+                                    </a>
+                                        @endif
+                                      
 
-                                        </a>
-                                        <a href="{{ route('archiveJob', $job->job_id) }}"
+                                        
+
+                                        <a href="{{ route('contact') }}"
                                             class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">report a problem</a>
                                     @endif
 
 
-                                   
+
 
                                     <div class="job-detail-share d-flex align-items-center">
                                         <p class="mb-0 me-lg-4 me-3">Share:</p>
@@ -122,68 +133,87 @@
                                 </div>
                         </div>
                     </div>
-                    
-
-                @elseif ( auth()->user()->id === $job->user_id)
+                @elseif (auth()->user()->id === $job->user_id)
                     <div class="d-flex justify-content-center flex-wrap mt-5 border-top pt-4">
                         {{-- check if the job is still open so the user can edit and archive the job --}}
-                        @if($job->job_status!='closed')
-                        <a href="#" class="custom-btn btn mt-2">edit job details</a>
+                        @if ($job->job_status != 'closed')
+                            <a href="#" class="custom-btn btn mt-2">edit job details</a>
 
-                        <a href="{{ route('archiveJob', $job->job_id) }}"
-                            class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">archive job</a>
-                        <!-- Cancel Job Button (Triggers the Modal) -->
-<a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#cancelJobModal"
-class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">Cancel job post</a>
+                            @if($job->job_visibility != 'public')
+                            <a href="{{ route('unArchiveJob', $job->job_id) }}"
+                                class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">unarchive job</a>
+                            @else
+                            <a href="{{ route('archiveJob', $job->job_id) }}"
+                                class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">archive job</a>
+                            @endif
+                           
 
-<!-- Cancel Job Modal -->
-<div class="modal fade" id="cancelJobModal" tabindex="-1" aria-labelledby="cancelJobModalLabel" aria-hidden="true">
-<div class="modal-dialog">
- <div class="modal-content">
-   <div class="modal-header">
-     <h5 class="modal-title" id="cancelJobModalLabel">Cancel Job</h5>
-     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-   </div>
-   <div class="modal-body">
-     <!-- Form to Select Cancellation Reason -->
-     <form action="{{ route('cancelJob', $job->job_id) }}" method="POST">
-       @csrf
-       <div class="mb-3">
-         <label for="cancellationReason" class="form-label">Reason for Cancellation</label>
-         <select class="form-select" name="cancellation_reason" id="cancellationReason" required>
-           <option value="" selected disabled>Select a reason</option>
-           <option value="No longer needed">No longer needed</option>
-           <option value="Found someone elsewhere">Found someone elsewhere</option>
-           <option value="it took too much time">it took too much time</option>
-           <option value="Other">Other</option>
-         </select>
-       </div>
+                            <!-- Cancel Job Button (Triggers the Modal) -->
+                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#cancelJobModal"
+                                class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">Cancel job
+                                post</a>
 
-       <!-- Hidden Input Field for "Other" Reason -->
-       <div class="mb-3 d-none" id="otherReasonDiv">
-         <label for="otherReason" class="form-label">Please specify</label>
-         <input type="text" class="form-control" name="other_reason" id="otherReason" placeholder="Enter reason" maxlength="255">
-       </div>
+                            <!-- Cancel Job Modal -->
+                            <div class="modal fade" id="cancelJobModal" tabindex="-1"
+                                aria-labelledby="cancelJobModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="cancelJobModalLabel">Cancel Job</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Form to Select Cancellation Reason -->
+                                            <form action="{{ route('cancelJob', $job->job_id) }}" method="POST">
+                                                @csrf
+                                                <div class="mb-3">
+                                                    <label for="cancellationReason" class="form-label">Reason for
+                                                        Cancellation</label>
+                                                    <select class="form-select" name="cancellation_reason"
+                                                        id="cancellationReason" required>
+                                                        <option value="" selected disabled>Select a reason</option>
+                                                        <option value="No longer needed">No longer needed</option>
+                                                        <option value="Found someone elsewhere">Found someone elsewhere
+                                                        </option>
+                                                        <option value="it took too much time">it took too much time
+                                                        </option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
 
-       <div class="modal-footer">
-         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-         <button type="submit" class="btn btn-danger">Submit Cancellation</button>
-       </div>
-     </form>
-   </div>
- </div>
-</div>
-</div>
+                                                <!-- Hidden Input Field for "Other" Reason -->
+                                                <div class="mb-3 d-none" id="otherReasonDiv">
+                                                    <label for="otherReason" class="form-label">Please specify</label>
+                                                    <input type="text" class="form-control" name="other_reason"
+                                                        id="otherReason" placeholder="Enter reason" maxlength="255">
+                                                </div>
 
-
-                        @elseif($job->job_status==='closed')
-
-                        <a class="custom-btn btn mt-2 btn-primary"
-                        onclick="confirmAction('{{ route('applyToJob', $job->job_id) }}', 'did you read all the job information!', 'Yes, apply now!', 'keep reading', 'info')">
-                        Complete the job
-                         </a>
-                        <a href="{{ route('archiveJob', $job->job_id) }}"
-                            class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">report a problem</a>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-danger">Submit
+                                                        Cancellation</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @elseif($job->job_status === 'closed')
+                            @if ($isCompletedByWorkers)
+                            <a class="custom-btn btn mt-2" data-bs-toggle="modal"
+                            data-bs-target="#completeJobModal2">
+                            Complete the job
+                        </a>
+                            @else
+                                <button class="custom-btn btn mt-2" disabled>
+                                    Complete the job
+                                </button>
+                                <span class="text-danger"> all workers should complete thair job* </span>
+                            @endif
+                            <a href="{{ route('contact') }}"
+                                class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">report a problem</a>
                         @endif
                         <div class="job-detail-share d-flex align-items-center">
                             <p class="mb-0 me-lg-4 me-3">Share:</p>
@@ -213,12 +243,10 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
                     <div class="d-flex align-items-center">
                         <div class="job-image-wrap d-flex align-items-center bg-white shadow-lg mb-3">
                             <img src="{{ $job->user->profile_picture ? asset('uploads/users/' . $job->user->profile_picture) : asset('assets/user/images/defaults/defaultPFP2.jpg') }}"
-                                class="urgent-job-image" alt="">
+                                class="urgent-job-image align-items-center" alt="">
                         </div>
 
-                        <a href="#" class="bi-bookmark ms-auto me-2"></a>
 
-                        <a href="#" class="bi-heart"></a>
                     </div>
 
                     <h6 class="mt-3 mb-2">About
@@ -243,8 +271,6 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
 
         {{-- similer jobs section --}}
         @if (!auth()->check() || (auth()->check() && auth()->user()->id != $job->user_id && $job->job_status === 'open'))
-        
-           
             <section class="job-section section-padding">
                 <div class="container">
                     <div class="row align-items-center">
@@ -341,8 +367,7 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
                 </div>
             </section>
 
-        {{-- end of similer jobs section --}}
-
+            {{-- end of similer jobs section --}}
         @elseif(auth()->user()->id === $job->user_id && $job->job_status === 'open')
             {{-- job applications section --}}
             <section class="job-section section-padding">
@@ -408,21 +433,19 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
                 </div>
             </section>
             {{-- end of job applcations section --}}
-
         @elseif((auth()->user()->id === $job->user_id && $job->job_status === 'closed') || $isAccepted)
-
             <section class="job-section section-padding">
                 <div class="container">
                     <div class="row align-items-center">
 
                         <div class="col-lg-6 col-12 mb-lg-4">
-                            @if(auth()->user()->id===$job->user_id)
-                            <h3>Your workers</h3>
+                            @if (auth()->user()->id === $job->user_id)
+                                <h3>Your workers</h3>
 
-                            <p><strong>bellow you find the list of the workers working in your job </strong></p>
+                                <p><strong>bellow you find the list of the workers working in your job </strong></p>
                             @else
-                            <h3>Job workers</h3>
-                            <p><strong>bellow you find the list of the workers working on this job with you</strong></p>
+                                <h3>Job workers</h3>
+                                <p><strong>bellow you find the list of the workers working on this job with you</strong></p>
                             @endif
                         </div>
 
@@ -433,13 +456,13 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="job-thumb job-thumb-box">
                                     <div class="job-image-box-wrap">
-                                        @if(auth()->user()->id===$application->user_id)
-                                        <a href="{{ route('profile')}}">
-                                        @else
-                                        <a href="{{ route('userProfile', $application->user_id) }}">
+                                        @if (auth()->user()->id === $application->user_id)
+                                            <a href="{{ route('profile') }}">
+                                            @else
+                                                <a href="{{ route('userProfile', $application->user_id) }}">
                                         @endif
-                                            <img src="{{ $application->user->profile_picture ? asset('uploads/users/' . $application->user->profile_picture) : asset('assets/user/images/defaults/defaultPFP2.jpg') }}"
-                                                class="job-image img-fluid" alt="go to profile">
+                                        <img src="{{ $application->user->profile_picture ? asset('uploads/users/' . $application->user->profile_picture) : asset('assets/user/images/defaults/defaultPFP2.jpg') }}"
+                                            class="job-image img-fluid" alt="go to profile">
                                         </a>
 
 
@@ -447,34 +470,32 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
 
                                     <div class="job-body">
                                         <h4 class="job-title">
-                                            @if(auth()->user()->id===$application->user_id)
-
-                                            <a href="{{ route('profile')}}"
-                                                class="job-title-link">You</a>
+                                            @if (auth()->user()->id === $application->user_id)
+                                                <a href="{{ route('profile') }}" class="job-title-link">You</a>
                                             @else
-                                            <a href="{{ route('userProfile', $application->user_id) }}"
-                                                class="job-title-link">{{ $application->user->first_name . ' ' .$application->user->last_name }}</a>
+                                                <a href="{{ route('userProfile', $application->user_id) }}"
+                                                    class="job-title-link">{{ $application->user->first_name . ' ' . $application->user->last_name }}</a>
                                             @endif
                                         </h4>
 
 
 
                                         <div class="d-flex align-items-center">
-                                           <p> phone: {{$application->user->mobile_number}}
-                                           </p>
+                                            <p> phone: {{ $application->user->mobile_number }}
+                                            </p>
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            
+
                                             <p class="{{ $application->completed_at ? 'text-success' : 'text-danger' }}">
-                                                {{ $application->completed_at 
-                                                    ? $application->user->first_name . ' completed the job succefully ' 
+                                                {{ $application->completed_at
+                                                    ? $application->user->first_name . ' completed the job succefully '
                                                     : $application->user->first_name . ' is still working' }}
                                             </p>
-                                            
-                                            
-                                            
+
+
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -494,9 +515,11 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
 
                     <div class="col-lg-6 col-10">
                         <h2 class="text-white mb-2"> job Opportunities</h2>
-                    
+
                         <p class="text-white">
-                            Shogholcom offers a wide range of seasonal and temporary job openings across various industries. Connect with trusted employers and find the perfect job that matches your skills and schedule—all on Shogholcom.
+                            Shogholcom offers a wide range of seasonal and temporary job openings across various industries.
+                            Connect with trusted employers and find the perfect job that matches your skills and
+                            schedule—all on Shogholcom.
                         </p>
                     </div>
 
@@ -514,24 +537,163 @@ class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3 bg-danger text-white">
             </div>
         </section>
 
+      {{-- review modals  --}}
+      <!-- Modal -->
+
+     <!-- Modal for worker review -->
+     @if($existingApplication)
+     <div class="modal fade" id="completeJobModal" tabindex="-1" aria-labelledby="completeJobModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="completeJobModalLabel">Rate the Employer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for rating the employer -->
+                    <form id="completeJobForm" method="POST" action="{{ route('completeJobByApplication', $existingApplication->application_id) }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="question1" class="form-label">Did the employer fulfill all the job requirements?</label>
+                            <select id="question1" name="question1" class="form-select">
+                                <option value="1">1 - Poor</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="3">3 - Good</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="5">5 - Excellent</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="question2" class="form-label">Was the employer communicative and responsive?</label>
+                            <select id="question2" name="question2" class="form-select">
+                                <option value="1">1 - Poor</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="3">3 - Good</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="5">5 - Excellent</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="question3" class="form-label">Would you recommend this employer to others?</label>
+                            <select id="question3" name="question3" class="form-select">
+                                <option value="1">1 - Poor</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="3">3 - Good</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="5">5 - Excellent</option>
+                            </select>
+                        </div>
+                        <!-- Review text field -->
+                        <div class="mb-3">
+                            <label for="review_text" class="form-label">Additional Comments(optional)</label>
+                            <textarea id="review_text" name="review_text" class="form-control" rows="3" placeholder="Write your comments here..."></textarea>
+                        </div>
+                        <!-- Submit button to confirm completion -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            
+                            <button type="submit" class="btn btn-success">complete the job</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    {{-- modal for owner review --}}
+    @if(auth()->check() && $job->user_id === auth()->user()->id)
+    <div class="modal fade" id="completeJobModal2" tabindex="-1" aria-labelledby="completeJobModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="completeJobModalLabel">Rate the workers</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for rating the workers -->
+                    <form id="completeJobForm" method="POST" action="{{route('completeJob',$job->job_id)}}">
+                        @csrf
+                        @foreach($workers as $worker)
+                            <div class="mb-3">
+                                <h6>Rating for {{$worker->user->first_name}}</h6>
+                                <input type="hidden" name="ratings[{{$worker->user->id}}][application_id]" value="{{$worker->application_id}}">
+
+                                <label for="question1_{{$worker->user->id}}" class="form-label">Did {{$worker->user->first_name}} fulfill all the job requirements?</label>
+                                <select id="question1_{{$worker->user->id}}" name="ratings[{{$worker->user->id}}][question1]" class="form-select">
+                                    <option value="1">1 - Poor</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="5">5 - Excellent</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="question2_{{$worker->user->id}}" class="form-label">Was {{$worker->user->first_name}} communicative and responsive?</label>
+                                <select id="question2_{{$worker->user->id}}" name="ratings[{{$worker->user->id}}][question2]" class="form-select">
+                                    <option value="1">1 - Poor</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="5">5 - Excellent</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="question3_{{$worker->user->id}}" class="form-label">Would you recommend {{$worker->user->first_name}} to others?</label>
+                                <select id="question3_{{$worker->user->id}}" name="ratings[{{$worker->user->id}}][question3]" class="form-select">
+                                    <option value="1">1 - Poor</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="5">5 - Excellent</option>
+                                </select>
+                            </div>
+
+                            <!-- Review text field -->
+                            <div class="mb-3">
+                                <label for="review_text_{{$worker->user->id}}" class="form-label">Additional Comments (optional)</label>
+                                <textarea id="review_text_{{$worker->user->id}}" name="ratings[{{$worker->user->id}}][review_text]" class="form-control" rows="3" placeholder="Write your comments here..."></textarea>
+                            </div>
+                        @endforeach
+
+                        <!-- Submit button to confirm completion -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Complete the job</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+    
 
 
     </main>
     <script>
- document.getElementById('cancellationReason').addEventListener('change', function() {
-  const otherReasonDiv = document.getElementById('otherReasonDiv');
-  const otherReasonInput = document.getElementById('otherReason');
+        
 
-  // Show the "Other" input field if "Other" is selected
-  if (this.value === 'Other') {
-    otherReasonDiv.classList.remove('d-none');
-    otherReasonInput.setAttribute('required', 'required'); // Make the input required
-  } else {
-    otherReasonDiv.classList.add('d-none');
-    otherReasonInput.removeAttribute('required'); // Remove required attribute if not "Other"
-    otherReasonInput.value = ''; // Clear the input value
-  }
-});
 
+
+
+
+        document.getElementById('cancellationReason').addEventListener('change', function() {
+            const otherReasonDiv = document.getElementById('otherReasonDiv');
+            const otherReasonInput = document.getElementById('otherReason');
+
+            // Show the "Other" input field if "Other" is selected
+            if (this.value === 'Other') {
+                otherReasonDiv.classList.remove('d-none');
+                otherReasonInput.setAttribute('required', 'required'); // Make the input required
+            } else {
+                otherReasonDiv.classList.add('d-none');
+                otherReasonInput.removeAttribute('required'); // Remove required attribute if not "Other"
+                otherReasonInput.value = ''; // Clear the input value
+            }
+        });
     </script>
 @endsection

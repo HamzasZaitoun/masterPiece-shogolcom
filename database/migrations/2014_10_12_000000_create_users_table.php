@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('user_detailed_location', 255)->nullable();
             $table->decimal('balance',10,2)->nullable();
             $table->string('bio')->nullable();
-            $table->decimal('rating',3,2)->nullable();
-            $table->integer('rating_count')->nullable();
+            $table->decimal('rating',3,2)->default(1);
+            $table->integer('rating_count')->default(0);
             $table->enum('verification_status',['pending','verified','rejected'])->default('pending');
             $table->enum('account_status',['active','suspended','banned'])->default('active');
             $table->enum('role',['admin','user'])->default('user');

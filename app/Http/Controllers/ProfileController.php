@@ -23,7 +23,7 @@ class ProfileController extends Controller
 
     // Get user posts (jobs posted by the user)
     $userPosts = Job::where('user_id', $user->id)->where('job_status', 'open')
-    ->orderBy('created_at', 'desc') 
+   ->where('job_visibility','public')->orderBy('created_at', 'desc') 
     ->paginate(5);
 
 
@@ -39,13 +39,20 @@ class ProfileController extends Controller
 
     // Get user current jobs
     $currentJobs = $this->getCurrentJobs($user->id);
+
     // dd($currentJobs);
+
+
+    // get user completed jobs
+    $completedJobs =$this->getCompletedJobs($user->id);
+    // dd($completedJobs);
     return view('user.profile.profile', [
         'user' => $user,
         'userPosts' => $userPosts,
         'pendingApplications' => $pendingApplications,
         'archivedPosts' => $archivedPosts,
         'currentJobs'=>$currentJobs,
+        'completedJobs'=>$completedJobs,
     ]);
 }
 
@@ -129,12 +136,13 @@ public function getCurrentJobs($userId)
 {
     // First query: Select closed jobs for the user
     $closedJobsQuery = Job::where('user_id', $userId)
-        ->where('job_status', 'closed');
+        ->where('job_status', 'closed')->where('job_visibility','public');
 
     // Second query: Select jobs from accepted applications for the user
     $acceptedApplicationsQuery = Application::join('jobs', 'applications.job_id', '=', 'jobs.job_id')
         ->select('jobs.*') // Select only job fields
         ->where('applications.user_id', $userId)
+        ->where('jobs.job_visibility','public')
         ->where('applications.application_status', 'accepted');
 
     // Combine both queries using UNION ALL and get the results
@@ -145,7 +153,27 @@ public function getCurrentJobs($userId)
     return $allJobs;
 }
 
+public function getCompletedJobs($userId)
+{
+    // First query: Select closed jobs for the user
+    $completedJobsQuery = Job::where('user_id', $userId)
+        ->where('job_status', 'completed');
 
+    // Second query: Select jobs from accepted applications for the user
+    $completedApplicationsQuery = Application::join('jobs', 'applications.job_id', '=', 'jobs.job_id')
+    ->select('jobs.*') // Select only job fields
+    ->where('applications.user_id', $userId)
+    ->whereNotNull('applications.completed_at') // Ensure the application is completed
+    ->where('jobs.job_status', 'completed');
+
+
+    // Combine both queries using UNION ALL and get the results
+    $completedJobs = $completedJobsQuery
+        ->unionAll($completedApplicationsQuery)
+        ->get();
+
+    return $completedJobs;
+}
 
     /**
      * Delete the user's account.
