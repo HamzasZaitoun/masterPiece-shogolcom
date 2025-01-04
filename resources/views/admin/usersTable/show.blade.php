@@ -84,7 +84,7 @@
     <main class="main-profile">
         <div class="profile-head">
             <div class="profile-left">
-                <img id="profile-image" src="{{ asset('uploads/users/' . $user->profile_picture) }}" alt="profile image">
+                <img id="profile-image" src="{{ $user->profile_picture ? asset('uploads/users/' . $user->profile_picture) : asset('assets/user/images/defaults/defaultPFP2.jpg') }}" alt="profile image">
                 <div class="profile-info">
                     <h3 class="name">{{ $user->first_name }} {{ $user->last_name }}</h3>
                     <p class="headline">User ID: {{ $user->id }}</p>
@@ -140,11 +140,11 @@
 
             </div>
         </div>
-        <div class="button-container">
+        {{-- <div class="button-container">
             <button onclick="location.href='{{ route('admin.users.editUser', ['id' => $user->id]) }}'"
                 class="edit-btn btn btn-primary btn-lg shadow-sm rounded-pill px-4 py-2 my-3">
                 <i class="bi bi-pencil-square"></i> Edit User
             </button>
-        </div>
+        </div> --}}
     </main>
 @endsection

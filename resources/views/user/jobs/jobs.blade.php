@@ -151,26 +151,21 @@
                     <div class="col-lg-4 col-12 d-flex align-items-center ms-auto mb-5 mb-lg-4">
                         <p class="mb-0 ms-lg-auto">Sort by:</p>
 
-                        <div class="dropdown dropdown-sorting ms-3 me-4">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownSortingButton"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Newest Jobs
-                            </button>
+    <div class="dropdown dropdown-sorting ms-3 me-4">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownSortingButton"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            @if($sortOption == 'highest_salary')
+                Highest Salary Jobs
+            @else
+                Newest Jobs
+            @endif
+        </button>
 
-                            <ul class="dropdown-menu" aria-labelledby="dropdownSortingButton">
-                                <li><a class="dropdown-item" href="#">Lastest Jobs</a></li>
-
-                                <li><a class="dropdown-item" href="#">Highed Salary Jobs</a></li>
-
-                                <li><a class="dropdown-item" href="#">Internship Jobs</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="d-flex">
-                            <a href="#" class="sorting-icon active bi-list me-2"></a>
-
-                            <a href="#" class="sorting-icon bi-grid"></a>
-                        </div>
+        <ul class="dropdown-menu" aria-labelledby="dropdownSortingButton">
+            <li><a class="dropdown-item" href="{{ route('jobs', ['sort' => 'newest']) }}">Newest Jobs</a></li>
+            <li><a class="dropdown-item" href="{{ route('jobs', ['sort' => 'highest_salary']) }}">Highest Salary Jobs</a></li>
+        </ul>
+    </div>
                     </div>
 
                     @foreach ($jobs as $job)
@@ -184,18 +179,18 @@
 
                                     <div class="job-image-box-wrap-info d-flex align-items-center">
                                         <p class="mb-0">
-                                            <a href="job-listings.php" class="badge badge-level">{{ $job->job_type }}</a>
+                                            <a href="{{route('filterJobs',['job_type' => $job->job_type,])}}" class="badge badge-level">{{ $job->job_type }}</a>
                                         </p>
 
                                         <p class="mb-0">
-                                            <a href="job-listings.php" class="badge">{{$job->category->category_name}}</a>
+                                            <a href="{{route('jobsByCategory',$job->job_category)}}" class="badge">{{$job->category->category_name}}</a>
                                         </p>
                                     </div>
                                 </div>
 
                                 <div class="job-body">
                                     <h4 class="job-title">
-                                        <a href="job-details.php"
+                                        <a href="{{route('JobDetails',$job->job_id)}}"
                                             class="job-title-link">{{ \Illuminate\Support\Str::limit($job->job_title, 15, '...') }}</a>
                                     </h4>
 
@@ -208,10 +203,7 @@
                                             </p>
                                         </div>
 
-                                        <a href="#" class="bi-bookmark ms-auto me-2">
-                                        </a>
-
-                                        <a href="#" class="bi-heart">
+                                       
                                         </a>
                                     </div>
 
@@ -258,26 +250,27 @@
 
         <section class="cta-section">
             <div class="section-overlay"></div>
-
+    
             <div class="container">
                 <div class="row">
-
+    
                     <div class="col-lg-6 col-10">
-                        <h2 class="text-white mb-2">Over 10k opening jobs</h2>
-
-                        <p class="text-white">Gotto Job is a free HTML CSS template for job hunting related websites. This
-                            layout is based on the famous Bootstrap 5 CSS framework. Thank you for visiting Tooplate
-                            website.</p>
+                        <h2 class="text-white mb-2"> job Opportunities</h2>
+                    
+                        <p class="text-white">
+                            Shogholcom offers a wide range of seasonal and temporary job openings across various industries. Connect with trusted employers and find the perfect job that matches your skills and schedule—all on Shogholcom.
+                        </p>
                     </div>
-
+    
                     <div class="col-lg-4 col-12 ms-auto">
                         <div class="custom-border-btn-wrap d-flex align-items-center mt-lg-4 mt-2">
-                            <a href="#" class="custom-btn custom-border-btn btn me-4">Create an account</a>
-
-                            <a href="#" class="custom-link">Post a job</a>
+                            @guest
+                            <a href="{{route('register')}}" class="custom-btn custom-border-btn btn me-4">Create an account</a>
+                            @endguest
+                            <a href="{{route('postJob')}}" class="custom-link">Post a job</a>
                         </div>
                     </div>
-
+    
                 </div>
             </div>
         </section>

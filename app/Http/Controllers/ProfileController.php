@@ -120,11 +120,12 @@ public function showProfile($id)
 {
     $user = User::findOrFail($id);
     $userPosts = Job::where('user_id', $user->id)->paginate(5);
-    
+    $completedJobs =$this->getCompletedJobs($user->id);
     // dd($user);
         return view('user.profile.profile', [
             'user' => $user,
             'userPosts'=>$userPosts,
+            'completedJobs'=>$completedJobs,
         ]);
 }
 
@@ -143,7 +144,8 @@ public function getCurrentJobs($userId)
         ->select('jobs.*') // Select only job fields
         ->where('applications.user_id', $userId)
         ->where('jobs.job_visibility','public')
-        ->where('applications.application_status', 'accepted');
+        ->where('applications.application_status', 'accepted')
+        ->where('jobs.job_status',"closed");
 
     // Combine both queries using UNION ALL and get the results
     $allJobs = $closedJobsQuery

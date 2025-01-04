@@ -4,8 +4,8 @@
     <div class="recent-orders">
         <div class="header-table">
             <h2 class="header-h2">Applications</h2>
-            <button class="add-btn" onclick="location.href = '{{ route('admin.applications.create') }}';">Add
-                Application</button>
+            {{-- <button class="add-btn" onclick="location.href = '{{ route('admin.applications.create') }}';">Add
+                Application</button> --}}
         </div>
         <table id="applicationsTable">
             <thead>
@@ -20,7 +20,7 @@
             <tbody>
                 @foreach ($applications as $application)
                     <tr>
-                        <td>{{ $application->application_id }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $application->user->first_name ?? 'N/A' }}</td>
                         <td>{{ $application->job->job_title ?? 'N/A' }}</td>
                         <td>{{ ucfirst($application->application_status) }}</td>
@@ -39,7 +39,7 @@
                                     <span class="view-text">View</span>
                                 </a>
                                 {{-- <a href="{{ route('admin.applications.edit', $application->application_id) }}"><i class="bi bi-pencil"></i></a> --}}
-                                <form action="{{ route('admin.applications.destroy', $application->application_id) }}"
+                                {{-- <form action="{{ route('admin.applications.destroy', $application->application_id) }}"
                                     method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
@@ -50,7 +50,7 @@
                                             </path>
                                         </svg>
                                     </button>
-                                </form>
+                                </form> --}}
                             </div>
                         </td>
                     </tr>

@@ -25,7 +25,7 @@
                 </tr>
                 <tr>
                     <th>Applied At:</th>
-                    <td>{{ $application->created_at ?? 'N/A' }}</td>
+                    <td>{{ $application->applied_at ?? 'N/A' }}</td>
                     <th>Accepted At:</th>
                     <td>{{ $application->accepted_at ?? 'N/A' }}</td>
                 </tr>
@@ -34,12 +34,12 @@
                     <td>{{ $application->completed_at ?? 'N/A' }}</td>
                 </tr>
             </table>
-            <div class="button-container fixed-bottom">
+            {{-- <div class="button-container fixed-bottom">
                 <button onclick="location.href='{{ route('admin.applications.edit', $application->application_id) }}"
                     class="edit-btn btn btn-primary btn-lg shadow-sm rounded-pill px-4 py-2 my-3 fixed-bottom">
                     <i class="bi bi-pencil-square"></i> Edit application
                 </button>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection

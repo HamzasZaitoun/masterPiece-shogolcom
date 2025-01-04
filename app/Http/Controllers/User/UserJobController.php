@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\User;
-
+use App\Http\Controllers\User\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Application;
+use App\Models\Category;
+use App\Models\Governorate;
 use App\Models\UserToUserReview;
 
 class UserJobController extends Controller
@@ -117,6 +119,66 @@ public function completeJob(Request $request, $job_id)
     return redirect()->route('profile')->with('success', 'Job marked as completed and reviews submitted successfully');
 }
 
+public function showEditJob($id)
+{
+    $job =Job::FindOrFail($id);
+    $categories=Category::all();
+    $governorates=Governorate::all();
+    return view('user.jobs.edit', compact('job','categories','governorates'));
+}
 
+public function editJob(Request $request, $id)
+{
+    // Find the job by its ID
+    $job = Job::findOrFail($id);
+
+    // Validate the request data
+    $validatedData = $request->validate([
+        'job_title' => 'required|string|max:255',
+        'job_category' => 'required|integer',
+        'custom_category' => 'nullable|string|max:255',
+        'job_type' => 'required|string|in:day,month,project',
+        'job_description' => 'required|string|max:255',
+        'job_governorate' => 'required|string',
+        'job_city' => 'required|string',
+        'job_detailed_location' => 'nullable|string|max:255',
+        'payment_amount' => 'required|numeric|min:0',
+        'number_of_workers' => 'nullable|integer|min:1',
+        'start_date' => 'required|date',
+        'job_duration' => 'nullable|integer|min:1',
+        'is_urgent' => 'nullable|boolean',
+        'job_media' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'  // 2MB max size
+    ]);
+
+    // Update job fields
+    $job->job_title = $validatedData['job_title'];
+    $job->job_category = $validatedData['job_category'];
+    $job->custom_category = $validatedData['custom_category'] ?? null;
+    $job->job_type = $validatedData['job_type'];
+    $job->job_description = $validatedData['job_description'];
+    $job->job_governorate = $validatedData['job_governorate'];
+    $job->job_city = $validatedData['job_city'];
+    $job->job_detailed_location = $validatedData['job_detailed_location'] ?? null;
+    $job->payment_amount = $validatedData['payment_amount'];
+    $job->number_of_workers = $validatedData['number_of_workers'] ?? null;
+    $job->start_date = $validatedData['start_date'];
+    $job->job_duration = $validatedData['job_duration'] ?? null;
+    $job->is_urgent = $request->has('is_urgent') ? 1 : 0;
+
+    // Handle job media upload
+    if ($request->hasFile('job_media')) {
+
+            $fileName = time() . '.' . $request->job_media->extension();
+            $request->job_media->move(public_path('uploads/jobs'), $fileName);
+            $job->job_media = $fileName;
+        
+    }
+
+    // Save the job
+    $job->save();
+
+    // Redirect to a success page or back to the job edit form
+    return redirect()->route('JobDetails', $job->job_id)->with('success', 'Job updated successfully.');
+}
 
 }

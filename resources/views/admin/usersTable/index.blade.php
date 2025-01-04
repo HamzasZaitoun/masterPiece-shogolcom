@@ -15,7 +15,7 @@
     <div class="recent-orders">
         <div class="header-table">
             <h2 class="header-h2">Users</h2>
-            <button class="add-btn" onclick="location.href = '{{ Route('admin.users.addUser') }}';">Add user</button>
+            <button class="add-btn" onclick="location.href = '{{ Route('admin.users.addUser') }}';">Add admin</button>
         </div>
         <table id="userTable" class="display">
             <thead>
@@ -28,18 +28,32 @@
                 </tr>
             </thead>
             <tbody>
+
                 @foreach ($data as $user)
                     <tr>
-                        <td>{{ $user['id'] }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $user['first_name'] }}</td>
                         <td>{{ $user['last_name'] }}</td>
-                        <td>{{ $user['account_status'] }}</td>
+                        <td>
+                            <!-- Form to Update Account Status -->
+                            <form action="{{ route('admin.users.updateStatus', ['id' => $user->id]) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <select name="account_status" onchange="this.form.submit()">
+                                    <option value="active" {{ $user['account_status'] == 'active' ? 'selected' : '' }}>
+                                        Active</option>
+                                    <option value="banned" {{ $user['account_status'] == 'banned' ? 'selected' : '' }}>
+                                        banned</option>
+                                    <option value="suspended"
+                                        {{ $user['account_status'] == 'suspended' ? 'selected' : '' }}>Suspended</option>
+                                </select>
+                            </form>
+                        </td>
                         <td class="action">
                             <div class="flex">
-                                {{-- <a href="{{ route('admin.users.userDetails', ['id' => $user->id]) }}"><i
-                                        class="bi bi-eye"></i></a> --}}
                                 <a href="{{ route('admin.users.userDetails', ['id' => $user->id]) }}" class="view-button"
                                     title="View Details">
+                                    <!-- Your SVG and other code here -->
                                     <svg class="view-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                         aria-hidden="true" focusable="false">
                                         <path
@@ -49,11 +63,11 @@
                                     <span class="view-text">View</span>
                                 </a>
 
-                                <form action="{{ route('admin.users.destroy', ['id' => $user->id]) }}" method="POST">
+                                <form action="{{ route('admin.users.destroy', ['id' => $user->id]) }}" method="POST" id="deleteUserForm">
                                     @csrf
                                     @method('DELETE')
-                                    {{-- <button type="submit" class="delete-btn"><i class="bi bi-trash"></i></button> --}}
-                                    <button class="delete-button"type="submit">
+                                    <button class="delete-button" id="deleteUser" type="button" onclick="confirmDelete()">
+                                        <!-- Your SVG and other code here -->
                                         <svg class="delete-svgIcon" viewBox="0 0 448 512">
                                             <path
                                                 d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z">

@@ -22,8 +22,8 @@
         <aside>
             <div class="toggle">
                 <div class="logo">
-                    <img src="{{ asset('assets/images/logo1.png') }}">
-                    <h2>Seasonal<span class="danger">Jobs</span></h2>
+                    <img src="{{ asset('assets/user/images/publicSiteLogo.png') }}">
+                    <h2>Shoghol<span class="danger">Com</span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">

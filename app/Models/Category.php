@@ -12,4 +12,9 @@ class Category extends Model
     protected $primaryKey = 'category_id';
 
     protected $fillable=['category_name','category_description','category_picture'];
+
+    public function jobs()
+{
+    return $this->hasMany(Job::class, 'job_category'); 
+}
 }

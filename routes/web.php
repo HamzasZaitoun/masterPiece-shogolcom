@@ -5,6 +5,7 @@ use App\Http\Controllers\User\SearchAndFilterController;
 use App\Http\Controllers\User\UserJobController;
 use App\Http\Controllers\User\UserApplicationController;
 use App\Http\Controllers\User\UserContactController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -56,7 +57,9 @@ Route::get('/jobs/{job_id}/archiveJob', [UserJobController::class, 'archiveJob']
 Route::get('/jobs/{job_id}/unArchiveJob', [UserJobController::class, 'unArchiveJob'])->name('unArchiveJob');
 Route::post('/jobs/cancelJob/{id}', [UserJobController::class, 'cancelJob'])->name('cancelJob');
 Route::post('/jobs/completeJob/{id}', [UserJobController::class, 'completeJob'])->name('completeJob');
-
+Route::get('/category/{id}', [PublicSiteController::class, 'showJobsByCategory'])->name('jobsByCategory');
+Route::get('/jobs/edit/{id}', [UserJobController::class, 'showEditJob'])->name('showEditJob');
+Route::put('/jobs/edit/{id}', [UserJobController::class, 'editJob'])->name('editJob');
 
 //////////
 //application routes
@@ -82,7 +85,7 @@ Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
 
 //////////////////
-Route::get('/cities', [CityController::class, 'getCities']);
+Route::get('/cities/{governorate}', [CityController::class, 'getCities']);
 // Route::get('/dashboard', function () {
 //     return view('dashboard')->name('dashboard');
 // });
@@ -95,10 +98,9 @@ Route::get('/about', function () {
 
 
 
+Route::middleware(['auth', 'checkRole'])->group(function () {
 
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->name('admin');
+Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin');
 
 Route::controller(UserController::class)->prefix('admin/users')->name('admin.users.')->group(function () {
     Route::get('/', 'index')->name('index');
@@ -107,10 +109,14 @@ Route::controller(UserController::class)->prefix('admin/users')->name('admin.use
     Route::get('/userDetails/{id}', 'show')->name('userDetails');
     Route::get('/editUser/{id}', 'edit')->name('editUser');
     Route::patch('/editUser/{id}', 'update')->name('updateUser');
-    Route::get('/adminProfile', 'adminProfile')->name('adminProfile');
     Route::get('/cities/{governate}',  'getCitiesByGovernate');
     Route::delete('/deleteUser/{id}', 'destroy')->name('destroy');
+    Route::patch('/admin/users/update-status/{id}', [UserController::class, 'updateStatus'])->name('updateStatus');
 });
+
+Route::get('/admin/profile', [UserController::class, 'adminProfile'])->name('admin.users.adminProfile');
+Route::get('/admin/profile/edit', [UserController::class, 'editProfile'])->name('admin.profile.edit');
+Route::patch('/admin/profile/update', [UserController::class, 'updateProfile'])->name('admin.profile.update');
 
 Route::controller(CategoryController::class)->prefix('admin/categories')->name('admin.categories.')->group(function () {
     Route::get('/', 'index')->name('index');
@@ -195,19 +201,16 @@ Route::controller(ContactUsController::class)->prefix('admin/contactUs')->name('
     Route::delete('/{id}', 'destroy')->name('destroy');
 });
 
+});
 
-Route::get('/profile', function () {
-    return view('dashboard'); // Or return the appropriate view
-})->name('profile');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/index', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+
+Route::middleware(['auth', 'checkRole'])->group(function () {
+    Route::get('/index',[AdminController::class, 'dashboard'])->name('admin.dashboard');
 });
 Route::get('/admin/dashboard', function () {
-    return view('admin/index');
-})->middleware(['auth', 'verified'])->name('admin/index');
+    return view('admin/dashboard');
+})->middleware(['auth', 'checkRole'])->name('admin/index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile');

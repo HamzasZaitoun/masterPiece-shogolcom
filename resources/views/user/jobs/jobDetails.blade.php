@@ -137,7 +137,7 @@
                     <div class="d-flex justify-content-center flex-wrap mt-5 border-top pt-4">
                         {{-- check if the job is still open so the user can edit and archive the job --}}
                         @if ($job->job_status != 'closed')
-                            <a href="#" class="custom-btn btn mt-2">edit job details</a>
+                            <a href="{{route('showEditJob',$job->job_id)}}" class="custom-btn btn mt-2">edit job details</a>
 
                             @if($job->job_visibility != 'public')
                             <a href="{{ route('unArchiveJob', $job->job_id) }}"
@@ -278,8 +278,7 @@
                         <div class="col-lg-6 col-12 mb-lg-4">
                             <h3>Similar Jobs</h3>
 
-                            <p><strong>Over 10k opening jobs</strong> Lorem Ipsum dolor sit amet, consectetur adipsicing
-                                kengan omeg kohm tokito adipcingi elit eismuod larehai</p>
+                            <p><strong>Find Jobs  </strong>  Similer to this job</p>
                         </div>
 
                         <div class="col-lg-4 col-12 d-flex ms-auto mb-5 mb-lg-4">

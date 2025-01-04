@@ -135,7 +135,8 @@
     <main class="job-details-container">
         <div class="job-header">
             <div class="job-profile">
-                <img id="job-profile-image" src="{{ asset('uploads/jobs/' . $job->job_media) }}" alt="Profile Image">
+         
+                <img id="job-profile-image" src="{{ $job->job_media ? asset('uploads/jobs/' . $job->job_media) : asset('assets/user/images/defaults/defaultJob.jpg') }}" alt="Profile Image">
                 <div class="job-info">
                     <h3 class="job-name">{{ $job->job_title }} ({{ $job->job_id }})</h3>
                     <span>Posted By : {{ $job->user->first_name . ' ' . $job->user->last_name }}</span>
@@ -192,12 +193,6 @@
                     <td>{{ ucfirst($job->job_status) }}</td>
                     <th>Payment status:</th>
                     <td>{{ ucfirst($job->payment_status) }}</td>
-                </tr>
-                <tr>
-                    <th>Max applicants:</th>
-                    <td>{{ $job->max_applicants }}</td>
-                    <th>Number of workers:</th>
-                    <td>{{ $job->number_of_workers }}</td>
                 </tr>
                 <tr>
                     <th>Start date:</th>

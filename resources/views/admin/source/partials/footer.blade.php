@@ -12,7 +12,9 @@
     new DataTable('#jobTable');
     new DataTable('#applicationsTable');
     new DataTable('#userReviewsTable');
-    new DataTable('#reviewsTable');
+    new DataTable('#ReviewTable');
+    new DataTable('#contactTable');
+
 </script>
 </body>
 

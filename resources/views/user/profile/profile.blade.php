@@ -11,10 +11,28 @@
                 <h3 class="name">{{$user->first_name . ' ' . $user->last_name}}</h3>
                 
                 <p class="city">{{$user->user_governorate .', ' . $user->user_city}}</p>
+                
             </div>
         </div>
-        <div class="profile-right">
+        <div class="">
             <p> <strong> Member since:</strong> {{$user->created_at->format('Y-m-d')}}</p>
+            <p class="rate">
+            <strong>
+                {{$user->first_name . '\'s  rate:'}} 
+                @for ($i = 1; $i <= 5; $i++)
+                    @if($i <= $user->rating)
+                        <i class="fas fa-star text-warning"></i> <!-- Filled star -->
+                    @else
+                        <i class="far fa-star"></i> <!-- Empty star -->
+                    @endif
+                @endfor    
+            
+            </strong>
+                
+            </p>
+           <p class="mt-3"> <strong><span class="rateCount ">
+            Rated by: <span class="text-success">{{$user->rating_count}} </span> people
+        </span></strong> </p>
         </div>
     </div>
     

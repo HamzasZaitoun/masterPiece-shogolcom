@@ -15,7 +15,9 @@ use App\Models\User;
 class PublicSiteController extends Controller
 {
     public function showLandingPage() {
-        $categories = Category::all(); 
+        $categories = Category::withCount(['jobs' => function ($query) {
+            $query->where('job_visibility', 'public')->where('job_status', 'open');
+        }])->get();
         
         //get recent jobs
         $recentJobs = Job::where('job_visibility','public')->where('job_status','open')->orderBy('created_at', 'desc')->limit(6)->get();
@@ -42,14 +44,35 @@ class PublicSiteController extends Controller
         ]);
     }
 
-    public function showJobs()
-    {
-        $jobs=Job::where('job_visibility','public')->where('job_status','open')->paginate(9);
-        $categories=Category::all();
-        $governorates=Governorate::all();
-        // dd($governorates );
-        return view('user.jobs.jobs',compact('jobs','categories','governorates'));
+    public function showJobs(Request $request)
+{
+    // Get the sorting option from the request, default to 'newest'
+    $sortOption = $request->input('sort', 'newest');
+
+    // Query to get jobs with sorting
+    $jobsQuery = Job::where('job_visibility', 'public')
+        ->where('job_status', 'open');
+
+    // Apply sorting logic based on the sort option
+    if ($sortOption == 'highest_salary') {
+        $jobsQuery->orderBy('payment_amount', 'desc'); // Sort by highest salary
+    } else {
+        // Default to sorting by newest jobs
+        $jobsQuery->orderBy('created_at', 'desc');
     }
+
+    // Fetch the jobs with pagination
+    $jobs = $jobsQuery->paginate(9);
+
+    // Get other data like categories and governorates
+    $categories = Category::all();
+    $governorates = Governorate::all();
+
+    // Return view with the jobs and sortOption
+    return view('user.jobs.jobs', compact('jobs', 'categories', 'governorates', 'sortOption'));
+}
+
+    
 
     public function showPostJobPage()
      {
@@ -82,7 +105,7 @@ class PublicSiteController extends Controller
                 'job_media' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
                 'custom_category' => 'nullable|string|max:255',
             ]);
-            $isCustomCategory = $request->input('job_category') === '2';
+            $isCustomCategory = $request->input('job_category') === '6';
             $customCategory = $isCustomCategory ? $request->input('custom_category') : null;
             // Create the job post
             $job = new Job(array_merge(
@@ -133,7 +156,7 @@ public function showJobDetails($id)
     $job =Job::findOrFail($id);
 
     //get similer jobs
-    $similerJobs = Job::where('job_category', $job->job_category)->where('user_id', '!=', auth()->id())->limit(3)->get();
+    $similerJobs = Job::where('job_category', $job->job_category)->where('user_id', '!=', auth()->id())->where('job_id','!=',$id)->limit(3)->get();
 
     //check if the user applied for the job
     $existingApplication = Application::where('job_id', $job->job_id)
@@ -178,5 +201,14 @@ public function canMarkJobAsCompleted($job_id) {
     return $completedWorkers === $totalWorkers;
 }
 
-    
+
+public function showJobsByCategory($id)
+    {
+        $jobs=Job::where('job_category',$id)->where('job_status','open')->paginate(9);
+        $category=Category::findOrFail($id);
+      
+        return view('user.categories.category',compact('jobs','category'));
     }
+
+
+}

@@ -160,7 +160,7 @@
             console.log(GovernorateId); 
 
             if (GovernorateId) {
-                fetch(`/admin/users/cities/${GovernorateId}`)
+                fetch(`cities/${GovernorateId}`)
                     .then(response => response.json())
                     .then(cities => {
                         var citySelect = document.getElementById('job_city');

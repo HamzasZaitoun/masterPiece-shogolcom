@@ -27,7 +27,8 @@ class UserController extends Controller
     }
     public function adminProfile()
     {
-        return view('admin.adminsTable.profile');
+        $user = User::findOrFail(auth()->user()->id);
+        return view('admin.adminsTable.profile', compact('user'));
     }
 
     /**
@@ -132,4 +133,65 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
     }
+    public function updateStatus(Request $request, $id)
+    {
+        // Validate the input
+        $request->validate([
+            'account_status' => 'required|in:active,banned,suspended',
+        ]);
+
+        // Find the user and update the account status
+        $user = User::findOrFail($id);
+        $user->account_status = $request->account_status;
+        $user->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Account status updated successfully.');
+    }
+    public function editProfile()
+    {
+        $user = auth()->user();
+        return view('admin.adminsTable.update', compact('user')); // Ensure the correct view is returned
+    }
+
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user(); // Ensure it's a User model instance
+
+        $validatedData = $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email,' . $user->id],
+            'mobile_number' => ['nullable', 'string', 'max:15'],
+            'birth_date' => ['nullable', 'date'],
+            'profile_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
+            'user_governorate' => ['required', 'string', 'max:255'],
+            'user_city' => ['required', 'string', 'max:255'],
+            'bio' => ['nullable', 'string', 'max:255'],
+        ]);
+
+
+        if ($request->hasFile('profile_picture')) {
+            // Delete old profile picture if it exists
+            if ($user->profile_picture && file_exists(public_path('uploads/users/' . $user->profile_picture))) {
+                unlink(public_path('uploads/users/' . $user->profile_picture));
+            }
+
+            // Upload new profile picture
+            $fileName = time() . '.' . $request->profile_picture->extension();
+            $request->profile_picture->move(public_path('uploads/users'), $fileName);
+            $validatedData['profile_picture'] = $fileName;
+        }
+
+        // ✅ Ensure $user is an instance of User before calling update
+        if ($user instanceof \App\Models\User) {
+            $user->update($validatedData);
+        } else {
+            return redirect()->back()->withErrors(['error' => 'User not found.']);
+        }
+
+        return redirect()->route('admin.users.adminProfile')->with('success', 'Profile updated successfully.');
+    }
+    
 };

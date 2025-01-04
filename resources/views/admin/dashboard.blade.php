@@ -1,84 +1,144 @@
 @extends('admin.source.template')
 @section('content')
+
+@php
+    // Circle circumference for r=36 is approximately 226.08 (2 * pi * 36)
+    $circumference = 2 * pi() * 36;
+@endphp
+
 <h1>Analytics</h1>
             <!-- Analyses -->
             <div class="analyse">
+                <!-- Total Jobs -->
                 <div class="sales">
                     <div class="status">
                         <div class="info">
-                            <h3>Total Sales</h3>
-                            <h1>$65,024</h1>
+                            <h3>Total jobs</h3>
+                            <h1>{{$totalJobs}}</h1>
                         </div>
                         <div class="progresss">
-                            <svg>
-                                <circle cx="38" cy="38" r="36"></circle>
+                            <svg width="80" height="80">
+                                <circle cx="38" cy="38" r="36" stroke-dasharray="{{ $circumference }}" stroke-dashoffset="0"></circle>
                             </svg>
                             <div class="percentage">
-                                <p>+81%</p>
+                                <p>100%</p>
                             </div>
                         </div>
                     </div>
                 </div>
+            
+                <!-- Completed Jobs -->
+                <div class="sales">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Completed jobs</h3>
+                            <h1>{{$completedJobs}}</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg width="80" height="80">
+                                <circle cx="38" cy="38" r="36" stroke-dasharray="{{ $circumference }}" 
+                                stroke-dashoffset="{{ $circumference - ($completedJobsPercentage / 100) * $circumference }}"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>{{$completedJobsPercentage}}%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Pending Jobs -->
+                <div class="sales">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Pending jobs</h3>
+                            <h1>{{$pendingJobs}}</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg width="80" height="80">
+                                <circle cx="38" cy="38" r="36" stroke-dasharray="{{ $circumference }}" 
+                                stroke-dashoffset="{{ $circumference - ($pendingJobsPercentage / 100) * $circumference }}"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>{{ $pendingJobsPercentage }}%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Cancelled Jobs -->
+                <div class="sales">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Cancelled jobs</h3>
+                            <h1>{{$cancelledJobs}}</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg width="80" height="80">
+                                <circle cx="38" cy="38" r="36" stroke-dasharray="{{ $circumference }}" 
+                                stroke-dashoffset="{{ $circumference - ($cancelledJobsPercentage / 100) * $circumference }}"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>{{$cancelledJobsPercentage}}%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Daily Active Users -->
                 <div class="visits">
                     <div class="status">
                         <div class="info">
-                            <h3>Site Visit</h3>
-                            <h1>24,981</h1>
+                            <h3>Number of daily active users</h3>
+                            <h1>{{$dailyUsers}}</h1>
                         </div>
                         <div class="progresss">
-                            <svg>
-                                <circle cx="38" cy="38" r="36"></circle>
+                            <svg width="80" height="80">
+                                <circle cx="38" cy="38" r="36" stroke-dasharray="{{ $circumference }}" 
+                                stroke-dashoffset="{{ $circumference - ($dailyUsersPercentage / 100) * $circumference }}"></circle>
                             </svg>
                             <div class="percentage">
-                                <p>-48%</p>
+                                <p>{{  $dailyUsersPercentage }}%</p>
                             </div>
                         </div>
                     </div>
                 </div>
+            
+                <!-- Custom Categories -->
                 <div class="searches">
                     <div class="status">
                         <div class="info">
-                            <h3>Searches</h3>
-                            <h1>14,147</h1>
+                            <h3>Custom categories</h3>
+                            <h1>{{$customCategories}}</h1>
                         </div>
                         <div class="progresss">
-                            <svg>
-                                <circle cx="38" cy="38" r="36"></circle>
+                            <svg width="80" height="80">
+                                <circle cx="38" cy="38" r="36" stroke-dasharray="{{ $circumference }}" 
+                                stroke-dashoffset="{{ $circumference - ($customCategoriesPercentage / 100) * $circumference }}"></circle>
                             </svg>
                             <div class="percentage">
-                                <p>+21%</p>
+                                <p>{{$customCategoriesPercentage}}%</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- End of Analyses -->
-
             <!-- New Users Section -->
             <div class="new-users">
                 <h2>New Users</h2>
                 <div class="user-list">
-                    <div class="user">
-                        <img src="../assets/images/profile-2.jpg">
-                        <h2>Jack</h2>
-                        <p>54 Min Ago</p>
-                    </div>
-                    <div class="user">
-                        <img src="../assets/images/profile-3.jpg">
-                        <h2>Amir</h2>
-                        <p>3 Hours Ago</p>
-                    </div>
-                    <div class="user">
-                        <img src="../assets/images/profile-4.jpg">
-                        <h2>Ember</h2>
-                        <p>6 Hours Ago</p>
-                    </div>
-                    <div class="user">
-                        <img src="../assets/images/plus.png">
-                        <h2>More</h2>
-                        <p>New User</p>
-                    </div>
+                    @foreach($latestUsers as $user)
+                        <div class="user">
+                            <a href="{{ route('admin.users.userDetails', ['id' => $user->id]) }}">
+                            <img src="{{ $user->profile_picture ? asset('uploads/users/' . $user->profile_picture) : asset('assets/user/images/defaults/defaultPFP2.jpg') }}" alt="{{ $user->first_name }}">
+                        </a>
+                            <h2>{{ $user->first_name }}</h2>
+                            <p>{{ $user->created_at->diffForHumans() }}</p>
+                        </div>
+                    @endforeach
+                    <!-- Optionally, add a "More" button if you want -->
+                  
                 </div>
             </div>
+            
         </main>
 @endsection

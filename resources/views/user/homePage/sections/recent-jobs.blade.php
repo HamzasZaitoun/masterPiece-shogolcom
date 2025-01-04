@@ -3,9 +3,8 @@
         <div class="row align-items-center">
 
             <div class="col-lg-6 col-12 mb-4">
-                <h2>Recent Jobs</h2>
+                <h2>Most Recent Jobs</h2>
 
-                <p><strong>Over 10k opening jobs</strong> Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito adipcingi elit eismuod larehai</p>
             </div>
 
             <div class="clearfix"></div>
@@ -19,11 +18,11 @@
 
                         <div class="job-image-box-wrap-info d-flex align-items-center">
                             <p class="mb-0">
-                                <a href="job-listings.php" class="badge badge-level">{{$job->job_type}}</a>
+                                <a href="{{route('filterJobs',['job_type' => $job->job_type,])}}" class="badge badge-level">{{$job->job_type}}</a>
                             </p>
 
                             <p class="mb-0">
-                                <a href="job-listings.php" class="badge">{{$job->category->category_name}}</a>
+                                <a href="{{route('jobsByCategory',$job->job_category)}}" class="badge">{{$job->category->category_name}}</a>
                             </p>
                         </div>
                     </div>
@@ -84,7 +83,7 @@
             
 
             <div class="col-lg-4 col-12 recent-jobs-bottom d-flex ms-auto my-4">
-                <a href="{{route('jobs')}}" class="custom-btn btn ms-lg-auto">Browse Job Listings</a>
+                <a href="{{route('jobs')}}" class="custom-btn btn ms-lg-auto">Browse More Jobs</a>
             </div>
 
         </div>
